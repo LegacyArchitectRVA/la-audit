@@ -1,19 +1,12 @@
-/* LA Digital Audit v15 - audit7.js
-   Changes from v14:
-   - Scroll fix: scrolls to #la-wrap instead of page top
-   - Visual consistency: all font sizes match Page 1 HTML (16px labels/buttons, 18px descriptions)
-   - Checkbox border color unified to #7A6842
-   - Glowing counter box on every pillar page (updates live)
-   - Page 1 counter updated via polling
-   - Item-level detail appended to HubSpot submission
-   - Removed inline "X of 6" text (replaced by counter box)
+/* LA Digital Audit v19 - audit7.js
+   Changes from v15:
+   - Added N/A state (-1) to ST tracking array
+   - Scores calculated dynamically based on (Completed / Applicable), discarding N/A tasks
+   - Tiers refactored to evaluate percentages instead of hardcoded point thresholds
+   - Polling loop updated to enforce mutual exclusivity on Page 1 hardcoded inputs
+   - Automatically generates N/A buttons for Pillars 2-7
 */
 (function(){
-  var lnk=document.createElement('link');
-  lnk.rel='stylesheet';
-  lnk.href='https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,300;1,6..96,400&display=swap';
-  document.head.appendChild(lnk);
-
   var P=[
     {n:'Digital Life',d:'Access and continuity for essential digital accounts, credentials, and archives.',i:['PRIMARY EMAIL ACCOUNT ACCESS','MASTER PASSWORD MANAGER VAULT','CLOUD STORAGE & PHOTO ARCHIVES','TWO-FACTOR AUTH (2FA) RECOVERY KEYS','SOCIAL MEDIA LEGACY CONTACTS','DIGITAL MEDIA ARCHIVES']},
     {n:'Financial & Assets',d:'Documentation of all financial accounts, obligations, and automated payment systems.',i:['BANKING & CREDIT CARD ACCESS','INVESTMENT & RETIREMENT ACCOUNTS','CRYPTOCURRENCY WALLETS & KEYS','AUTOMATED BILL PAYMENTS LIST','TAX RETURNS & FINANCIAL RECORDS','DEBT & LOAN DOCUMENTATION']},
@@ -24,11 +17,10 @@
     {n:'Legacy & Wishes',d:'Personal statements, end-of-life preferences, and enduring messages for those left behind.',i:['PERSONAL LETTERS & MESSAGES','ETHICAL WILL STATEMENT','FUNERAL PREFERENCES','OBITUARY INFORMATION','HEIRLOOM STORIES','CHARITABLE GIVING WISHES']}
   ];
 
+  /* 0 = Unchecked, 1 = Checked, -1 = N/A */
   var ST=[[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
   var OB=null;
-  var lastP1Cnt=-1;
-
-  /* ── helpers ────────────────────────────────────── */
+  var lastP1State="";
 
   function scrollToAudit(){
     var el=document.getElementById('la-wrap');
@@ -40,13 +32,17 @@
   }
 
   function getPg1State(){
-    for(var i=0;i<6;i++){var cb=document.getElementById('c0-'+i);ST[0][i]=(cb&&cb.checked)?1:0;}
+    for(var i=0;i<6;i++){
+      var cb=document.getElementById('c0-'+i);
+      var na=document.getElementById('na0-'+i);
+      if(na && na.checked) ST[0][i] = -1;
+      else if(cb && cb.checked) ST[0][i] = 1;
+      else ST[0][i] = 0;
+    }
   }
 
-  /* ── glowing counter ───────────────────────────── */
-
-  function ctrStyles(cnt){
-    var f=cnt===6;
+  function ctrStyles(cnt, totalActive){
+    var f = (cnt === totalActive && totalActive > 0);
     return {
       border: f?'#c1b085': cnt>0?'rgba(193,176,133,'+(0.3+cnt*0.1).toFixed(1)+')':'#342a1c',
       shadow: cnt>0?'0 0 '+(8+cnt*4)+'px rgba(193,176,133,'+(0.15+cnt*0.05).toFixed(2)+')'+(f?',0 0 32px rgba(193,176,133,0.3)':''):'none',
@@ -57,8 +53,10 @@
   }
 
   function counterHTML(pi){
-    var cnt=ST[pi].reduce(function(a,v){return a+v;},0);
-    var s=ctrStyles(cnt);
+    var cnt = ST[pi].filter(function(v){return v===1;}).length;
+    var totalActive = 6 - ST[pi].filter(function(v){return v===-1;}).length;
+    var s = ctrStyles(cnt, totalActive);
+    
     return '<div id="la-ctr-'+pi+'" style="display:flex;align-items:center;justify-content:center;margin-bottom:32px;">'+
       '<div style="display:inline-flex;align-items:baseline;gap:8px;padding:14px 32px;'+
         'border:1px solid '+s.border+';border-radius:2px;'+
@@ -67,27 +65,30 @@
         'transition:border-color 0.3s,box-shadow 0.4s,background 0.3s;">'+
         '<span style="font-family:Cinzel,serif;font-size:28px;font-weight:700;color:'+s.numColor+';line-height:1;'+
           'text-shadow:'+s.numShadow+';transition:color 0.3s,text-shadow 0.3s;">'+cnt+'</span>'+
-        '<span style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#8a7240;line-height:1;">of 6</span>'+
+        '<span style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#8a7240;line-height:1;">of '+totalActive+'</span>'+
       '</div>'+
     '</div>';
   }
 
   function updateCtr(pi){
-    var cnt=ST[pi].reduce(function(a,v){return a+v;},0);
+    var cnt = ST[pi].filter(function(v){return v===1;}).length;
+    var totalActive = 6 - ST[pi].filter(function(v){return v===-1;}).length;
+    
     var wrap=document.getElementById('la-ctr-'+pi);
     if(!wrap)return;
     var box=wrap.firstElementChild; if(!box)return;
-    var num=box.firstElementChild; if(!num)return;
-    var s=ctrStyles(cnt);
+    var spans=box.querySelectorAll('span'); if(spans.length<2)return;
+    var num=spans[0], denom=spans[1];
+    
+    var s=ctrStyles(cnt, totalActive);
     box.style.borderColor=s.border;
     box.style.boxShadow=s.shadow;
     box.style.background=s.bg;
     num.textContent=cnt;
     num.style.color=s.numColor;
     num.style.textShadow=s.numShadow;
+    denom.textContent='of '+totalActive;
   }
-
-  /* ── progress bar ──────────────────────────────── */
 
   function prog(active){
     var h='<div style="display:flex;gap:6px;margin-bottom:52px;">';
@@ -99,23 +100,26 @@
     return h+'</div>';
   }
 
-  /* ── pillar page ───────────────────────────────── */
-
   function pillarHTML(pi){
     var pl=P[pi],isP5=pi===4,isLast=pi===6;
     var rows='';
     for(var ii=0;ii<6;ii++){
-      var on=ST[pi][ii];
+      var on = (ST[pi][ii]===1);
+      var na = (ST[pi][ii]===-1);
       rows+=
-        '<div id="r'+pi+'-'+ii+'" onclick="__la.t('+pi+','+ii+')" style="display:flex;align-items:center;gap:18px;padding:13px 16px;border:1px solid '+(on?'rgba(193,176,133,0.12)':'transparent')+';border-radius:2px;cursor:pointer;background:'+(on?'rgba(193,176,133,0.03)':'transparent')+';">'+
-          '<div id="sh'+pi+'-'+ii+'" style="width:24px;height:24px;flex-shrink:0;border:1px solid '+(on?'#c1b085':'#7A6842')+';border-radius:2px;display:flex;align-items:center;justify-content:center;box-shadow:'+(on?'0 0 12px rgba(193,176,133,0.6),0 0 24px rgba(193,176,133,0.25),inset 0 0 8px rgba(193,176,133,0.1)':'none')+';">'+
-            '<svg id="mk'+pi+'-'+ii+'" width="14" height="11" viewBox="0 0 14 11" fill="none" style="opacity:'+(on?'1':'0')+';transform:'+(on?'scale(1)':'scale(0.6)')+';transition:opacity 0.2s,transform 0.2s;filter:drop-shadow(0 0 3px rgba(193,176,133,0.9));"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
-          '</div>'+
-          '<div id="lb'+pi+'-'+ii+'" style="font-family:Cinzel,serif;font-size:16px;letter-spacing:2px;color:'+(on?'#c1b085':'#9a8d7a')+';'+(on?'text-shadow:0 0 12px rgba(193,176,133,0.3);':'')+'">'+pl.i[ii]+'</div>'+
+        '<div id="wrap'+pi+'-'+ii+'" class="la-item-wrap '+(na?'is-na':'')+'">'+
+          '<input type="checkbox" id="c'+pi+'-'+ii+'" class="lacb" '+(on?'checked':'')+'>'+
+          '<label for="c'+pi+'-'+ii+'" onclick="event.preventDefault();__la.t('+pi+','+ii+')" class="larow" style="border-color:'+(on?'rgba(193,176,133,0.12)':'transparent')+';background:'+(on?'rgba(193,176,133,0.03)':'transparent')+';">'+
+            '<div id="sh'+pi+'-'+ii+'" class="lash" style="border-color:'+(on?'#c1b085':'#7A6842')+';box-shadow:'+(on?'0 0 12px rgba(193,176,133,0.6),0 0 24px rgba(193,176,133,0.25),inset 0 0 8px rgba(193,176,133,0.1)':'none')+';">'+
+              '<svg id="mk'+pi+'-'+ii+'" class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none" style="opacity:'+(on?'1':'0')+';transform:'+(on?'scale(1)':'scale(0.6)')+';"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+            '</div>'+
+            '<div id="lb'+pi+'-'+ii+'" class="lalb" style="color:'+(on?'#c1b085':'#9a8d7a')+';'+(on?'text-shadow:0 0 12px rgba(193,176,133,0.3);':'')+'">'+pl.i[ii]+'</div>'+
+          '</label>'+
+          '<input type="checkbox" id="na'+pi+'-'+ii+'" class="lana" '+(na?'checked':'')+'>'+
+          '<label for="na'+pi+'-'+ii+'" onclick="event.preventDefault();__la.na('+pi+','+ii+')" class="lana-btn">N/A</label>'+
         '</div>';
     }
 
-    /* business-owner gate on Pillar 5 */
     var gate='';
     if(isP5){
       gate='<div style="margin-top:36px;padding-top:32px;border-top:1px solid #2a2218;margin-bottom:52px;">'+
@@ -129,7 +133,6 @@
         '</div></div>';
     }
 
-    /* nav buttons */
     var nextBtn;
     if(isP5){
       nextBtn='<button onclick="__la.p5()" style="font-family:Cinzel,serif;font-size:16px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:1px;">CONTINUE</button>';
@@ -155,24 +158,29 @@
       '</div>';
   }
 
-  /* ── results page ──────────────────────────────── */
-
-  /* Full item-by-item breakdown shown after email submit */
   function detailHTML(){
     var h='<div style="font-family:Cinzel,serif;font-size:15px;letter-spacing:4px;color:#b8984e;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #2a2218;">YOUR FULL BREAKDOWN</div>';
     for(var pi=0;pi<7;pi++){
       if(pi===5&&OB===false)continue;
-      var c=ST[pi].reduce(function(a,v){return a+v;},0);
+      var c = ST[pi].filter(function(v){return v===1;}).length;
+      var act = 6 - ST[pi].filter(function(v){return v===-1;}).length;
+      
       h+='<div style="margin-bottom:28px;">'+
-        '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:2px;color:#c1b085;margin-bottom:14px;">'+P[pi].n.toUpperCase()+' <span style="color:#8a7240;font-size:12px;margin-left:8px;">'+c+'/6</span></div>';
+        '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:2px;color:#c1b085;margin-bottom:14px;">'+P[pi].n.toUpperCase()+' <span style="color:#8a7240;font-size:12px;margin-left:8px;">'+c+'/'+act+'</span></div>';
+      
       for(var ii=0;ii<6;ii++){
-        var on=ST[pi][ii];
-        h+='<div style="display:flex;align-items:center;gap:14px;padding:8px 0;border-bottom:1px solid #1a1610;">'+
-          '<div style="width:18px;height:18px;flex-shrink:0;border:1px solid '+(on?'#c1b085':'#4a3d28')+';border-radius:2px;display:flex;align-items:center;justify-content:center;'+(on?'box-shadow:0 0 8px rgba(193,176,133,0.4);':'')+'">'+
-            (on?'<svg width="12" height="9" viewBox="0 0 14 11" fill="none"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>':
-                 '<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2L8 8M8 2L2 8" stroke="#4a3d28" stroke-width="1.2" stroke-linecap="round"/></svg>')+
+        var on = (ST[pi][ii]===1);
+        var na = (ST[pi][ii]===-1);
+        
+        var icon = na ? '<div style="font-family:Cinzel,serif;font-size:10px;font-weight:700;color:#8a7d6a;">N/A</div>' :
+                   (on ? '<svg width="12" height="9" viewBox="0 0 14 11" fill="none"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>' :
+                         '<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2L8 8M8 2L2 8" stroke="#4a3d28" stroke-width="1.2" stroke-linecap="round"/></svg>');
+                         
+        h+='<div style="display:flex;align-items:center;gap:14px;padding:8px 0;border-bottom:1px solid #1a1610;'+(na?'opacity:0.5;':'')+'">'+
+          '<div style="width:18px;height:18px;flex-shrink:0;border:1px solid '+(na?'#342a1c':(on?'#c1b085':'#4a3d28'))+';border-radius:2px;display:flex;align-items:center;justify-content:center;'+(on?'box-shadow:0 0 8px rgba(193,176,133,0.4);':'')+'">'+
+            icon+
           '</div>'+
-          '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:1.5px;color:'+(on?'#c1b085':'#6b5a38')+';">'+P[pi].i[ii]+'</div>'+
+          '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:1.5px;color:'+(na?'#5c503e':(on?'#c1b085':'#6b5a38'))+';">'+P[pi].i[ii]+'</div>'+
         '</div>';
       }
       h+='</div>';
@@ -180,151 +188,70 @@
     return h;
   }
 
-
   var GD=[
-    [/* Digital Life */
-      "Email is the recovery method for nearly every other account. Without access, password resets fail across the board.",
-      "Without a centralized credential system, a successor would need to recover each account individually - a process that can take weeks or months, with some accounts lost permanently.",
-      "Family photos, documents, and personal files stored in the cloud can become permanently inaccessible if credentials are lost.",
-      "If 2FA is enabled without stored recovery keys, accounts become permanently inaccessible. This is the single most common cause of irreversible digital lockout.",
-      "Without designated legacy contacts, social media accounts may be memorialized, deleted, or hijacked - with no way to recover meaningful content.",
-      "Digital purchases, streaming libraries, and media collections are tied to accounts. Without access documentation, they disappear."
-    ],
-    [/* Financial & Assets */
-      "Without account documentation, a successor may not know which institutions to contact, leading to missed payments, penalties, and frozen funds.",
-      "Retirement and brokerage accounts each have different beneficiary and access requirements. Gaps here can mean months of legal process.",
-      "Cryptocurrency without documented recovery keys is permanently lost. There is no institution to call, no reset to request.",
-      "Automated payments continue after incapacitation or death. Without a list, successors discover them only when accounts overdraft or services are cut.",
-      "Tax history is required for estate settlement, insurance claims, and financial transfers. Missing records create delays and potential legal exposure.",
-      "Undocumented debts can lead to collection actions, credit damage, and unexpected liabilities for the estate."
-    ],
-    [/* Household & Property */
-      "Without accessible deeds, property transfers require title searches, legal fees, and significant delays.",
-      "Vehicle transfers require title documentation. Missing titles mean DMV processes, potential lien searches, and delays.",
-      "Warranty information, service contracts, and maintenance schedules prevent costly duplicate work and protect property value.",
-      "Utilities left unmanaged can result in service interruptions, damage to property, and unnecessary charges.",
-      "Without an inventory, valuable items can be overlooked, undervalued, or lost during estate settlement.",
-      "Storage units with unknown contents or lost access can result in forfeiture of personal property."
-    ],
-    [/* Health & Medical */
-      "Without insurance documentation, medical decisions may be delayed and coverage may lapse during a critical period.",
-      "A complete medical history is essential for treatment decisions. Gaps can lead to dangerous drug interactions or repeated procedures.",
-      "A current medication list prevents dangerous interactions and ensures continuity of care during transitions.",
-      "Without a directive, medical decisions may not reflect your wishes, and family members may face agonizing choices without guidance.",
-      "Documented preferences prevent confusion and ensure your wishes are honored in time-sensitive situations.",
-      "A clear emergency contact list ensures the right people are reached immediately - not hours or days later."
-    ],
-    [/* Legal & Estate */
-      "Without a will, state intestacy laws determine asset distribution - which may not align with your intentions.",
-      "Trusts without accessible documentation may not function as intended, potentially triggering probate for assets meant to avoid it.",
-      "Without a Power of Attorney, even a spouse may not have legal authority to act on financial, medical, or legal matters during incapacitation.",
-      "Undiscovered policies are more common than most people realize. Billions in life insurance go unclaimed every year.",
-      "Without documented guardianship preferences, courts decide who cares for your dependents.",
-      "A business without a succession plan risks operational collapse, employee displacement, and loss of client relationships."
-    ],
-    [/* Business Continuity */
-      "Articles of incorporation, EINs, and operating documents are required for continuity. Without them, basic business functions stall.",
-      "Business accounts often have different access requirements than personal. Without documentation, cash flow stops.",
-      "Operating agreements define authority. Without them, partners and successors may have no legal standing to act.",
-      "Business insurance lapses can expose the entity to liability during a transition period.",
-      "Relationships are assets. Without a contact list, critical vendor and client relationships may be lost.",
-      "Without operational documentation, institutional knowledge leaves with the owner."
-    ],
-    [/* Legacy & Wishes */
-      "Words left unsaid become the things people wish they had. Letters provide closure that no legal document can.",
-      "An ethical will captures values, beliefs, and life lessons - the intangible inheritance that matters most to many families.",
-      "Without documented preferences, families make difficult decisions under emotional pressure, often second-guessing themselves.",
-      "A prepared obituary ensures accuracy and reflects your life as you would want it told.",
-      "Objects carry meaning, but only if the stories behind them are preserved. Without documentation, heirlooms become just things.",
-      "Documented giving preferences ensure your philanthropic intentions continue."
-    ]
+    ["Email is the recovery method for nearly every other account. Without access, password resets fail across the board.", "Without a centralized credential system, a successor would need to recover each account individually - a process that can take weeks or months, with some accounts lost permanently.", "Family photos, documents, and personal files stored in the cloud can become permanently inaccessible if credentials are lost.", "If 2FA is enabled without stored recovery keys, accounts become permanently inaccessible. This is the single most common cause of irreversible digital lockout.", "Without designated legacy contacts, social media accounts may be memorialized, deleted, or hijacked - with no way to recover meaningful content.", "Digital purchases, streaming libraries, and media collections are tied to accounts. Without access documentation, they disappear."],
+    ["Without account documentation, a successor may not know which institutions to contact, leading to missed payments, penalties, and frozen funds.", "Retirement and brokerage accounts each have different beneficiary and access requirements. Gaps here can mean months of legal process.", "Cryptocurrency without documented recovery keys is permanently lost. There is no institution to call, no reset to request.", "Automated payments continue after incapacitation or death. Without a list, successors discover them only when accounts overdraft or services are cut.", "Tax history is required for estate settlement, insurance claims, and financial transfers. Missing records create delays and potential legal exposure.", "Undocumented debts can lead to collection actions, credit damage, and unexpected liabilities for the estate."],
+    ["Without accessible deeds, property transfers require title searches, legal fees, and significant delays.", "Vehicle transfers require title documentation. Missing titles mean DMV processes, potential lien searches, and delays.", "Warranty information, service contracts, and maintenance schedules prevent costly duplicate work and protect property value.", "Utilities left unmanaged can result in service interruptions, damage to property, and unnecessary charges.", "Without an inventory, valuable items can be overlooked, undervalued, or lost during estate settlement.", "Storage units with unknown contents or lost access can result in forfeiture of personal property."],
+    ["Without insurance documentation, medical decisions may be delayed and coverage may lapse during a critical period.", "A complete medical history is essential for treatment decisions. Gaps can lead to dangerous drug interactions or repeated procedures.", "A current medication list prevents dangerous interactions and ensures continuity of care during transitions.", "Without a directive, medical decisions may not reflect your wishes, and family members may face agonizing choices without guidance.", "Documented preferences prevent confusion and ensure your wishes are honored in time-sensitive situations.", "A clear emergency contact list ensures the right people are reached immediately - not hours or days later."],
+    ["Without a will, state intestacy laws determine asset distribution - which may not align with your intentions.", "Trusts without accessible documentation may not function as intended, potentially triggering probate for assets meant to avoid it.", "Without a Power of Attorney, even a spouse may not have legal authority to act on financial, medical, or legal matters during incapacitation.", "Undiscovered policies are more common than most people realize. Billions in life insurance go unclaimed every year.", "Without documented guardianship preferences, courts decide who cares for your dependents.", "A business without a succession plan risks operational collapse, employee displacement, and loss of client relationships."],
+    ["Articles of incorporation, EINs, and operating documents are required for continuity. Without them, basic business functions stall.", "Business accounts often have different access requirements than personal. Without documentation, cash flow stops.", "Operating agreements define authority. Without them, partners and successors may have no legal standing to act.", "Business insurance lapses can expose the entity to liability during a transition period.", "Relationships are assets. Without a contact list, critical vendor and client relationships may be lost.", "Without operational documentation, institutional knowledge leaves with the owner."],
+    ["Words left unsaid become the things people wish they had. Letters provide closure that no legal document can.", "An ethical will captures values, beliefs, and life lessons - the intangible inheritance that matters most to many families.", "Without documented preferences, families make difficult decisions under emotional pressure, often second-guessing themselves.", "A prepared obituary ensures accuracy and reflects your life as you would want it told.", "Objects carry meaning, but only if the stories behind them are preserved. Without documentation, heirlooms become just things.", "Documented giving preferences ensure your philanthropic intentions continue."]
   ];
 
   var TP=[
-    {/* LEAN & READY */
-      t:"LEAN & READY",
-      p:[
-        "Your audit revealed <strong style=\"color:#c1b085;\">critical gaps</strong> across most pillars. This is not unusual - most people have never been asked to think about continuity in structured terms.",
-        "What it means practically: if something happened to you tomorrow, the people you trust most would face significant confusion. Access to accounts, knowledge of obligations, location of key documents - these are the things that fall through the cracks when there is no system in place.",
-        "The gaps you have are common - and they are fixable. A foundational continuity plan would cover the highest-risk areas first: digital access, emergency contacts, and essential documents."
-      ]
-    },
-    {/* LEGACY AT RISK */
-      t:"LEGACY AT RISK",
-      p:[
-        "You have some documentation in place, but <strong style=\"color:#c1b085;\">significant gaps remain</strong>. The items you checked show awareness - the unchecked ones represent single points of failure.",
-        "This is the range where risk is most deceptive. You have enough organized that it feels manageable, but not enough that a successor could act without guesswork. Financial accounts without documented access pathways, insurance policies without location records, digital accounts without recovery options - these are the gaps that create months of confusion.",
-        "An expanded continuity plan would close these gaps systematically, covering not just the basics but the financial, legal, and household layers that hold everything together."
-      ]
-    },
-    {/* CRITICAL COMPLEXITY */
-      t:"CRITICAL COMPLEXITY",
-      p:[
-        "Your audit shows <strong style=\"color:#c1b085;\">multi-layered responsibilities</strong> across most pillars. You have significant documentation, but the complexity of your situation means the remaining gaps carry outsized risk.",
-        "At this level, the issue is not awareness but architecture. Individual items may be documented, but without a unified system that a successor can follow step by step, even well-organized people leave critical gaps. Cryptocurrency keys, business operating agreements, trust documentation, advanced healthcare directives - these are items where a single missing piece can mean permanent loss.",
-        "A comprehensive continuity plan would bring every pillar into a single, navigable system - including business operations if applicable."
-      ]
-    },
-    {/* WELL STRUCTURED */
-      t:"WELL STRUCTURED",
-      p:[
-        "You are <strong style=\"color:#c1b085;\">well organized</strong>. Your audit shows a strong foundation across most pillars, with only a few remaining gaps.",
-        "At this level, the value is not in building from scratch - it is in validation and completion. The items you have not checked may represent things you have not gotten to yet, or things you assumed were covered but are not. Either way, a focused review would identify exactly what is missing and ensure everything is accessible, current, and connected.",
-        "Most people at this level benefit from a structured review session rather than a full engagement."
-      ]
-    },
-    {/* COMPREHENSIVE */
-      t:"COMPREHENSIVE",
-      p:[
-        "Your documentation is <strong style=\"color:#c1b085;\">thorough</strong>. This is rare - most people who take this audit score well below where you are.",
-        "The question at this level is not what is missing, but whether what exists is current, accessible, and structured in a way that a successor could actually use. Documents can exist without being findable. Accounts can be listed without access being transferable.",
-        "An annual review ensures nothing drifts out of date - and that the people who may need this information know where to find it."
-      ]
-    }
+    {t:"LEAN & READY", p:["Your audit revealed <strong style=\"color:#c1b085;\">critical gaps</strong> across most pillars. This is not unusual - most people have never been asked to think about continuity in structured terms.", "What it means practically: if something happened to you tomorrow, the people you trust most would face significant confusion. Access to accounts, knowledge of obligations, location of key documents - these are the things that fall through the cracks when there is no system in place.", "The gaps you have are common - and they are fixable. A foundational continuity plan would cover the highest-risk areas first: digital access, emergency contacts, and essential documents."]},
+    {t:"LEGACY AT RISK", p:["You have some documentation in place, but <strong style=\"color:#c1b085;\">significant gaps remain</strong>. The items you checked show awareness - the unchecked ones represent single points of failure.", "This is the range where risk is most deceptive. You have enough organized that it feels manageable, but not enough that a successor could act without guesswork. Financial accounts without documented access pathways, insurance policies without location records, digital accounts without recovery options - these are the gaps that create months of confusion.", "An expanded continuity plan would close these gaps systematically, covering not just the basics but the financial, legal, and household layers that hold everything together."]},
+    {t:"CRITICAL COMPLEXITY", p:["Your audit shows <strong style=\"color:#c1b085;\">multi-layered responsibilities</strong> across most pillars. You have significant documentation, but the complexity of your situation means the remaining gaps carry outsized risk.", "At this level, the issue is not awareness but architecture. Individual items may be documented, but without a unified system that a successor can follow step by step, even well-organized people leave critical gaps. Cryptocurrency keys, business operating agreements, trust documentation, advanced healthcare directives - these are items where a single missing piece can mean permanent loss.", "A comprehensive continuity plan would bring every pillar into a single, navigable system - including business operations if applicable."]},
+    {t:"WELL STRUCTURED", p:["You are <strong style=\"color:#c1b085;\">well organized</strong>. Your audit shows a strong foundation across most pillars, with only a few remaining gaps.", "At this level, the value is not in building from scratch - it is in validation and completion. The items you have not checked may represent things you have not gotten to yet, or things you assumed were covered but are not. Either way, a focused review would identify exactly what is missing and ensure everything is accessible, current, and connected.", "Most people at this level benefit from a structured review session rather than a full engagement."]},
+    {t:"COMPREHENSIVE", p:["Your documentation is <strong style=\"color:#c1b085;\">thorough</strong>. This is rare - most people who take this audit score well below where you are.", "The question at this level is not what is missing, but whether what exists is current, accessible, and structured in a way that a successor could actually use. Documents can exist without being findable. Accounts can be listed without access being transferable.", "An annual review ensures nothing drifts out of date - and that the people who may need this information know where to find it."]}
   ];
 
   function fullResultsHTML(){
     getPg1State();
-    var tot=0,u=0;
-    for(var i=0;i<7;i++){if(i===5&&OB===false)continue;ST[i].forEach(function(v){tot+=v;});u++;}
-    var mx=u*6,pct=Math.round(tot/mx*100);
-    var ti=tot<=10?0:tot<=22?1:tot<=30?2:tot<=36?3:4;
-    var tp=TP[ti];
+    var tot=0, mx=0;
+    for(var i=0;i<7;i++){
+      if(i===5&&OB===false)continue;
+      ST[i].forEach(function(v){
+        if(v===1) tot++;
+        if(v!==-1) mx++; 
+      });
+    }
+    
+    var pct = mx > 0 ? Math.round(tot/mx*100) : 0;
+    var ti = pct<=24?0: pct<=52?1: pct<=71?2: pct<=85?3: 4;
+    var tp = TP[ti];
 
-    /* score box */
     var h='<div style="border:1px solid #c1b085;background:rgba(193,176,133,0.03);padding:36px;text-align:center;margin-bottom:36px;">'+
       '<div style="font-family:Cinzel,serif;font-size:12px;letter-spacing:5px;color:#b8984e;margin-bottom:10px;">CONTINUITY SCORE</div>'+
       '<div style="font-family:Cinzel,serif;font-size:62px;font-weight:700;color:#c1b085;line-height:1;">'+pct+'<span style="font-size:26px;color:#b8984e;">%</span></div>'+
-      '<div style="font-family:Cinzel,serif;font-size:15px;letter-spacing:2px;color:#a09484;margin-top:8px;">'+tot+' OF '+mx+' POINTS</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:15px;letter-spacing:2px;color:#a09484;margin-top:8px;">'+tot+' OF '+mx+' APPLICABLE POINTS</div>'+
       '<div style="width:60px;height:1px;background:#c1b085;margin:18px auto;"></div>'+
       '<div style="font-family:Cinzel,serif;font-size:20px;font-weight:700;letter-spacing:3px;color:#c1b085;">'+tp.t+'</div>'+
     '</div>';
 
-    /* pillar breakdown table */
     h+='<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;padding-bottom:14px;border-bottom:1px solid #2a2218;margin-bottom:4px;">PILLAR BREAKDOWN</div>';
     for(var pi=0;pi<7;pi++){
       if(pi===5&&OB===false)continue;
-      var c=ST[pi].reduce(function(a,v){return a+v;},0);
+      var c = ST[pi].filter(function(v){return v===1;}).length;
+      var act = 6 - ST[pi].filter(function(v){return v===-1;}).length;
       h+='<div style="display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #1a1510;">'+
         '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:2px;color:#c1b085;">'+P[pi].n.toUpperCase()+'</div>'+
-        '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#b8984e;">'+c+'/6</div>'+
+        '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#b8984e;">'+c+'/'+act+'</div>'+
       '</div>';
     }
 
-    /* what your score means */
     h+='<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;margin-top:44px;padding-bottom:14px;border-bottom:1px solid #2a2218;margin-bottom:22px;">WHAT YOUR SCORE MEANS</div>';
     for(var pp=0;pp<tp.p.length;pp++){
       h+='<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.8;margin-bottom:18px;">'+tp.p[pp]+'</div>';
     }
 
-    /* key gaps - top 5 unchecked with highest impact */
     var gaps=[];
-    var priority=[4,3,1,0,2,6,5]; /* Legal, Health, Financial, Digital, Household, Legacy, Business */
+    var priority=[4,3,1,0,2,6,5]; 
     for(var gi=0;gi<priority.length&&gaps.length<5;gi++){
       var gp=priority[gi];
       if(gp===5&&OB===false)continue;
       for(var gj=0;gj<6&&gaps.length<5;gj++){
-        if(!ST[gp][gj]) gaps.push({pi:gp,ii:gj});
+        if(ST[gp][gj] === 0) gaps.push({pi:gp,ii:gj});
       }
     }
 
@@ -340,10 +267,8 @@
       }
     }
 
-    /* full breakdown */
     h+='<div style="margin-top:44px;">'+detailHTML()+'</div>';
 
-    /* recommended next step */
     h+='<div style="border-top:1px solid #2a2218;margin-top:40px;padding-top:36px;">'+
       '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;margin-bottom:22px;">YOUR RECOMMENDED NEXT STEP</div>'+
       '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.8;margin-bottom:28px;">A Life Manual is the operational companion to your legal documents. It does not replace a will or a trust - it makes them usable. It tells the people you trust not just what they have authority to do, but how to actually do it.<br><br>Based on your results, a private conversation would help determine the right scope and approach. There is no obligation and no sales pressure - just a clear-eyed look at what needs attention.</div>'+
@@ -353,7 +278,6 @@
       '</div>'+
     '</div>';
 
-    /* footer */
     h+='<div style="border-top:1px solid #2a2218;margin-top:40px;padding-top:32px;text-align:center;">'+
       '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#c1b085;line-height:1.6;margin-bottom:4px;">"Order in Your Absence"</div>'+
       '<div style="font-family:Cinzel,serif;font-size:13px;color:#6b5a38;margin-top:16px;">Legacy Architect RVA - Richmond, Virginia</div>'+
@@ -362,42 +286,45 @@
     return h;
   }
 
-    function resultsHTML(){
+  function resultsHTML(){
     getPg1State();
-    var tot=0,pillarsUsed=0;
+    var tot=0, mx=0;
     for(var i=0;i<7;i++){
       if(i===5&&OB===false)continue;
-      ST[i].forEach(function(v){tot+=v;});
-      pillarsUsed++;
+      ST[i].forEach(function(v){
+        if(v===1) tot++;
+        if(v!==-1) mx++;
+      });
     }
-    var pct=Math.round(tot/(pillarsUsed*6)*100);
-    var pts=tot,maxPts=pillarsUsed*6;
-
+    
+    var pct = mx > 0 ? Math.round(tot/mx*100) : 0;
+    
     var desc,tier,tierDesc,tierRec;
-    if(pts<=10){desc='Critical gaps identified';tier='LEAN & READY';tierDesc='Minimal digital and legal silos. A standard continuity plan would cover this.';tierRec='Most people in this range start with <strong>The Vault</strong>.';}
-    else if(pts<=22){desc='Significant gaps remain';tier='LEGACY AT RISK';tierDesc='Some documentation exists, but access gaps and single points of failure remain.';tierRec='Most people in this range benefit from <strong>The Archive</strong>.';}
-    else if(pts<=30){desc='Partially documented';tier='CRITICAL COMPLEXITY';tierDesc='High-value, multi-layered responsibilities. Risk of permanent asset loss without a clear system.';tierRec='Most people in this range need <strong>The Legacy</strong>.';}
-    else if(pts<=36){desc='Well organized';tier='WELL STRUCTURED';tierDesc='Strong foundation in place. A few remaining gaps to close.';tierRec='A focused session can identify what is missing.';}
+    if(pct<=24){desc='Critical gaps identified';tier='LEAN & READY';tierDesc='Minimal digital and legal silos. A standard continuity plan would cover this.';tierRec='Most people in this range start with <strong>The Vault</strong>.';}
+    else if(pct<=52){desc='Significant gaps remain';tier='LEGACY AT RISK';tierDesc='Some documentation exists, but access gaps and single points of failure remain.';tierRec='Most people in this range benefit from <strong>The Archive</strong>.';}
+    else if(pct<=71){desc='Partially documented';tier='CRITICAL COMPLEXITY';tierDesc='High-value, multi-layered responsibilities. Risk of permanent asset loss without a clear system.';tierRec='Most people in this range need <strong>The Legacy</strong>.';}
+    else if(pct<=85){desc='Well organized';tier='WELL STRUCTURED';tierDesc='Strong foundation in place. A few remaining gaps to close.';tierRec='A focused session can identify what is missing.';}
     else{desc='Strongly organized';tier='COMPREHENSIVE';tierDesc='Thorough documentation across all pillars. Successor readiness is high.';tierRec='An annual review keeps this current.';}
 
     var brows='';
     for(var idx=0;idx<7;idx++){
       if(idx===5&&OB===false)continue;
-      var c=ST[idx].reduce(function(a,v){return a+v;},0);
-      var w=Math.round(c/6*100),mx=c===6;
-      brows+='<div style="display:flex;align-items:center;gap:16px;padding:11px 0;border-bottom:1px solid #2a2218;">'+
+      var c = ST[idx].filter(function(v){return v===1;}).length;
+      var act = 6 - ST[idx].filter(function(v){return v===-1;}).length;
+      
+      var w = act > 0 ? Math.round(c/act*100) : 100;
+      var mxPillar = (c === act && act > 0);
+      brows+='<div style="display:flex;align-items:center;gap:16px;padding:11px 0;border-bottom:1px solid #2a2218;'+(act===0?'opacity:0.5;':'')+'">'+
         '<div style="font-family:Cinzel,serif;font-size:12px;letter-spacing:1.5px;color:#c1b085;width:170px;flex-shrink:0;">'+P[idx].n.toUpperCase()+'</div>'+
         '<div style="flex:1;height:2px;background:#342a1c;position:relative;">'+
-          '<div class="lab" data-w="'+w+'" style="position:absolute;top:0;left:0;height:100%;width:0%;background:'+(mx?'#c1b085':'#8a7030')+';transition:width 1.2s cubic-bezier(0.4,0,0.2,1);box-shadow:'+(mx?'0 0 8px rgba(193,176,133,0.5)':'0 0 4px rgba(138,112,48,0.4)')+';"></div>'+
+          '<div class="lab" data-w="'+w+'" style="position:absolute;top:0;left:0;height:100%;width:0%;background:'+(mxPillar?'#c1b085':'#8a7030')+';transition:width 1.2s cubic-bezier(0.4,0,0.2,1);box-shadow:'+(mxPillar?'0 0 8px rgba(193,176,133,0.5)':'0 0 4px rgba(138,112,48,0.4)')+';"></div>'+
         '</div>'+
-        '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:'+(mx?'#c1b085':'#b8984e')+';width:32px;text-align:right;flex-shrink:0;">'+c+'/6</div>'+
+        '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:'+(mxPillar?'#c1b085':'#b8984e')+';width:32px;text-align:right;flex-shrink:0;">'+c+'/'+act+'</div>'+
       '</div>';
     }
 
     return '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:5px;color:#b8984e;text-align:center;margin-bottom:14px;">AUDIT COMPLETE</div>'+
       '<div style="font-family:Cinzel,serif;font-size:23px;font-weight:600;color:#fdfcfa;letter-spacing:3px;text-align:center;margin-bottom:56px;">YOUR CONTINUITY SCORE</div>'+
-
-      /* score ring */
       '<div style="display:flex;justify-content:center;margin-bottom:40px;">'+
         '<div style="position:relative;width:230px;height:230px;">'+
           '<div style="position:absolute;top:0;right:0;bottom:0;left:0;border-radius:50%;animation:la-spin 2.8s linear infinite;">'+
@@ -414,21 +341,15 @@
           '</div>'+
         '</div>'+
       '</div>'+
-
-      /* score summary */
       '<div style="text-align:center;margin-bottom:48px;">'+
-        '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:3px;color:#c1b085;margin-bottom:8px;">'+pts+' OF '+maxPts+' POINTS</div>'+
+        '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:3px;color:#c1b085;margin-bottom:8px;">'+tot+' OF '+mx+' APPLICABLE POINTS</div>'+
         '<div style="font-family:Cinzel,serif;font-size:20px;font-weight:700;color:#c1b085;letter-spacing:2px;margin-bottom:12px;">'+tier+'</div>'+
         '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.6;">'+tierDesc+'</div>'+
       '</div>'+
-
-      /* pillar breakdown */
       '<div style="margin-bottom:48px;">'+
         '<div style="font-family:Cinzel,serif;font-size:15px;letter-spacing:4px;color:#b8984e;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #2a2218;">PILLAR BREAKDOWN</div>'+
         brows+
       '</div>'+
-
-      /* email capture + CTA */
       '<div style="padding:36px 0;border-top:1px solid #2a2218;text-align:center;">'+
         '<div id="la-email-sec" style="margin-bottom:40px;">'+
           '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:3px;color:#c1b085;margin-bottom:12px;">GET YOUR RESULTS</div>'+
@@ -451,8 +372,6 @@
       '</div>';
   }
 
-  /* ── DOM helpers ────────────────────────────────── */
-
   function showRest(html){
     var el=document.getElementById('pg-rest');
     if(!el)return;
@@ -464,7 +383,46 @@
   function hidePg1(){var e=document.getElementById('pg1');if(e)e.style.display='none';}
   function showPg1(){var e=document.getElementById('pg1');if(e)e.style.display='';}
 
-  /* ── public API ────────────────────────────────── */
+  function syncRow(pi, ii) {
+    var val = ST[pi][ii];
+    var on = (val === 1);
+    var na = (val === -1);
+    
+    var wrap = document.getElementById('wrap'+pi+'-'+ii);
+    var r = document.getElementById('r'+pi+'-'+ii);
+    var s = document.getElementById('sh'+pi+'-'+ii);
+    var m = document.getElementById('mk'+pi+'-'+ii);
+    var l = document.getElementById('lb'+pi+'-'+ii);
+    
+    var cb = document.getElementById('c'+pi+'-'+ii);
+    var nacb = document.getElementById('na'+pi+'-'+ii);
+
+    if(cb) cb.checked = on;
+    if(nacb) nacb.checked = na;
+
+    if(wrap) {
+        if(na) wrap.classList.add('is-na');
+        else wrap.classList.remove('is-na');
+    }
+    if(r) {
+        r.style.borderColor = on ? 'rgba(193,176,133,0.12)' : 'transparent';
+        r.style.background = on ? 'rgba(193,176,133,0.03)' : 'transparent';
+    }
+    if(s) {
+        s.style.borderColor = on ? '#c1b085' : '#7A6842';
+        s.style.boxShadow = on ? '0 0 12px rgba(193,176,133,0.6),0 0 24px rgba(193,176,133,0.25),inset 0 0 8px rgba(193,176,133,0.1)' : 'none';
+    }
+    if(m) {
+        m.style.opacity = on ? '1' : '0';
+        m.style.transform = on ? 'scale(1)' : 'scale(0.6)';
+    }
+    if(l) {
+        l.style.color = on ? '#c1b085' : '#9a8d7a';
+        l.style.textShadow = on ? '0 0 12px rgba(193,176,133,0.3)' : 'none';
+    }
+    
+    updateCtr(pi);
+  }
 
   window.__la={
     go:function(n){
@@ -475,16 +433,13 @@
     },
 
     t:function(pi,ii){
-      ST[pi][ii]=ST[pi][ii]?0:1; var on=ST[pi][ii];
-      var r=document.getElementById('r'+pi+'-'+ii);
-      var s=document.getElementById('sh'+pi+'-'+ii);
-      var m=document.getElementById('mk'+pi+'-'+ii);
-      var l=document.getElementById('lb'+pi+'-'+ii);
-      if(r){r.style.borderColor=on?'rgba(193,176,133,0.12)':'transparent';r.style.background=on?'rgba(193,176,133,0.03)':'transparent';}
-      if(s){s.style.borderColor=on?'#c1b085':'#7A6842';s.style.boxShadow=on?'0 0 12px rgba(193,176,133,0.6),0 0 24px rgba(193,176,133,0.25),inset 0 0 8px rgba(193,176,133,0.1)':'none';}
-      if(m){m.style.opacity=on?'1':'0';m.style.transform=on?'scale(1)':'scale(0.6)';}
-      if(l){l.style.color=on?'#c1b085':'#9a8d7a';l.style.textShadow=on?'0 0 12px rgba(193,176,133,0.3)':'none';}
-      updateCtr(pi);
+      ST[pi][ii] = ST[pi][ii]===1 ? 0 : 1;
+      syncRow(pi, ii);
+    },
+    
+    na:function(pi,ii){
+      ST[pi][ii] = ST[pi][ii]===-1 ? 0 : -1;
+      syncRow(pi, ii);
     },
 
     by:function(){OB=true;var y=document.getElementById('by'),n=document.getElementById('bn'),h=document.getElementById('bh');if(y){y.style.borderColor='#c1b085';y.style.color='#c1b085';y.style.background='rgba(193,176,133,0.05)';y.style.boxShadow='0 0 18px rgba(193,176,133,0.5),inset 0 0 12px rgba(193,176,133,0.08)';}if(n){n.style.borderColor='#4a3d28';n.style.color='#8a7240';n.style.background='transparent';n.style.boxShadow='none';}if(h){h.textContent='All 7 pillars will be included in your audit.';h.style.color='#9a8d7a';}},
@@ -498,32 +453,43 @@
       var msg=document.getElementById('la-email-msg');
       if(!em||!em.value||em.value.indexOf('@')<1){if(msg)msg.textContent='Please enter a valid email.';return;}
       var email=em.value;
-      if(msg)msg.textContent='Sending\u2026';
+      if(msg)msg.textContent='Sending...';
 
       getPg1State();
-      var tot=0,used=0;
-      for(var i=0;i<7;i++){if(i===5&&OB===false)continue;ST[i].forEach(function(v){tot+=v;});used++;}
-      var maxPts=used*6;
-      var pct=Math.round(tot/maxPts*100);
-      var tier=tot<=10?'LEAN & READY':tot<=22?'LEGACY AT RISK':tot<=30?'CRITICAL COMPLEXITY':tot<=36?'WELL STRUCTURED':'COMPREHENSIVE';
-      var rec=tot<=10?'The Vault':tot<=22?'The Archive':tot<=30?'The Legacy':tot<=36?'Focused session':'Annual review';
+      var tot=0, mx=0;
+      for(var i=0;i<7;i++){
+        if(i===5&&OB===false)continue;
+        ST[i].forEach(function(v){
+          if(v===1) tot++;
+          if(v!==-1) mx++;
+        });
+      }
+      
+      var pct = mx > 0 ? Math.round(tot/mx*100) : 0;
+      var tier = pct<=24?'LEAN & READY':pct<=52?'LEGACY AT RISK':pct<=71?'CRITICAL COMPLEXITY':pct<=85?'WELL STRUCTURED':'COMPREHENSIVE';
+      var rec = pct<=24?'The Vault':pct<=52?'The Archive':pct<=71?'The Legacy':pct<=85?'Focused session':'Annual review';
 
-      /* pillar totals */
       var bd='';
-      for(var j=0;j<7;j++){if(j===5&&OB===false)continue;var c=ST[j].reduce(function(a,v){return a+v;},0);bd+=P[j].n+': '+c+'/6\n';}
+      for(var j=0;j<7;j++){
+        if(j===5&&OB===false)continue;
+        var c = ST[j].filter(function(v){return v===1;}).length;
+        var act = 6 - ST[j].filter(function(v){return v===-1;}).length;
+        bd+=P[j].n+': '+c+'/'+act+'\n';
+      }
 
-      /* item-level detail */
       var detail='\nDETAILED ITEM BREAKDOWN\n';
       for(var k=0;k<7;k++){
         if(k===5&&OB===false)continue;
-        var pc=ST[k].reduce(function(a,v){return a+v;},0);
-        detail+='\n'+P[k].n.toUpperCase()+': '+pc+'/6\n';
+        var pc = ST[k].filter(function(v){return v===1;}).length;
+        var pact = 6 - ST[k].filter(function(v){return v===-1;}).length;
+        detail+='\n'+P[k].n.toUpperCase()+': '+pc+'/'+pact+'\n';
         for(var m2=0;m2<6;m2++){
-          detail+='  '+(ST[k][m2]?'\u2713':'\u2717')+' '+P[k].i[m2]+'\n';
+          var mk = ST[k][m2]===-1 ? '[N/A]' : (ST[k][m2]===1 ? '✓' : '✗');
+          detail+='  '+mk+' '+P[k].i[m2]+'\n';
         }
       }
 
-      var body='DIGITAL LIFE AUDIT RESULTS\n\nScore: '+pct+'% ('+tot+' of '+maxPts+' points)\nTier: '+tier+'\nBusiness Owner: '+(OB?'Yes':'No')+'\n\nPILLAR BREAKDOWN\n'+bd+'\nRecommended: '+rec+detail;
+      var body='DIGITAL LIFE AUDIT RESULTS\n\nScore: '+pct+'% ('+tot+' of '+mx+' applicable points)\nTier: '+tier+'\nBusiness Owner: '+(OB?'Yes':'No')+'\n\nPILLAR BREAKDOWN\n'+bd+'\nRecommended: '+rec+detail;
 
       var xhr=new XMLHttpRequest();
       xhr.open('POST','https://api.hsforms.com/submissions/v3/integration/submit/244990054/8def8d38-97f9-4c65-8c3e-fd5b4653c121');
@@ -535,28 +501,51 @@
 
     rs:function(){
       ST=[[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
-      OB=null; lastP1Cnt=-1;
+      OB=null; lastP1State="";
       showPg1(); showRest('');
-      /* reset page 1 checkboxes */
-      for(var i=0;i<6;i++){var cb=document.getElementById('c0-'+i);if(cb)cb.checked=false;}
+      for(var i=0;i<6;i++){
+        var cb=document.getElementById('c0-'+i); if(cb)cb.checked=false;
+        var na=document.getElementById('na0-'+i); if(na)na.checked=false;
+        var wrap=cb?cb.closest('.la-item-wrap'):null; if(wrap)wrap.classList.remove('is-na');
+      }
       updateCtr(0);
       scrollToAudit();
     }
   };
 
-  /* ── polling: nav checkbox + page 1 counter ────── */
   setInterval(function(){
     var c=document.getElementById('la-go');
     if(c&&c.checked){c.checked=false;getPg1State();window.__la.go(2);}
 
-    /* update page 1 counter when visible */
     var pg1=document.getElementById('pg1');
     if(pg1&&pg1.style.display!=='none'){
-      var cnt=0;
-      for(var i=0;i<6;i++){var cb=document.getElementById('c0-'+i);if(cb&&cb.checked)cnt++;}
-      if(cnt!==lastP1Cnt){
-        lastP1Cnt=cnt;
-        for(var j=0;j<6;j++){var cb2=document.getElementById('c0-'+j);ST[0][j]=(cb2&&cb2.checked)?1:0;}
+      var changed = false;
+      for(var j=0;j<6;j++){
+        var cb2=document.getElementById('c0-'+j);
+        var na2=document.getElementById('na0-'+j);
+        
+        if(na2 && na2.checked && cb2 && cb2.checked) {
+            cb2.checked = false;
+        }
+        
+        var val = 0;
+        if (na2 && na2.checked) val = -1;
+        else if (cb2 && cb2.checked) val = 1;
+        
+        if(ST[0][j] !== val) {
+            ST[0][j] = val;
+            changed = true;
+            
+            var wrap = cb2 ? cb2.closest('.la-item-wrap') : null;
+            if(wrap) {
+                if(val === -1) wrap.classList.add('is-na');
+                else wrap.classList.remove('is-na');
+            }
+        }
+      }
+      var p1Str = ST[0].join(',');
+      if(p1Str !== lastP1State){
+        lastP1State = p1Str;
         updateCtr(0);
       }
     }
