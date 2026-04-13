@@ -30,9 +30,6 @@
     .larow.selected { border-color: rgba(193,176,133,0.25) !important; background: rgba(193,176,133,0.08) !important; box-shadow: 0 0 12px rgba(193,176,133,0.4) !important; }
     .larow.selected .lash { border-color: #c1b085 !important; box-shadow: 0 0 12px rgba(193,176,133,0.6) !important; }
     .larow.selected .lamk { opacity: 1 !important; transform: scale(1) !important; }
-
-    @keyframes la-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    @keyframes la-in { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
@@ -52,79 +49,48 @@
         </div>
 
         <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:52px;">
-
           <div class="la-item-wrap">
             <input type="checkbox" id="c0-0" class="lacb">
             <label for="c0-0" class="larow">
-              <div class="lash">
-                <svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none">
-                  <path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
+              <div class="lash"><svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <span class="lalb">PRIMARY EMAIL ACCOUNT ACCESS</span>
             </label>
           </div>
-
           <div class="la-item-wrap">
             <input type="checkbox" id="c0-1" class="lacb">
             <label for="c0-1" class="larow">
-              <div class="lash">
-                <svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none">
-                  <path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
+              <div class="lash"><svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <span class="lalb">MASTER PASSWORD MANAGER VAULT</span>
             </label>
           </div>
-
           <div class="la-item-wrap">
             <input type="checkbox" id="c0-2" class="lacb">
             <label for="c0-2" class="larow">
-              <div class="lash">
-                <svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none">
-                  <path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
+              <div class="lash"><svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <span class="lalb">CLOUD STORAGE & PHOTO ARCHIVES</span>
             </label>
           </div>
-
           <div class="la-item-wrap">
             <input type="checkbox" id="c0-3" class="lacb">
             <label for="c0-3" class="larow">
-              <div class="lash">
-                <svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none">
-                  <path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
+              <div class="lash"><svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <span class="lalb">TWO-FACTOR AUTH (2FA) RECOVERY KEYS</span>
             </label>
           </div>
-
           <div class="la-item-wrap">
             <input type="checkbox" id="c0-4" class="lacb">
             <label for="c0-4" class="larow">
-              <div class="lash">
-                <svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none">
-                  <path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
+              <div class="lash"><svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <span class="lalb">SOCIAL MEDIA LEGACY CONTACTS</span>
             </label>
           </div>
-
           <div class="la-item-wrap">
             <input type="checkbox" id="c0-5" class="lacb">
             <label for="c0-5" class="larow">
-              <div class="lash">
-                <svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none">
-                  <path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
+              <div class="lash"><svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
               <span class="lalb">DIGITAL MEDIA ARCHIVES</span>
             </label>
           </div>
-
         </div>
 
         <div style="text-align:center;">
@@ -135,48 +101,60 @@
         </div>
       </div>
 
-      <div id="pg-rest"></div>
+      <div id="pg-rest" style="display:none;"></div>
     </div>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Add N/A buttons to all items
       const itemWraps = document.querySelectorAll('.la-item-wrap');
       itemWraps.forEach((wrap, index) => {
-        const naButton = document.createElement('input');
-        naButton.type = 'checkbox';
-        naButton.className = 'lana';
-        naButton.id = `na0-${index}`;
+        if (!wrap.querySelector('.lana-btn')) {
+          const naButton = document.createElement('input');
+          naButton.type = 'checkbox';
+          naButton.className = 'lana';
+          naButton.id = `na0-${index}`;
 
-        const naLabel = document.createElement('label');
-        naLabel.htmlFor = naButton.id;
-        naLabel.className = 'lana-btn';
-        naLabel.textContent = 'N/A';
+          const naLabel = document.createElement('label');
+          naLabel.htmlFor = naButton.id;
+          naLabel.className = 'lana-btn';
+          naLabel.textContent = 'N/A';
+          naLabel.style.fontFamily = "'Cinzel', serif";
+          naLabel.style.fontSize = "12px";
+          naLabel.style.fontWeight = "600";
+          naLabel.style.color = "#7A6842";
+          naLabel.style.border = "1px solid #342a1c";
+          naLabel.style.padding = "6px 12px";
+          naLabel.style.borderRadius = "2px";
+          naLabel.style.cursor = "pointer";
+          naLabel.style.background = "transparent";
+          naLabel.style.marginLeft = "10px";
 
-        wrap.appendChild(naButton);
-        wrap.appendChild(naLabel);
+          wrap.appendChild(naButton);
+          wrap.appendChild(naLabel);
 
-        // Toggle "N/A" state
-        naButton.addEventListener('change', function() {
-          if (this.checked) {
-            wrap.classList.add('is-na');
-            wrap.querySelector('.lacb').checked = false;
-          } else {
-            wrap.classList.remove('is-na');
+          naButton.addEventListener('change', function() {
+            if (this.checked) {
+              wrap.classList.add('is-na');
+              const checkbox = wrap.querySelector('.lacb');
+              if (checkbox) checkbox.checked = false;
+            } else {
+              wrap.classList.remove('is-na');
+            }
+          });
+
+          const checkbox = wrap.querySelector('.lacb');
+          if (checkbox) {
+            checkbox.addEventListener('change', function() {
+              if (this.checked) {
+                naButton.checked = false;
+                wrap.classList.remove('is-na');
+              }
+            });
           }
-        });
-
-        // Disable "N/A" if Yes/No is selected
-        wrap.querySelector('.lacb').addEventListener('change', function() {
-          if (this.checked) {
-            naButton.checked = false;
-            wrap.classList.remove('is-na');
-          }
-        });
+        }
       });
 
-      // Glow effect for selected items
       const checkboxes = document.querySelectorAll('.lacb');
       checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
@@ -189,46 +167,46 @@
         });
       });
 
-      // Hide results until email submission
-      const resultsSection = document.getElementById('pg-rest');
-      if (resultsSection) {
-        resultsSection.style.display = 'none';
-      }
-
-      // Email submission logic
-      const emailForm = document.createElement('form');
-      emailForm.id = 'email-form';
-      emailForm.innerHTML = `
-        <div style="text-align:center;margin:30px 0;">
-          <label for="email" style="font-family:Bodoni Moda,serif;font-size:16px;color:#b0a494;">Enter your email to see results:</label><br>
-          <input type="email" id="email" required style="padding:8px;margin:10px 0;width:200px;background:#100d0a;color:#fdfcfa;border:1px solid #342a1c;">
-          <button type="submit" style="font-family:Cinzel,serif;padding:8px 16px;background:#c1b085;color:#100d0a;border:none;cursor:pointer;">Submit</button>
-        </div>
-      `;
-
       const continueButton = document.querySelector('label[for="la-go"]');
       if (continueButton) {
         continueButton.addEventListener('click', function(e) {
-          if (document.getElementById('la-go').checked) {
+          const goCheckbox = document.getElementById('la-go');
+          if (goCheckbox && goCheckbox.checked) {
             e.preventDefault();
-            document.querySelector('#la-wrap > div').appendChild(emailForm);
-            document.getElementById('la-go').checked = false;
+            const emailForm = document.createElement('div');
+            emailForm.id = 'email-form';
+            emailForm.innerHTML = `
+              <div style="text-align:center;margin:30px 0;">
+                <label for="email" style="font-family:Bodoni Moda,serif;font-size:16px;color:#b0a494;">Enter your email to see results:</label><br>
+                <input type="email" id="email" required style="padding:8px;margin:10px 0;width:200px;background:#100d0a;color:#fdfcfa;border:1px solid #342a1c;">
+                <button type="submit" style="font-family:Cinzel,serif;padding:8px 16px;background:#c1b085;color:#100d0a;border:none;cursor:pointer;">Submit</button>
+              </div>
+            `;
+            const container = document.querySelector('#la-wrap > div');
+            if (container) {
+              container.appendChild(emailForm);
+              goCheckbox.checked = false;
+            }
+
+            emailForm.querySelector('button[type="submit"]').addEventListener('click', function(e) {
+              e.preventDefault();
+              const emailInput = emailForm.querySelector('#email');
+              if (emailInput && emailInput.value) {
+                const resultsSection = document.getElementById('pg-rest');
+                if (resultsSection) {
+                  resultsSection.style.display = 'block';
+                  resultsSection.innerHTML = `
+                    <div style="text-align:center;padding:40px;background:rgba(193,176,133,0.05);border:1px solid #342a1c;margin-top:20px;">
+                      <h2 id="results-message" style="font-family:Cinzel,serif;font-size:24px;color:#c1b085;margin-bottom:20px;">Your results are below.</h2>
+                      <p style="font-family:Bodoni Moda,serif;font-size:16px;color:#b0a494;">[Your results content goes here]</p>
+                    </div>
+                  `;
+                }
+              }
+            });
           }
         });
       }
-
-      emailForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (resultsSection) {
-          resultsSection.style.display = 'block';
-          resultsSection.innerHTML = `
-            <div style="text-align:center;padding:40px;background:rgba(193,176,133,0.05);border:1px solid #342a1c;margin-top:20px;">
-              <h2 id="results-message" style="font-family:Cinzel,serif;font-size:24px;color:#c1b085;margin-bottom:20px;">Your results are below.</h2>
-              <p style="font-family:Bodoni Moda,serif;font-size:16px;color:#b0a494;">[Insert your results content here]</p>
-            </div>
-          `;
-        }
-      });
     });
   </script>
 </body>
