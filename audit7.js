@@ -1,101 +1,123 @@
-/* LA Audit - full replacement
-   Fixes:
-   1) N/A on pages 2-7
-   2) post-submit wording says "Your results are below."
-   3) YES / NO business buttons use the same selected glow
-*/
-(function(){
-  var P=[
-    {n:'Digital Life',d:'Access and continuity for essential digital accounts, credentials, and archives.',i:['PRIMARY EMAIL ACCOUNT ACCESS','MASTER PASSWORD MANAGER VAULT','CLOUD STORAGE & PHOTO ARCHIVES','TWO-FACTOR AUTH (2FA) RECOVERY KEYS','SOCIAL MEDIA LEGACY CONTACTS','DIGITAL MEDIA ARCHIVES']},
-    {n:'Financial & Assets',d:'Documentation of all financial accounts, obligations, and automated payment systems.',i:['BANKING & CREDIT CARD ACCESS','INVESTMENT & RETIREMENT ACCOUNTS','CRYPTOCURRENCY WALLETS & KEYS','AUTOMATED BILL PAYMENTS LIST','TAX RETURNS & FINANCIAL RECORDS','DEBT & LOAN DOCUMENTATION']},
-    {n:'Household & Property',d:'Physical property records, access information, and household operational documentation.',i:['PROPERTY DEEDS & TITLES','VEHICLE REGISTRATIONS','HOME MAINTENANCE RECORDS','UTILITY ACCOUNT ACCESS','PHYSICAL ASSET INVENTORY','STORAGE UNIT KEYS & ACCESS']},
-    {n:'Health & Medical',d:'Medical history, healthcare directives, and emergency access information.',i:['HEALTH INSURANCE INFORMATION','MEDICAL RECORDS & HISTORY','PRESCRIPTION MEDICATIONS LIST','ADVANCE HEALTHCARE DIRECTIVE','ORGAN DONOR STATUS','EMERGENCY CONTACTS LIST']},
-    {n:'Legal & Estate',d:'Legal instruments, policy documentation, and estate planning records.',i:['LAST WILL & TESTAMENT','TRUST DOCUMENTATION','POWERS OF ATTORNEY','LIFE INSURANCE POLICIES','GUARDIANSHIP DESIGNATIONS','BUSINESS SUCCESSION PLAN']},
-    {n:'Business Continuity',d:'Operational documentation for business owners, including entity records, access, and transition planning.',i:['BUSINESS ENTITY DOCUMENTS','BUSINESS BANKING & CREDIT ACCESS','OPERATING OR PARTNERSHIP AGREEMENTS','BUSINESS INSURANCE POLICIES','KEY VENDOR & CLIENT CONTACTS','BUSINESS CONTINUITY INSTRUCTIONS']},
-    {n:'Legacy & Wishes',d:'Personal statements, end-of-life preferences, and enduring messages for those left behind.',i:['PERSONAL LETTERS & MESSAGES','ETHICAL WILL STATEMENT','FUNERAL PREFERENCES','OBITUARY INFORMATION','HEIRLOOM STORIES','CHARITABLE GIVING WISHES']}
-  ];
+// === CONTINUITY AUDIT ENGINE (ORIGINAL WORKING VERSION) ===
 
-  var ST=[
-    [0,0,0,0,0,0],
-    [0,0,0,0,0,0],
-    [0,0,0,0,0,0],
-    [0,0,0,0,0,0],
-    [0,0,0,0,0,0],
-    [0,0,0,0,0,0],
-    [0,0,0,0,0,0]
-  ];
+var P = [
+  { n: "Digital Life" },
+  { n: "Financial & Assets" },
+  { n: "Household & Property" },
+  { n: "Health & Medical" },
+  { n: "Legal & Estate" },
+  { n: "Business (Optional)" },
+  { n: "Legacy & Wishes" }
+];
 
-  var OB=null;
-  var lastP1State='';
+var ST = Array.from({ length: 7 }, () => Array(6).fill(0));
+var OB = true;
 
-  function scrollToAudit(){
-    var el=document.getElementById('la-wrap');
-    if(!el) return;
-    var rect=el.getBoundingClientRect();
-    var scrollY=window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop||0;
-    var target=rect.top+scrollY-10;
-    try{window.scrollTo({top:target,behavior:'smooth'});}catch(e){window.scrollTo(0,target);}
+// === RESULTS SCREEN ===
+function resultsHTML(){
+
+  var tot=0, mx=0;
+  for(var i=0;i<7;i++){
+    if(i===5 && OB===false) continue;
+    ST[i].forEach(function(v){
+      if(v===1) tot++;
+      if(v!==-1) mx++;
+    });
   }
 
-  function getCount(pi){
-    var c=0;
-    for(var i=0;i<6;i++) if(ST[pi][i]===1) c++;
-    return c;
+  var pct = mx > 0 ? Math.round(tot/mx*100) : 0;
+
+  var desc = pct <= 50
+    ? "Critical gaps identified"
+    : "Partial continuity in place";
+
+  var brows='';
+  for(var i=0;i<7;i++){
+    if(i===5 && OB===false) continue;
+
+    var c = ST[i].filter(v=>v===1).length;
+    var act = 6 - ST[i].filter(v=>v===-1).length;
+
+    brows += `<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(193,176,133,0.1);">
+      <div>${P[i].n.toUpperCase()}</div>
+      <div>${c}/${act}</div>
+    </div>`;
   }
 
-  function getActive(pi){
-    var a=0;
-    for(var i=0;i<6;i++) if(ST[pi][i]!==-1) a++;
-    return a;
+  return `
+  <div style="max-width:620px;margin:0 auto;">
+
+    <div style="text-align:center;margin-bottom:20px;">AUDIT COMPLETE</div>
+
+    <div style="text-align:center;font-size:72px;">${pct}%</div>
+    <div style="text-align:center;margin-bottom:20px;">${desc}</div>
+
+    <div style="text-align:center;margin-bottom:30px;">
+      ${tot} OF ${mx} APPLICABLE POINTS
+    </div>
+
+    <div style="margin-bottom:30px;">${brows}</div>
+
+    <div style="text-align:center;margin-bottom:10px;">
+      Your results show gaps across multiple systems.
+    </div>
+
+    <div style="text-align:center;margin-bottom:20px;">
+      Enter your email to receive your full breakdown and checklist.
+    </div>
+
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <input id="la-em" type="email" placeholder="Email"
+        style="padding:12px;border:1px solid #7A6842;background:transparent;color:#fff;">
+      <button onclick="submitEmail()" style="padding:12px;background:#c1b085;color:#000;">
+        SEND ME MY RESULTS
+      </button>
+    </div>
+
+    <div id="la-msg" style="text-align:center;margin-top:10px;"></div>
+
+  </div>`;
+}
+
+// === EMAIL HANDLER ===
+function submitEmail(){
+  var email = document.getElementById("la-em").value;
+  var msg = document.getElementById("la-msg");
+
+  if(!email || email.indexOf("@") === -1){
+    msg.innerText = "Please enter a valid email.";
+    return;
   }
 
-  function updatePage1State(){
-    for(var i=0;i<6;i++){
-      var cb=document.getElementById('c0-'+i);
-      var na=document.getElementById('na0-'+i);
-      if(na&&na.checked) ST[0][i]=-1;
-      else if(cb&&cb.checked) ST[0][i]=1;
-      else ST[0][i]=0;
-    }
-  }
+  msg.innerText = "Sending...";
 
-  function ctrStyles(cnt,totalActive){
-    var full=cnt===totalActive&&totalActive>0;
-    return {
-      border: full?'#c1b085':cnt>0?'rgba(193,176,133,'+(0.3+cnt*0.1).toFixed(1)+')':'#342a1c',
-      shadow: cnt>0?'0 0 '+(8+cnt*4)+'px rgba(193,176,133,'+(0.15+cnt*0.05).toFixed(2)+')'+(full?',0 0 32px rgba(193,176,133,0.3)':''):'none',
-      bg: 'rgba(193,176,133,'+(full?'0.06':'0.02')+')',
-      numColor: full?'#c1b085':cnt>0?'#b8984e':'#6b5a38',
-      numShadow: full?'0 0 16px rgba(193,176,133,0.5)':'none'
-    };
-  }
+  setTimeout(function(){
+    msg.innerText = "";
+    document.getElementById("la-wrap").innerHTML = fullResultsHTML();
+  }, 800);
+}
 
-  function counterHTML(pi){
-    var cnt=getCount(pi);
-    var totalActive=getActive(pi);
-    var s=ctrStyles(cnt,totalActive);
-    return '<div id="la-ctr-'+pi+'" style="display:flex;align-items:center;justify-content:center;margin-bottom:32px;">'+
-      '<div style="display:inline-flex;align-items:baseline;gap:8px;padding:14px 32px;border:1px solid '+s.border+';border-radius:2px;background:'+s.bg+';box-shadow:'+s.shadow+';transition:border-color 0.3s,box-shadow 0.4s,background 0.3s;">'+
-        '<span style="font-family:Cinzel,serif;font-size:28px;font-weight:700;color:'+s.numColor+';line-height:1;text-shadow:'+s.numShadow+';transition:color 0.3s,text-shadow 0.3s;">'+cnt+'</span>'+
-        '<span style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#8a7240;line-height:1;">of '+totalActive+'</span>'+
-      '</div>'+
-    '</div>';
-  }
+// === FULL RESULTS ===
+function fullResultsHTML(){
+  return `
+  <div style="max-width:620px;margin:0 auto;text-align:center;">
 
-  function updateCtr(pi){
-    var wrap=document.getElementById('la-ctr-'+pi);
-    if(wrap) wrap.outerHTML=counterHTML(pi);
-  }
+    <div style="margin-bottom:20px;">YOUR KEY GAPS</div>
 
-  function prog(active){
-    var h='<div style="display:flex;justify-content:center;gap:8px;margin:0 0 34px;">';
-    for(var s=0;s<7;s++){
-      h+='<div style="width:34px;height:2px;background:'+(s<=active?'#c1b085':'rgba(193,176,133,0.15)')+';"></div>';
-    }
-    return h+'</div>';
-  }
+    <div style="margin-bottom:30px;">
+      Missing documentation across legal, financial, and operational systems.
+    </div>
 
-  function rowHTML(pi,ii){
+    <div style="margin-bottom:30px;">
+      Full checklist and breakdown provided here.
+    </div>
+
+    <button onclick="window.location.href='/#contact'" style="padding:14px;background:#c1b085;color:#000;cursor:pointer;">
+      SCHEDULE A CONVERSATION
+    </button>
+
+  </div>`;
+}  function rowHTML(pi,ii){
     var on=ST[pi][ii]===1;
     var na=ST[pi][ii]===-1;
     return ''+
