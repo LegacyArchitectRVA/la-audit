@@ -1,101 +1,109 @@
-// === CONTINUITY AUDIT ENGINE (FIXED SEQUENCING) ===
+(function () {
+  var HUBSPOT_PORTAL_ID = "244990054";
+  var HUBSPOT_FORM_ID = "8def8d38-97f9-4c65-8c3e-fd5b4653c121";
 
-var P = [
-  { n: "Digital Life" },
-  { n: "Financial & Assets" },
-  { n: "Household & Property" },
-  { n: "Health & Medical" },
-  { n: "Legal & Estate" },
-  { n: "Business (Optional)" },
-  { n: "Legacy & Wishes" }
-];
+  var P = [
+    {
+      n: "Digital Life",
+      d: "Access and continuity for essential digital accounts, credentials, and archives.",
+      i: [
+        "PRIMARY EMAIL ACCOUNT ACCESS",
+        "MASTER PASSWORD MANAGER VAULT",
+        "CLOUD STORAGE & PHOTO ARCHIVES",
+        "TWO-FACTOR AUTH (2FA) RECOVERY KEYS",
+        "SOCIAL MEDIA LEGACY CONTACTS",
+        "DIGITAL MEDIA ARCHIVES"
+      ]
+    },
+    {
+      n: "Financial & Assets",
+      d: "Documentation of all financial accounts, obligations, and automated payment systems.",
+      i: [
+        "BANKING & CREDIT CARD ACCESS",
+        "INVESTMENT & RETIREMENT ACCOUNTS",
+        "CRYPTOCURRENCY WALLETS & KEYS",
+        "AUTOMATED BILL PAYMENTS LIST",
+        "TAX RETURNS & FINANCIAL RECORDS",
+        "DEBT & LOAN DOCUMENTATION"
+      ]
+    },
+    {
+      n: "Household & Property",
+      d: "Physical property records, access information, and household operational documentation.",
+      i: [
+        "PROPERTY DEEDS & TITLES",
+        "VEHICLE REGISTRATIONS",
+        "HOME MAINTENANCE RECORDS",
+        "UTILITY ACCOUNT ACCESS",
+        "PHYSICAL ASSET INVENTORY",
+        "STORAGE UNIT KEYS & ACCESS"
+      ]
+    },
+    {
+      n: "Health & Medical",
+      d: "Medical history, healthcare directives, and emergency access information.",
+      i: [
+        "HEALTH INSURANCE INFORMATION",
+        "MEDICAL RECORDS & HISTORY",
+        "PRESCRIPTION MEDICATIONS LIST",
+        "ADVANCE HEALTHCARE DIRECTIVE",
+        "ORGAN DONOR STATUS",
+        "EMERGENCY CONTACTS LIST"
+      ]
+    },
+    {
+      n: "Legal & Estate",
+      d: "Legal instruments, policy documentation, and estate planning records.",
+      i: [
+        "LAST WILL & TESTAMENT",
+        "TRUST DOCUMENTATION",
+        "POWERS OF ATTORNEY",
+        "LIFE INSURANCE POLICIES",
+        "GUARDIANSHIP DESIGNATIONS",
+        "BUSINESS SUCCESSION PLAN"
+      ]
+    },
+    {
+      n: "Business Continuity",
+      d: "Operational documentation for business owners, including entity records, access, and transition planning.",
+      i: [
+        "BUSINESS ENTITY DOCUMENTS",
+        "BUSINESS BANKING & CREDIT ACCESS",
+        "OPERATING OR PARTNERSHIP AGREEMENTS",
+        "BUSINESS INSURANCE POLICIES",
+        "KEY VENDOR & CLIENT CONTACTS",
+        "BUSINESS CONTINUITY INSTRUCTIONS"
+      ]
+    },
+    {
+      n: "Legacy & Wishes",
+      d: "Personal statements, end-of-life preferences, and enduring messages for those left behind.",
+      i: [
+        "PERSONAL LETTERS & MESSAGES",
+        "ETHICAL WILL STATEMENT",
+        "FUNERAL PREFERENCES",
+        "OBITUARY INFORMATION",
+        "HEIRLOOM STORIES",
+        "CHARITABLE GIVING WISHES"
+      ]
+    }
+  ];
 
-var ST = Array.from({ length: 7 }, () => Array(6).fill(0));
-var OB = true;
-
-// === RESULTS SCREEN (FIXED) ===
-function resultsHTML(){
-
-  var tot=0, mx=0;
-  for(var i=0;i<7;i++){
-    if(i===5 && OB===false) continue;
-    ST[i].forEach(function(v){
-      if(v===1) tot++;
-      if(v!==-1) mx++;
-    });
-  }
-
-  var pct = mx > 0 ? Math.round(tot/mx*100) : 0;
-
-  var desc = pct <= 50
-    ? "Critical gaps identified"
-    : "Partial continuity in place";
-
-  var brows='';
-  for(var i=0;i<7;i++){
-    if(i===5 && OB===false) continue;
-
-    var c = ST[i].filter(v=>v===1).length;
-    var act = 6 - ST[i].filter(v=>v===-1).length;
-
-    brows += `<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(193,176,133,0.1);">
-      <div>${P[i].n.toUpperCase()}</div>
-      <div>${c}/${act}</div>
-    </div>`;
-  }
-
-  return `
-  <div style="max-width:620px;margin:0 auto;">
-
-    <div style="text-align:center;margin-bottom:20px;">AUDIT COMPLETE</div>
-
-    <div style="text-align:center;font-size:72px;">${pct}%</div>
-    <div style="text-align:center;margin-bottom:20px;">${desc}</div>
-
-    <div style="text-align:center;margin-bottom:30px;">
-      ${tot} OF ${mx} APPLICABLE POINTS
-    </div>
-
-    <div style="margin-bottom:30px;">${brows}</div>
-
-    <div style="text-align:center;margin-bottom:10px;">
-      Your results show gaps across multiple systems.
-    </div>
-
-    <div style="text-align:center;margin-bottom:20px;">
-      Enter your email to receive your full breakdown and checklist.
-    </div>
-
-    <div style="display:flex;gap:10px;justify-content:center;">
-      <input id="la-em" type="email" placeholder="Email"
-        style="padding:12px;border:1px solid #7A6842;background:transparent;color:#fff;">
-      <button onclick="submitEmail()" style="padding:12px;background:#c1b085;color:#000;">
-        SEND ME MY RESULTS
-      </button>
-    </div>
-
-    <div id="la-msg" style="text-align:center;margin-top:10px;"></div>
-
-  </div>`;
-}
-
-// === EMAIL HANDLER ===
-function submitEmail(){
-  var email = document.getElementById("la-em").value;
-  var msg = document.getElementById("la-msg");
-
-  if(!email || email.indexOf("@") === -1){
-    msg.innerText = "Please enter a valid email address.";
-    return;
-  }
-
-  msg.innerText = "Sending...";
-
-  setTimeout(function(){
-    msg.innerText = "";
-    document.getElementById("la-wrap").innerHTML = fullResultsHTML();
-  }, 800);
-}
+  var GD = [
+    [
+      "Email is the recovery method for nearly every other account. Without access, password resets fail across the board.",
+      "Without a centralized credential system, a successor would need to recover each account individually, a process that can take weeks or months, with some accounts lost permanently.",
+      "Family photos, documents, and personal files stored in the cloud can become permanently inaccessible if credentials are lost.",
+      "If 2FA is enabled without stored recovery keys, accounts become permanently inaccessible. This is one of the most common causes of irreversible digital lockout.",
+      "Without designated legacy contacts, social media accounts may be memorialized, deleted, or hijacked, with no way to recover meaningful content.",
+      "Digital purchases, streaming libraries, and media collections are tied to accounts. Without access documentation, they disappear."
+    ],
+    [
+      "Without account documentation, a successor may not know which institutions to contact, leading to missed payments, penalties, and frozen funds.",
+      "Retirement and brokerage accounts each have different beneficiary and access requirements. Gaps here can mean months of legal process.",
+      "Cryptocurrency without documented recovery keys is permanently lost. There is no institution to call and no reset to request.",
+      "Automated payments continue after incapacitation or death. Without a list, successors discover them only when accounts overdraft or services are cut.",
+      "Tax history is required for settlement, insurance claims, and financial transfers.}
 
 // === FULL RESULTS (ONLY AFTER EMAIL) ===
 function fullResultsHTML(){
