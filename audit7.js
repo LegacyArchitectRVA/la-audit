@@ -415,25 +415,10 @@
       '<div style="font-family:Bodoni Moda,serif;font-size:14px;font-style:italic;color:#8a7240;margin-top:14px;">No obligation \u2014 100% confidential</div>'+
     '</div>';
 
-    /* === Founding Families urgency === */
+    /* pricing link */
     h+='<div style="border:1px solid #2a2218;padding:28px 32px;margin-top:24px;text-align:center;">'+
-      '<div style="font-family:Cinzel,serif;font-size:12px;letter-spacing:4px;color:#b8984e;margin-bottom:12px;">FOUNDING FAMILIES INITIATIVE</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#c1b085;line-height:1.6;margin-bottom:6px;">$500 off any Life Manual\u2122 package</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#b0a494;line-height:1.6;margin-bottom:16px;">Limited to 5 families \u2014 <strong style="color:#c1b085;">4 seats remaining</strong></div>'+
-      '<div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">'+
-        '<div style="border:1px solid #342a1c;padding:12px 20px;border-radius:1px;">'+
-          '<div style="font-family:Cinzel,serif;font-size:11px;letter-spacing:2px;color:#8a7240;margin-bottom:4px;">THE VAULT</div>'+
-          '<div style="font-family:Cinzel,serif;font-size:18px;color:#c1b085;"><span style="text-decoration:line-through;color:#6b5a38;font-size:14px;">$950</span> $450</div>'+
-        '</div>'+
-        '<div style="border:1px solid #342a1c;padding:12px 20px;border-radius:1px;">'+
-          '<div style="font-family:Cinzel,serif;font-size:11px;letter-spacing:2px;color:#8a7240;margin-bottom:4px;">THE ARCHIVE</div>'+
-          '<div style="font-family:Cinzel,serif;font-size:18px;color:#c1b085;"><span style="text-decoration:line-through;color:#6b5a38;font-size:14px;">$1,950</span> $1,450</div>'+
-        '</div>'+
-        '<div style="border:1px solid #342a1c;padding:12px 20px;border-radius:1px;">'+
-          '<div style="font-family:Cinzel,serif;font-size:11px;letter-spacing:2px;color:#8a7240;margin-bottom:4px;">THE LEGACY</div>'+
-          '<div style="font-family:Cinzel,serif;font-size:18px;color:#c1b085;"><span style="text-decoration:line-through;color:#6b5a38;font-size:14px;">$3,000+</span> $2,500+</div>'+
-        '</div>'+
-      '</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.6;margin-bottom:20px;">See how a Life Manual\u2122 closes the gaps above.</div>'+
+      '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;border:1px solid #c1b085;display:inline-block;padding:14px 36px;border-radius:1px;transition:background 0.2s;">VIEW PACKAGES &amp; PRICING</a>'+
     '</div>';
 
     /* footer CTA */
@@ -444,12 +429,6 @@
       '<div style="display:flex;justify-content:center;gap:32px;margin-top:28px;">'+
         '<div onclick="__la.rs()" style="font-family:Cinzel,serif;font-size:11px;letter-spacing:3px;color:#8a7240;cursor:pointer;">START OVER</div>'+
       '</div>'+
-    '</div>';
-
-    /* footer */
-    h+='<div style="border-top:1px solid #2a2218;margin-top:40px;padding-top:32px;text-align:center;">'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#c1b085;line-height:1.6;margin-bottom:4px;">\u201COrder in Your Absence\u201D</div>'+
-      '<div style="font-family:Cinzel,serif;font-size:13px;color:#6b5a38;margin-top:16px;">Legacy Architect RVA \u2014 Richmond, Virginia</div>'+
     '</div>';
 
     return h;
@@ -537,12 +516,6 @@
     h+='<div style="display:flex;justify-content:center;gap:32px;margin-top:28px;">'+
       '<button onclick="__la.go(7)" style="font-family:Cinzel,serif;font-size:11px;font-weight:700;letter-spacing:3px;color:#b8984e;background:none;border:none;cursor:pointer;text-transform:uppercase;padding:0;">BACK</button>'+
       '<div onclick="__la.rs()" style="font-family:Cinzel,serif;font-size:11px;letter-spacing:3px;color:#8a7240;cursor:pointer;">START OVER</div>'+
-    '</div>';
-
-    /* footer */
-    h+='<div style="border-top:1px solid #2a2218;margin-top:40px;padding-top:32px;text-align:center;">'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#c1b085;line-height:1.6;margin-bottom:4px;">\u201COrder in Your Absence\u201D</div>'+
-      '<div style="font-family:Cinzel,serif;font-size:13px;color:#6b5a38;margin-top:16px;">Legacy Architect RVA \u2014 Richmond, Virginia</div>'+
     '</div>';
 
     return h;
