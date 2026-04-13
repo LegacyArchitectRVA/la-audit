@@ -103,6 +103,9 @@
     var box=wrap.firstElementChild; if(!box)return;
     var num=document.getElementById('la-ctr-num-'+pi);
     var mxEl=document.getElementById('la-ctr-mx-'+pi);
+    /* fallback for Carrd-embedded counter (no inner IDs) */
+    if(!num){num=box.firstElementChild;}
+    if(!mxEl&&num){mxEl=num.nextElementSibling;if(mxEl)mxEl=mxEl.nextElementSibling;}
     var s=ctrStyles(cnt,mx);
     box.style.borderColor=s.border;
     box.style.boxShadow=s.shadow;
