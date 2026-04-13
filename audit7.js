@@ -114,26 +114,4 @@ return `
 </button>
 
   </div>`;  
-}}
-
-// === FULL RESULTS (ONLY AFTER EMAIL) ===
-function fullResultsHTML(){
-  return `
-  <div style="max-width:620px;margin:0 auto;text-align:center;">
-
-    <div style="margin-bottom:20px;">YOUR KEY GAPS</div>
-
-    <div style="margin-bottom:30px;">
-      Missing documentation across legal, financial, and operational systems.
-    </div>
-
-    <div style="margin-bottom:30px;">
-      Full checklist and breakdown provided here.
-    </div>
-
-    <button style="padding:14px;background:#c1b085;color:#000;">
-      SCHEDULE A CONVERSATION
-    </button>
-
-  </div>`;
 }
