@@ -1,112 +1,235 @@
-/* LA Digital Audit - audit7.js */
-(function(){
-  var P=[
-    {n:'Digital Life',d:'Access and continuity for essential digital accounts, credentials, and archives.',i:['PRIMARY EMAIL ACCOUNT ACCESS','MASTER PASSWORD MANAGER VAULT','CLOUD STORAGE & PHOTO ARCHIVES','TWO-FACTOR AUTH (2FA) RECOVERY KEYS','SOCIAL MEDIA LEGACY CONTACTS','DIGITAL MEDIA ARCHIVES']},
-    {n:'Financial & Assets',d:'Documentation of all financial accounts, obligations, and automated payment systems.',i:['BANKING & CREDIT CARD ACCESS','INVESTMENT & RETIREMENT ACCOUNTS','CRYPTOCURRENCY WALLETS & KEYS','AUTOMATED BILL PAYMENTS LIST','TAX RETURNS & FINANCIAL RECORDS','DEBT & LOAN DOCUMENTATION']},
-    {n:'Household & Property',d:'Physical property records, access information, and household operational documentation.',i:['PROPERTY DEEDS & TITLES','VEHICLE REGISTRATIONS','HOME MAINTENANCE RECORDS','UTILITY ACCOUNT ACCESS','PHYSICAL ASSET INVENTORY','STORAGE UNIT KEYS & ACCESS']},
-    {n:'Health & Medical',d:'Medical history, healthcare directives, and emergency access information.',i:['HEALTH INSURANCE INFORMATION','MEDICAL RECORDS & HISTORY','PRESCRIPTION MEDICATIONS LIST','ADVANCE HEALTHCARE DIRECTIVE','ORGAN DONOR STATUS','EMERGENCY CONTACTS LIST']},
-    {n:'Legal & Estate',d:'Legal instruments, policy documentation, and estate planning records.',i:['LAST WILL & TESTAMENT','TRUST DOCUMENTATION','POWERS OF ATTORNEY','LIFE INSURANCE POLICIES','GUARDIANSHIP DESIGNATIONS','BUSINESS SUCCESSION PLAN']},
-    {n:'Business Continuity',d:'Operational documentation for business owners, including entity records, access, and transition planning.',i:['BUSINESS ENTITY DOCUMENTS','BUSINESS BANKING & CREDIT ACCESS','OPERATING OR PARTNERSHIP AGREEMENTS','BUSINESS INSURANCE POLICIES','KEY VENDOR & CLIENT CONTACTS','BUSINESS CONTINUITY INSTRUCTIONS']},
-    {n:'Legacy & Wishes',d:'Personal statements, end-of-life preferences, and enduring messages for those left behind.',i:['PERSONAL LETTERS & MESSAGES','ETHICAL WILL STATEMENT','FUNERAL PREFERENCES','OBITUARY INFORMATION','HEIRLOOM STORIES','CHARITABLE GIVING WISHES']}
-  ];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audit Form</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,300;1,6..96,400&display=swap');
 
-  // Tracking states: ST for Checks, NA for N/As
-  var ST = Array(7).fill().map(() => Array(6).fill(0));
-  var NA = Array(7).fill().map(() => Array(6).fill(0));
-  var OB = null;
+    #la-wrap * { box-sizing: border-box; }
+    .lacb, .lana { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+    .la-item-wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; transition: opacity 0.3s; }
+    .larow { display: flex; align-items: center; gap: 18px; padding: 16px 8px; border: 1px solid transparent; border-radius: 2px; cursor: pointer; transition: all 0.3s; flex-grow: 1; }
+    .lash { width: 24px; height: 24px; flex-shrink: 0; border: 1px solid #7A6842; border-radius: 2px; background: transparent; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+    .lamk { opacity: 0; transform: scale(0.6); transition: opacity 0.2s, transform 0.2s; filter: drop-shadow(0 0 3px rgba(193,176,133,0.9)); }
+    .lalb { font-family: Cinzel, serif; font-size: 16px; letter-spacing: 2px; color: #9a8d7a; transition: all 0.3s; }
 
-  function scrollToAudit(){
-    var el = document.getElementById('la-wrap');
-    if(!el) return;
-    window.scrollTo({top: el.offsetTop - 10, behavior:'smooth'});
-  }
+    .lacb:checked + .larow { border-color: rgba(193,176,133,0.12); background: rgba(193,176,133,0.03); }
+    .lacb:checked + .larow .lash { border-color: #c1b085; box-shadow: 0 0 12px rgba(193,176,133,0.6), 0 0 24px rgba(193,176,133,0.25), inset 0 0 8px rgba(193,176,133,0.1); }
+    .lacb:checked + .larow .lamk { opacity: 1; transform: scale(1); }
+    .lacb:checked + .larow .lalb { color: #c1b085; text-shadow: 0 0 12px rgba(193,176,133,0.3); }
 
-  function updateCtr(pi){
-    var cnt=0, max=0;
-    for(var i=0; i<6; i++){
-      if(!NA[pi][i]){ max++; if(ST[pi][i]) cnt++; }
-    }
-    var wrap=document.getElementById('la-ctr-'+pi);
-    if(!wrap) return;
-    var num=wrap.querySelector('span:first-child');
-    var tot=wrap.querySelector('span:last-child');
-    if(num) num.textContent = cnt;
-    if(tot) tot.textContent = 'of ' + max;
-  }
+    .lana-btn { font-family: Cinzel, serif; font-size: 12px; font-weight: 600; color: #7A6842; border: 1px solid #342a1c; padding: 6px 12px; border-radius: 2px; cursor: pointer; transition: all 0.3s; background: transparent; }
+    .lana:checked + .lana-btn { background: #342a1c; color: #c1b085; border-color: #7A6842; }
 
-  function pillarHTML(pi){
-    var pl=P[pi], isP5=pi===4, isLast=pi===6;
-    var rows='';
-    
-    for(var ii=0; ii<6; ii++){
-      var on = ST[pi][ii];
-      var n = NA[pi][ii];
-      
-      // THIS GENERATES THE N/A BUTTON AND THE ROW
-      rows += `
-        <div class="la-item-wrap ${n ? 'is-na' : ''}">
-          <div onclick="__la.t(${pi},${ii})" class="larow" style="border-color:${on ? 'rgba(193,176,133,0.12)' : 'transparent'}; background:${on ? 'rgba(193,176,133,0.03)' : 'transparent'};">
-            <div class="lash" style="border-color:${on ? '#c1b085' : '#7A6842'}; box-shadow:${on ? '0 0 12px rgba(193,176,133,0.6)' : 'none'};">
-              <svg width="14" height="11" viewBox="0 0 14 11" fill="none" style="opacity:${on ? '1' : '0'}; transform:${on ? 'scale(1)' : 'scale(0.6)'}; transition:all 0.2s;">
-                <path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div class="lalb" style="color:${on ? '#c1b085' : '#9a8d7a'}">${pl.i[ii]}</div>
+    .la-item-wrap.is-na > div:first-child { opacity: 0.4; filter: grayscale(100%); pointer-events: none; }
+    .la-item-wrap.is-na .larow { opacity: 0.4; filter: grayscale(100%); }
+
+    /* Glow effect for selected items */
+    .larow.selected { border-color: rgba(193,176,133,0.25) !important; background: rgba(193,176,133,0.08) !important; box-shadow: 0 0 12px rgba(193,176,133,0.4) !important; }
+    .larow.selected .lash { border-color: #c1b085 !important; box-shadow: 0 0 12px rgba(193,176,133,0.6) !important; }
+    .larow.selected .lamk { opacity: 1 !important; transform: scale(1) !important; }
+
+    @keyframes la-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes la-in { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <div id="la-wrap" style="background:#100d0a;color:#fdfcfa;padding:48px 20px 60px;box-sizing:border-box;font-family:'Bodoni Moda',Georgia,serif;">
+    <div style="max-width:620px;margin:0 auto;">
+
+      <div id="pg1">
+        <div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:5px;color:#b8984e;text-align:center;margin-bottom:4px;">PILLAR 1 OF 7</div>
+        <div style="font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:#fdfcfa;text-align:center;letter-spacing:3px;margin-bottom:10px;">DIGITAL LIFE</div>
+        <div style="font-family:'Bodoni Moda',serif;font-size:16px;font-style:italic;color:#b0a494;text-align:center;margin-bottom:28px;line-height:1.5;">Access and continuity for essential digital accounts, credentials, and archives.</div>
+
+        <div id="la-ctr-0" style="display:flex;align-items:center;justify-content:center;margin-bottom:32px;">
+          <div style="display:inline-flex;align-items:baseline;gap:8px;padding:14px 32px;border:1px solid #342a1c;border-radius:2px;background:rgba(193,176,133,0.02);box-shadow:none;transition:border-color 0.3s,box-shadow 0.4s,background 0.3s;">
+            <span style="font-family:Cinzel,serif;font-size:28px;font-weight:700;color:#6b5a38;line-height:1;text-shadow:none;transition:color 0.3s,text-shadow 0.3s;">0</span>
+            <span style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#8a7240;line-height:1;">of 6</span>
           </div>
-          <button onclick="__la.na(${pi},${ii})" class="lana-btn" style="${n ? 'background:#342a1c; color:#c1b085; border-color:#7A6842;' : ''}">N/A</button>
-        </div>`;
-    }
+        </div>
 
-    var backBtn = pi===0 ? '' : `<button onclick="__la.go(${pi===6 && OB===false ? 5 : pi})" style="background:none; border:none; color:#6b5a38; cursor:pointer; font-family:Cinzel; letter-spacing:2px;">BACK</button>`;
-    var nextBtn = `<button onclick="${isLast ? '__la.go(\'R\')' : isP5 ? '__la.p5()' : '__la.go('+(pi+2)+')'}" style="background:#c1b085; border:none; color:#100d0a; padding:15px 40px; cursor:pointer; font-family:Cinzel; font-weight:700;">${isLast ? 'SEE RESULTS' : 'CONTINUE'}</button>`;
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:52px;">
 
-    return `
-      <div style="text-align:center; font-family:Cinzel; font-size:11px; letter-spacing:5px; color:#b8984e; margin-bottom:4px;">PILLAR ${pi+1} OF 7</div>
-      <div style="text-align:center; font-family:Cinzel; font-size:24px; font-weight:700; color:#fdfcfa; letter-spacing:3px; margin-bottom:32px;">${pl.n.toUpperCase()}</div>
-      <div id="la-ctr-${pi}" style="display:flex; align-items:center; justify-content:center; margin-bottom:32px;">
-        <div style="display:inline-flex; align-items:baseline; gap:8px; padding:14px 32px; border:1px solid #342a1c; border-radius:2px; background:rgba(193,176,133,0.02);">
-          <span style="font-family:Cinzel; font-size:28px; font-weight:700; color:#c1b085;">0</span>
-          <span style="font-family:Bodoni Moda; font-size:16px; font-style:italic; color:#8a7240;">of 6</span>
+          <div class="la-item-wrap">
+            <input type="checkbox" id="c0-0" class="lacb">
+            <label for="c0-0" class="larow">
+              <div class="lash">
+                <svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none">
+                  <path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="lalb">PRIMARY EMAIL ACCOUNT ACCESS</span>
+            </label>
+          </div>
+
+          <div class="la-item-wrap">
+            <input type="checkbox" id="c0-1" class="lacb">
+            <label for="c0-1" class="larow">
+              <div class="lash">
+                <svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none">
+                  <path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="lalb">MASTER PASSWORD MANAGER VAULT</span>
+            </label>
+          </div>
+
+          <div class="la-item-wrap">
+            <input type="checkbox" id="c0-2" class="lacb">
+            <label for="c0-2" class="larow">
+              <div class="lash">
+                <svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none">
+                  <path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="lalb">CLOUD STORAGE & PHOTO ARCHIVES</span>
+            </label>
+          </div>
+
+          <div class="la-item-wrap">
+            <input type="checkbox" id="c0-3" class="lacb">
+            <label for="c0-3" class="larow">
+              <div class="lash">
+                <svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none">
+                  <path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="lalb">TWO-FACTOR AUTH (2FA) RECOVERY KEYS</span>
+            </label>
+          </div>
+
+          <div class="la-item-wrap">
+            <input type="checkbox" id="c0-4" class="lacb">
+            <label for="c0-4" class="larow">
+              <div class="lash">
+                <svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none">
+                  <path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="lalb">SOCIAL MEDIA LEGACY CONTACTS</span>
+            </label>
+          </div>
+
+          <div class="la-item-wrap">
+            <input type="checkbox" id="c0-5" class="lacb">
+            <label for="c0-5" class="larow">
+              <div class="lash">
+                <svg class="lamk" width="14" height="11" viewBox="0 0 14 11" fill="none">
+                  <path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <span class="lalb">DIGITAL MEDIA ARCHIVES</span>
+            </label>
+          </div>
+
+        </div>
+
+        <div style="text-align:center;">
+          <input type="checkbox" id="la-go" class="lacb">
+          <label for="la-go" style="display:inline-block;padding:15px 40px;cursor:pointer;">
+            <span style="font-family:'Cinzel',serif;font-size:16px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;padding:15px 40px;border-radius:1px;">CONTINUE</span>
+          </label>
         </div>
       </div>
-      <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:52px;">${rows}</div>
-      ${isP5 ? `<div style="text-align:center; margin-bottom:40px; border-top:1px solid #2a2218; padding-top:20px;">
-          <div style="color:#b8984e; margin-bottom:15px; font-family:Cinzel;">DO YOU OWN A BUSINESS?</div>
-          <button id="by" onclick="__la.by()" style="padding:10px 20px; cursor:pointer; margin-right:10px;">YES</button>
-          <button id="bn" onclick="__la.bn()" style="padding:10px 20px; cursor:pointer;">NO</button>
-      </div>` : ''}
-      <div style="display:flex; justify-content:space-between; align-items:center;">${backBtn}${nextBtn}</div>`;
-  }
 
-  window.__la = {
-    go: function(n){
-      if(n===1) { document.getElementById('pg1').style.display=''; document.getElementById('pg-rest').innerHTML=''; }
-      else { document.getElementById('pg1').style.display='none'; document.getElementById('pg-rest').innerHTML=(n==='R'?'Calculation...':pillarHTML(n-1)); if(n!=='R') updateCtr(n-1); }
-      scrollToAudit();
-    },
-    t: function(pi, ii){ if(NA[pi][ii]) return; ST[pi][ii]=ST[pi][ii]?0:1; this.refresh(pi); },
-    na: function(pi, ii){ NA[pi][ii]=NA[pi][ii]?0:1; if(NA[pi][ii]) ST[pi][ii]=0; this.refresh(pi); },
-    refresh: function(pi){
-      if(pi === 0) { updateCtr(0); } // Page 1 handled by polling
-      else { document.getElementById('pg-rest').innerHTML = pillarHTML(pi); updateCtr(pi); }
-    },
-    by: function(){ OB=true; document.getElementById('by').style.background='#c1b085'; document.getElementById('bn').style.background='none'; },
-    bn: function(){ OB=false; document.getElementById('bn').style.background='#c1b085'; document.getElementById('by').style.background='none'; },
-    p5: function(){ if(OB===null)alert('Please select Business status'); else this.go(OB?6:7); }
-  };
+      <div id="pg-rest"></div>
+    </div>
+  </div>
 
-  // Keep Page 1 in sync
-  setInterval(function(){
-    var pg1 = document.getElementById('pg1');
-    if(pg1 && pg1.style.display !== 'none'){
-      for(var i=0; i<6; i++){
-        var cb = document.getElementById('c0-'+i);
-        if(cb) ST[0][i] = cb.checked ? 1 : 0;
-        var wrap = document.getElementById('wrap0-'+i);
-        if(wrap) NA[0][i] = wrap.classList.contains('is-na') ? 1 : 0;
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add N/A buttons to all items
+      const itemWraps = document.querySelectorAll('.la-item-wrap');
+      itemWraps.forEach((wrap, index) => {
+        const naButton = document.createElement('input');
+        naButton.type = 'checkbox';
+        naButton.className = 'lana';
+        naButton.id = `na0-${index}`;
+
+        const naLabel = document.createElement('label');
+        naLabel.htmlFor = naButton.id;
+        naLabel.className = 'lana-btn';
+        naLabel.textContent = 'N/A';
+
+        wrap.appendChild(naButton);
+        wrap.appendChild(naLabel);
+
+        // Toggle "N/A" state
+        naButton.addEventListener('change', function() {
+          if (this.checked) {
+            wrap.classList.add('is-na');
+            wrap.querySelector('.lacb').checked = false;
+          } else {
+            wrap.classList.remove('is-na');
+          }
+        });
+
+        // Disable "N/A" if Yes/No is selected
+        wrap.querySelector('.lacb').addEventListener('change', function() {
+          if (this.checked) {
+            naButton.checked = false;
+            wrap.classList.remove('is-na');
+          }
+        });
+      });
+
+      // Glow effect for selected items
+      const checkboxes = document.querySelectorAll('.lacb');
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          const row = this.nextElementSibling;
+          if (this.checked) {
+            row.classList.add('selected');
+          } else {
+            row.classList.remove('selected');
+          }
+        });
+      });
+
+      // Hide results until email submission
+      const resultsSection = document.getElementById('pg-rest');
+      if (resultsSection) {
+        resultsSection.style.display = 'none';
       }
-      updateCtr(0);
-    }
-  }, 500);
 
-})();
+      // Email submission logic
+      const emailForm = document.createElement('form');
+      emailForm.id = 'email-form';
+      emailForm.innerHTML = `
+        <div style="text-align:center;margin:30px 0;">
+          <label for="email" style="font-family:Bodoni Moda,serif;font-size:16px;color:#b0a494;">Enter your email to see results:</label><br>
+          <input type="email" id="email" required style="padding:8px;margin:10px 0;width:200px;background:#100d0a;color:#fdfcfa;border:1px solid #342a1c;">
+          <button type="submit" style="font-family:Cinzel,serif;padding:8px 16px;background:#c1b085;color:#100d0a;border:none;cursor:pointer;">Submit</button>
+        </div>
+      `;
+
+      const continueButton = document.querySelector('label[for="la-go"]');
+      if (continueButton) {
+        continueButton.addEventListener('click', function(e) {
+          if (document.getElementById('la-go').checked) {
+            e.preventDefault();
+            document.querySelector('#la-wrap > div').appendChild(emailForm);
+            document.getElementById('la-go').checked = false;
+          }
+        });
+      }
+
+      emailForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (resultsSection) {
+          resultsSection.style.display = 'block';
+          resultsSection.innerHTML = `
+            <div style="text-align:center;padding:40px;background:rgba(193,176,133,0.05);border:1px solid #342a1c;margin-top:20px;">
+              <h2 id="results-message" style="font-family:Cinzel,serif;font-size:24px;color:#c1b085;margin-bottom:20px;">Your results are below.</h2>
+              <p style="font-family:Bodoni Moda,serif;font-size:16px;color:#b0a494;">[Insert your results content here]</p>
+            </div>
+          `;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
