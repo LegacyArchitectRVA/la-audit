@@ -110,19 +110,31 @@ function fullResultsHTML(){
   return `
   <div style="max-width:620px;margin:0 auto;text-align:center;">
 
-    <div style="margin-bottom:20px;">YOUR KEY GAPS</div>
-
-    <div style="margin-bottom:30px;">
-      Missing documentation across legal, financial, and operational systems.
+    <div style="font-family:Cinzel,serif;font-size:18px;letter-spacing:3px;color:#fdfcfa;margin-bottom:20px;">
+      YOUR FULL RESULTS
     </div>
 
-    <div style="margin-bottom:30px;">
-      Full checklist and breakdown provided here.
+    <div style="max-width:560px;margin:0 auto 22px;font-family:'Bodoni Moda',serif;font-size:18px;font-style:italic;line-height:1.8;color:#d1c4b0;">
+      Your audit revealed gaps across multiple systems. This is not unusual.
     </div>
 
-    <button onclick="window.location.href='/#contact'" style="padding:14px;background:#c1b085;color:#000;cursor:pointer;">
-      SCHEDULE A CONVERSATION
-    </button>
+    <div style="max-width:560px;margin:0 auto 18px;font-family:'Bodoni Moda',serif;font-size:18px;font-style:italic;line-height:1.8;color:#d1c4b0;">
+      The highest-risk areas are usually access, records, and missing instructions for the person who would need to step in.
+    </div>
+
+    <div style="max-width:560px;margin:0 auto 32px;font-family:'Bodoni Moda',serif;font-size:18px;font-style:italic;line-height:1.8;color:#d1c4b0;">
+      Your full checklist and breakdown would continue here.
+    </div>
+
+    <div style="margin-top:36px;padding-top:24px;border-top:1px solid rgba(193,176,133,0.12);">
+      <div style="max-width:560px;margin:0 auto 22px;font-family:'Bodoni Moda',serif;font-size:18px;font-style:italic;line-height:1.8;color:#d1c4b0;">
+        A Life Manual helps organize the operational details someone else would need if you could not manage them yourself.
+      </div>
+
+      <button onclick="window.location.href='/#contact'" style="padding:14px 24px;background:#c1b085;color:#100d0a;border:none;cursor:pointer;font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:2px;">
+        SCHEDULE A CONVERSATION
+      </button>
+    </div>
 
   </div>`;
 }
