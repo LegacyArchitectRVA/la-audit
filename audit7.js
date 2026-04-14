@@ -876,7 +876,7 @@
         }
       };
       xhr.onerror=function(){if(msg)msg.textContent='Connection error. Please try again.';};
-      xhr.send(JSON.stringify({fields:[{name:'email',value:email},{name:'message',value:body}]}));
+      xhr.send(JSON.stringify({fields:[{name:'email',value:email},{name:'message',value:body},{name:'audit_tier',value:tierName},{name:'audit_score',value:String(tot)},{name:'audit_percent',value:String(pct)},{name:'business_owner',value:OB?'Yes':'No'}]}));
     },
 
     rs:function(){
