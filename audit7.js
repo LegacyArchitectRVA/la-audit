@@ -74,12 +74,15 @@
   /* ── helpers ────────────────────────────────────── */
 
   function scrollToAudit(){
-    var el=document.getElementById('la-wrap');
-    if(!el) return;
-    var rect=el.getBoundingClientRect();
-    var scrollY=window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop||0;
-    var target=rect.top+scrollY-10;
-    try{window.scrollTo({top:target,behavior:'smooth'});}catch(e){window.scrollTo(0,target);}
+    var el=document.getElementById('la-wrap')||document.getElementById('pg-rest')||document.getElementById('pg1');
+    if(el){
+      var rect=el.getBoundingClientRect();
+      var scrollY=window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop||0;
+      var target=Math.max(0,rect.top+scrollY-10);
+      try{window.scrollTo({top:target,behavior:'smooth'});}catch(e){window.scrollTo(0,target);}
+    }else{
+      try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}
+    }
   }
 
   function getPg1State(){
@@ -774,6 +777,28 @@
     if(target&&target.parentElement){target.parentElement.insertBefore(ctrDiv.firstElementChild,target);}
     else{pg1.insertBefore(ctrDiv.firstElementChild,pg1.firstChild);}
     updateCtr(0);
+  })();
+
+  /* ── wire Page 1 mutual exclusion: checkbox ↔ N/A ── */
+  (function wireP1(){
+    var firstCb=document.getElementById('c0-0');
+    if(!firstCb){setTimeout(wireP1,200);return;}
+    for(var i=0;i<6;i++){
+      (function(idx){
+        var cb=document.getElementById('c0-'+idx);
+        var na=document.getElementById('na0-'+idx);
+        if(cb) cb.addEventListener('change',function(){
+          if(cb.checked&&na&&na.checked){na.checked=false; NA[0][idx]=0;}
+          ST[0][idx]=cb.checked?1:0;
+          updateCtr(0);
+        });
+        if(na) na.addEventListener('change',function(){
+          if(na.checked&&cb&&cb.checked){cb.checked=false; ST[0][idx]=0;}
+          NA[0][idx]=na.checked?1:0;
+          updateCtr(0);
+        });
+      })(i);
+    }
   })();
 
   /* ── polling: nav checkbox + page 1 counter ────── */
