@@ -654,9 +654,9 @@
       /* update N/A button style */
       var naBtn=document.getElementById('na'+pi+'-'+ii);
       if(naBtn){
-        naBtn.style.borderColor=isNa?'#6b5a38':'#342a1c';
-        naBtn.style.background=isNa?'rgba(107,90,56,0.12)':'transparent';
-        naBtn.style.boxShadow=isNa?'0 0 10px rgba(107,90,56,0.4)':'none';
+        naBtn.style.borderColor=isNa?'#c1b085':'#342a1c';
+        naBtn.style.background=isNa?'rgba(193,176,133,0.08)':'transparent';
+        naBtn.style.boxShadow=isNa?'0 0 12px rgba(193,176,133,0.5),0 0 24px rgba(193,176,133,0.2)':'none';
         var span=naBtn.querySelector('span');
         if(span) span.style.color=isNa?'#b8984e':'#4a3d28';
       }
