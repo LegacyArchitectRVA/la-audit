@@ -526,7 +526,7 @@
       '<a href="https://legacyarchitectrva.com/#workbook" target="_blank" onclick="__la.ctaW()" style="text-decoration:none;display:inline-block;">'+
         '<img src="'+WORKBOOK_IMG+'" alt="7-Pillar Continuity Workbook" style="max-width:360px;width:100%;border-radius:2px;margin-bottom:14px;">'+
       '</a>'+
-      '<div style="margin-bottom:16px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" onclick="__la.ctaW()" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);text-decoration:none;display:inline-block;padding:14px 36px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.25);transition:box-shadow 0.3s;">DOWNLOAD THE FREE WORKBOOK</a></div>'+
+      '<div style="margin-bottom:16px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" onclick="__la.ctaW()" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);text-decoration:none;display:inline-block;padding:14px 36px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.25);transition:box-shadow 0.3s;">GET THE 7-PILLAR WORKBOOK</a></div>'+
       '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" onclick="__la.ctaP()" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid rgba(193,176,133,0.5);border-radius:2px;display:inline-block;transition:border-color 0.3s,box-shadow 0.3s;">VIEW PACKAGES & PRICING</a>'+
     '</div>';
 
@@ -845,7 +845,7 @@
               /* Workbook + pricing */
               '<div style="border-top:1px solid #2a2218;padding-top:24px;">'+
                 '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#fdfcfa;line-height:1.6;margin-bottom:16px;">Explore at your own pace:</div>'+
-                '<div style="margin-bottom:16px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" onclick="__la.ctaW()" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);text-decoration:none;display:inline-block;padding:14px 36px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.25);">DOWNLOAD THE FREE WORKBOOK</a></div>'+
+                '<div style="margin-bottom:16px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" onclick="__la.ctaW()" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);text-decoration:none;display:inline-block;padding:14px 36px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.25);">GET THE 7-PILLAR WORKBOOK</a></div>'+
                 '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" onclick="__la.ctaP()" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid rgba(193,176,133,0.5);border-radius:2px;display:inline-block;">VIEW PACKAGES & PRICING</a>'+
               '</div>'+
               /* Cal embed */
