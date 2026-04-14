@@ -1,4 +1,6 @@
-/* LA Digital Audit v17 - audit7.js
+/* LA Digital Audit v19.3 - audit7.js
+   v19.3 changes:
+   - Added GA4 event tracking: audit_start, pillar_view, audit_complete, business_gate, email_submit, cta_click
    Changes from v16:
    - Results reordered: 52% stat -> pillar breakdown -> continuity score
    - Removed all em dashes
@@ -75,6 +77,11 @@
   var OB=null;
   var lastP1Cnt=-1;
   var lastP1Na=-1;
+
+  /* ── GA4 event tracking ─────────────────────────── */
+  function gaEvt(name, params) {
+    try { if (typeof gtag === 'function') gtag('event', name, params || {}); } catch(e) {}
+  }
 
   /* ── helpers ────────────────────────────────────── */
 
@@ -516,11 +523,11 @@
     /* Workbook CTA with image */
     h+='<div style="text-align:center;margin-top:28px;padding-top:24px;border-top:1px solid #2a2218;">'+
       '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#fdfcfa;line-height:1.6;margin-bottom:16px;">Explore at your own pace:</div>'+
-      '<a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="text-decoration:none;display:inline-block;">'+
+      '<a href="https://legacyarchitectrva.com/#workbook" target="_blank" onclick="__la.ctaW()" style="text-decoration:none;display:inline-block;">'+
         '<img src="'+WORKBOOK_IMG+'" alt="7-Pillar Continuity Workbook" style="max-width:360px;width:100%;border-radius:2px;margin-bottom:14px;">'+
       '</a>'+
-      '<div style="margin-bottom:16px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);text-decoration:none;display:inline-block;padding:14px 36px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.25);transition:box-shadow 0.3s;">DOWNLOAD THE FREE WORKBOOK</a></div>'+
-      '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid rgba(193,176,133,0.5);border-radius:2px;display:inline-block;transition:border-color 0.3s,box-shadow 0.3s;">VIEW PACKAGES & PRICING</a>'+
+      '<div style="margin-bottom:16px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" onclick="__la.ctaW()" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);text-decoration:none;display:inline-block;padding:14px 36px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.25);transition:box-shadow 0.3s;">DOWNLOAD THE FREE WORKBOOK</a></div>'+
+      '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" onclick="__la.ctaP()" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid rgba(193,176,133,0.5);border-radius:2px;display:inline-block;transition:border-color 0.3s,box-shadow 0.3s;">VIEW PACKAGES & PRICING</a>'+
     '</div>';
 
     /* Cal.com inline embed */
@@ -657,9 +664,16 @@
 
   window.__la={
     go:function(n){
-      if(n===1){showPg1();showRest('');}
-      else if(n==='R'){getPg1State();hidePg1();showRest(resultsHTML());}
-      else{hidePg1();showRest(pillarHTML(n-1));}
+      if(n===1){showPg1();showRest('');gaEvt('audit_start');}
+      else if(n==='R'){
+        getPg1State();hidePg1();showRest(resultsHTML());
+        var s=calcScore(),t=getTier(s.total,s.max);
+        gaEvt('audit_complete',{score:s.total,max_score:s.max,percent:s.pct,tier:t<4?TP[t].t:'',business_owner:OB?'yes':'no'});
+      }
+      else{
+        hidePg1();showRest(pillarHTML(n-1));
+        gaEvt('pillar_view',{pillar_number:n,pillar_name:P[n-2>=0?n-2:0].n});
+      }
       scrollToAudit();
     },
 
@@ -717,7 +731,7 @@
 
     /* business owner: YES */
     by:function(){
-      OB=true;
+      OB=true;gaEvt('business_gate',{answer:'yes'});
       var y=document.getElementById('by'),n=document.getElementById('bn'),h=document.getElementById('bh');
       if(y){y.style.borderColor='#c1b085';y.style.color='#c1b085';y.style.background='rgba(193,176,133,0.05)';y.style.boxShadow='0 0 18px rgba(193,176,133,0.5),inset 0 0 12px rgba(193,176,133,0.08)';}
       if(n){n.style.borderColor='#4a3d28';n.style.color='#8a7240';n.style.background='transparent';n.style.boxShadow='none';}
@@ -726,7 +740,7 @@
 
     /* business owner: NO — now with matching gold glow */
     bn:function(){
-      OB=false;
+      OB=false;gaEvt('business_gate',{answer:'no'});
       var y=document.getElementById('by'),n=document.getElementById('bn'),h=document.getElementById('bh');
       if(n){n.style.borderColor='#c1b085';n.style.color='#c1b085';n.style.background='rgba(193,176,133,0.05)';n.style.boxShadow='0 0 18px rgba(193,176,133,0.5),inset 0 0 12px rgba(193,176,133,0.08)';}
       if(y){y.style.borderColor='#4a3d28';y.style.color='#8a7240';y.style.background='transparent';y.style.boxShadow='none';}
@@ -734,6 +748,11 @@
     },
 
     p5:function(){if(OB===null){var h=document.getElementById('bh');if(h){h.textContent='Please answer before continuing.';h.style.color='#b8984e';}return;}window.__la.go(OB?6:7);},
+
+    /* GA CTA tracking */
+    ctaW:function(){gaEvt('cta_click',{destination:'workbook'});},
+    ctaP:function(){gaEvt('cta_click',{destination:'pricing'});},
+    ctaC:function(){gaEvt('cta_click',{destination:'book_call'});},
 
     /* email submit — now optional, results already visible */
     sub:function(){
@@ -788,6 +807,7 @@
       xhr.setRequestHeader('Content-Type','application/json');
       xhr.onload=function(){
         if(xhr.status>=200&&xhr.status<300){
+          gaEvt('email_submit',{tier:tierName,score:tot,percent:pct,business_owner:OB?'yes':'no'});
           /* Fire-and-forget: send branded email via worker */
           try{
             var ePillars=[];
@@ -825,8 +845,8 @@
               /* Workbook + pricing */
               '<div style="border-top:1px solid #2a2218;padding-top:24px;">'+
                 '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#fdfcfa;line-height:1.6;margin-bottom:16px;">Explore at your own pace:</div>'+
-                '<div style="margin-bottom:16px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);text-decoration:none;display:inline-block;padding:14px 36px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.25);">DOWNLOAD THE FREE WORKBOOK</a></div>'+
-                '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid rgba(193,176,133,0.5);border-radius:2px;display:inline-block;">VIEW PACKAGES & PRICING</a>'+
+                '<div style="margin-bottom:16px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" onclick="__la.ctaW()" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);text-decoration:none;display:inline-block;padding:14px 36px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.25);">DOWNLOAD THE FREE WORKBOOK</a></div>'+
+                '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" onclick="__la.ctaP()" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid rgba(193,176,133,0.5);border-radius:2px;display:inline-block;">VIEW PACKAGES & PRICING</a>'+
               '</div>'+
               /* Cal embed */
               '<div id="la-cal-section" style="margin-top:36px;padding-top:24px;border-top:1px solid #2a2218;">'+
