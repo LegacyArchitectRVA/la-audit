@@ -11,10 +11,34 @@
    - One link to #workbook, one to #pricing
 */
 (function(){
+  if(window.__laLoaded)return; window.__laLoaded=true;
   var lnk=document.createElement('link');
   lnk.rel='stylesheet';
   lnk.href='https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,300;1,6..96,400&display=swap';
   document.head.appendChild(lnk);
+
+  /* ── responsive styles + keyframes ─────────────── */
+  var sty=document.createElement('style');
+  sty.textContent='@keyframes la-spin{to{transform:rotate(360deg)}}'+
+    '@keyframes la-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}'+
+    '@media(max-width:600px){'+
+      '#pg-rest,#pg1{padding:0 12px!important;}'+
+      '[style*="font-size:42px"]{font-size:32px!important;}'+
+      '[style*="font-size:30px"]{font-size:22px!important;}'+
+      '[style*="font-size:23px"]{font-size:18px!important;}'+
+      '[style*="letter-spacing:5px"]{letter-spacing:2px!important;}'+
+      '[style*="width:230px"]{width:170px!important;height:170px!important;}'+
+      '[style*="width:170px"][style*="flex-shrink"]{width:110px!important;}'+
+      '[style*="padding:13px 24px"]{padding:11px 16px!important;font-size:10px!important;}'+
+      '[style*="padding:14px 36px"]{padding:12px 20px!important;font-size:11px!important;}'+
+      '[style*="max-width:400px"]{max-width:100%!important;}'+
+      '[style*="max-width:360px"]{max-width:100%!important;}'+
+      '#la-cal-embed{min-height:400px!important;}'+
+      '[style*="display:flex"][style*="gap:10px"]{flex-direction:column!important;}'+
+      '[style*="display:flex"][style*="gap:10px"] input{width:100%!important;}'+
+      '[style*="display:flex"][style*="gap:10px"] button{width:100%!important;}'+
+    '}';
+  document.head.appendChild(sty);
 
   /* ── Cal.com embed loader ──────────────────────── */
   var WORKBOOK_IMG='https://cdn.jsdelivr.net/gh/LegacyArchitectRVA/la-audit@main/workbook-promo.jpg';
@@ -739,6 +763,7 @@
 
   /* ── inject counter into Carrd page 1 ─────────── */
   (function injectP1Ctr(){
+    if(document.getElementById('la-ctr-0'))return; /* already exists */
     var pg1=document.getElementById('pg1');
     if(!pg1){setTimeout(injectP1Ctr,200);return;}
     /* find the first checkbox row to insert counter above it */
