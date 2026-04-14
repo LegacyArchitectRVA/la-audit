@@ -800,7 +800,7 @@
             }
             var ePayload={email:email,score:tot,maxScore:mx,percent:pct,tier:tierName,businessOwner:OB,recommendation:rec,pillars:ePillars};
             var ex=new XMLHttpRequest();
-            ex.open('POST','__WORKER_URL__');
+            ex.open('POST','https://la-audit-email.craig-a51.workers.dev');
             ex.setRequestHeader('Content-Type','application/json');
             ex.send(JSON.stringify(ePayload));
           }catch(eErr){console.log('email worker error',eErr);}
