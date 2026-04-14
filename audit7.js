@@ -563,7 +563,7 @@
         '<div style="display:flex;align-items:center;gap:16px;">'+
           '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:1.5px;color:#c1b085;width:170px;flex-shrink:0;">'+P[idx].n.toUpperCase()+'</div>'+
           '<div style="flex:1;height:4px;background:#1a1610;border-radius:2px;position:relative;overflow:hidden;">'+
-            '<div class="lab" data-w="'+w+'" style="position:absolute;top:0;left:0;height:100%;width:0%;background:'+(full?'linear-gradient(90deg,#b8984e,#c1b085,#d4c4a0)':'linear-gradient(90deg,#6b5a38,#8a7030)')+';border-radius:2px;transition:width 1.2s cubic-bezier(0.4,0,0.2,1);box-shadow:'+(full?'0 0 10px rgba(193,176,133,0.6)':'0 0 6px rgba(138,112,48,0.4)');"></div>'+
+            '<div class="lab" data-w="'+w+'" style="position:absolute;top:0;left:0;height:100%;width:0%;background:'+(full?'linear-gradient(90deg,#b8984e,#c1b085,#d4c4a0)':'linear-gradient(90deg,#6b5a38,#8a7030)')+';border-radius:2px;transition:width 1.2s cubic-bezier(0.4,0,0.2,1);box-shadow:'+(full?'0 0 10px rgba(193,176,133,0.6)':'0 0 6px rgba(138,112,48,0.4)')+';"></div>'+
           '</div>'+
           '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:'+(full?'#c1b085':'#b8984e')+';width:42px;text-align:right;flex-shrink:0;">'+c+'/'+pmx+'</div>'+
         '</div>'+
