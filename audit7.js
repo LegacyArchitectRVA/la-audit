@@ -810,6 +810,9 @@
           ST[0][j]=(cb2&&cb2.checked)?1:0;
           var naCb2=document.getElementById('na0-'+j);
           NA[0][j]=(naCb2&&naCb2.checked)?1:0;
+          /* dim the Carrd row when N/A is active */
+          var row=cb2&&(cb2.closest('[id^="r0-"]')||cb2.parentElement.parentElement);
+          if(row) row.style.opacity=NA[0][j]?'0.35':'1';
         }
         updateCtr(0);
       }
