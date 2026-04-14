@@ -169,9 +169,9 @@
   function naStyle(isNa){
     return 'display:inline-flex;align-items:center;justify-content:center;'+
       'width:auto;min-width:42px;height:24px;padding:0 8px;flex-shrink:0;'+
-      'border:1px solid '+(isNa?'#6b5a38':'#342a1c')+';border-radius:2px;cursor:pointer;'+
-      'background:'+(isNa?'rgba(107,90,56,0.12)':'transparent')+';'+
-      'box-shadow:'+(isNa?'0 0 10px rgba(107,90,56,0.4)':'none')+';'+
+      'border:1px solid '+(isNa?'#c1b085':'#342a1c')+';border-radius:2px;cursor:pointer;'+
+      'background:'+(isNa?'rgba(193,176,133,0.08)':'transparent')+';'+
+      'box-shadow:'+(isNa?'0 0 12px rgba(193,176,133,0.5),0 0 24px rgba(193,176,133,0.2)':'none')+';'+
       'transition:border-color 0.2s,background 0.2s,box-shadow 0.2s;';
   }
 
@@ -432,7 +432,7 @@
     /* what your score means */
     h+='<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;padding-bottom:14px;border-bottom:1px solid #2a2218;margin-bottom:22px;">WHAT YOUR SCORE MEANS</div>';
     for(var pp=0;pp<tp.p.length;pp++){
-      h+='<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.8;margin-bottom:18px;">'+tp.p[pp]+'</div>';
+      h+='<div style="font-family:Bodoni Moda,serif;font-size:17px;color:#fdfcfa;line-height:1.8;margin-bottom:18px;">'+tp.p[pp]+'</div>';
     }
 
     /* key gaps */
@@ -448,12 +448,12 @@
 
     if(gaps.length>0){
       h+='<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;margin-top:40px;padding-bottom:14px;border-bottom:1px solid #2a2218;margin-bottom:22px;">YOUR KEY GAPS</div>';
-      h+='<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.8;margin-bottom:24px;">Based on your responses, these are the areas with the highest impact if left unaddressed:</div>';
+      h+='<div style="font-family:Bodoni Moda,serif;font-size:17px;color:#fdfcfa;line-height:1.8;margin-bottom:24px;">Based on your responses, these are the areas with the highest impact if left unaddressed:</div>';
       for(var gk=0;gk<gaps.length;gk++){
         var g=gaps[gk];
         h+='<div style="padding:14px 0;border-bottom:1px solid #1a1510;">'+
           '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:2px;color:#c1b085;margin-bottom:8px;">\u2717 '+P[g.pi].i[g.ii]+'</div>'+
-          '<div style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#8a7d6a;line-height:1.7;">'+GD[g.pi][g.ii]+'</div>'+
+          '<div style="font-family:Bodoni Moda,serif;font-size:15px;color:#d4cfc7;line-height:1.7;">'+GD[g.pi][g.ii]+'</div>'+
         '</div>';
       }
     }
@@ -463,14 +463,21 @@
 
     /* CTA — tight, conversion-focused */
     h+='<div style="padding:24px 0;margin-top:32px;text-align:center;">'+
-      '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:4px;color:#b8984e;margin-bottom:10px;">YOUR RECOMMENDED NEXT STEP</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#c1b085;line-height:1.5;margin-bottom:6px;">A <strong>Life Manual</strong>\u2122 closes these gaps before someone else has to.</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#b0a494;line-height:1.6;">It does not replace a will or a trust. It makes them usable.</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:4px;color:#b8984e;margin-bottom:16px;">YOUR RECOMMENDED NEXT STEP</div>'+
+      /* Book a Call button — right under heading */
+      '<div style="margin-bottom:20px;">'+
+        '<a href="#la-cal-embed" onclick="document.getElementById(\'la-cal-embed\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;padding:14px 32px;border-radius:1px;transition:all 0.3s ease;" onmouseover="this.style.background=\'#d4c4a0\'" onmouseout="this.style.background=\'#c1b085\'">'+
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#100d0a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>'+
+          'BOOK A CALL'+
+        '</a>'+
+      '</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:18px;color:#c1b085;line-height:1.5;margin-bottom:6px;">A <strong>Life Manual</strong>\u2122 closes these gaps before someone else has to.</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:15px;color:#fdfcfa;line-height:1.6;">It does not replace a will or a trust. It makes them usable.</div>'+
     '</div>';
 
     /* Workbook CTA with image */
     h+='<div style="text-align:center;margin-top:28px;padding-top:24px;border-top:1px solid #2a2218;">'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#b0a494;line-height:1.6;margin-bottom:16px;">Explore at your own pace:</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:16px;color:#fdfcfa;line-height:1.6;margin-bottom:16px;">Explore at your own pace:</div>'+
       '<a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="text-decoration:none;display:inline-block;">'+
         '<img src="'+WORKBOOK_IMG+'" alt="7-Pillar Continuity Workbook" style="max-width:360px;width:100%;border-radius:2px;margin-bottom:14px;">'+
       '</a>'+
@@ -478,18 +485,10 @@
       '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid #c1b085;border-radius:1px;display:inline-block;">VIEW PACKAGES & PRICING</a>'+
     '</div>';
 
-    /* Book a Call icon anchor → scrolls to calendar */
-    h+='<div style="text-align:center;margin-top:28px;">'+
-      '<a href="#la-cal-embed" onclick="document.getElementById(\'la-cal-embed\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#c1b085;padding:12px 28px;border:1px solid rgba(193,176,133,0.3);border-radius:1px;transition:all 0.3s ease;" onmouseover="this.style.borderColor=\'#c1b085\';this.style.background=\'rgba(193,176,133,0.06)\'" onmouseout="this.style.borderColor=\'rgba(193,176,133,0.3)\';this.style.background=\'none\'">'+
-        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c1b085" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>'+
-        'BOOK A CALL'+
-      '</a>'+
-    '</div>';
-
     /* Cal.com inline embed */
     h+='<div id="la-cal-section" style="margin-top:36px;padding-top:24px;border-top:1px solid #2a2218;">'+
       '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:4px;color:#b8984e;text-align:center;margin-bottom:6px;">BOOK A PRIVATE CONVERSATION</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:14px;font-style:italic;color:#8a7240;text-align:center;margin-bottom:16px;">No obligation. 100% confidential.</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:14px;color:#c1b085;text-align:center;margin-bottom:16px;">No obligation. 100% confidential.</div>'+
       '<div id="la-cal-embed" style="width:100%;min-height:500px;overflow:auto;"></div>'+
     '</div>';
 
@@ -510,7 +509,7 @@
     /* 52% urgency stat - FIRST */
     h+='<div style="padding:20px 24px;margin-bottom:28px;text-align:center;background:rgba(193,176,133,0.02);">'+
         '<div style="font-family:Cinzel,serif;font-size:42px;font-weight:700;color:#c1b085;line-height:1;margin-bottom:8px;">52%</div>'+
-        '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.6;">of adults have <strong style=\'color:#c1b085;\'>no plan</strong> for their digital assets. The gaps below show where your family would be left guessing.</div>'+
+        '<div style="font-family:Bodoni Moda,serif;font-size:17px;color:#fdfcfa;line-height:1.6;">of adults have <strong style=\'color:#c1b085;\'>no plan</strong> for their digital assets. The gaps below show where your family would be left guessing.</div>'+
       '</div>';
 
     /* pillar breakdown bars - SECOND */
@@ -552,7 +551,7 @@
               '<div style="font-family:Cinzel,serif;font-size:58px;font-weight:600;color:#c1b085;line-height:1;text-shadow:0 0 30px rgba(193,176,133,0.3);">'+pct+'</div>'+
               '<div style="font-family:Cinzel,serif;font-size:22px;color:#b8984e;line-height:1;">%</div>'+
             '</div>'+
-            '<div style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#c1b085;text-align:center;padding:0 16px;margin-top:4px;">'+desc+'</div>'+
+            '<div style="font-family:Bodoni Moda,serif;font-size:15px;color:#c1b085;text-align:center;padding:0 16px;margin-top:4px;">'+desc+'</div>'+
           '</div>'+
         '</div>'+
       '</div>'+
@@ -565,8 +564,8 @@
     h+='<div style="padding:40px 32px;text-align:center;background:rgba(193,176,133,0.03);">'+
         '<div id="la-email-sec">'+
           '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:3px;color:#c1b085;margin-bottom:12px;">GET YOUR FULL RESULTS</div>'+
-          '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;margin-bottom:8px;line-height:1.6;">Your score is above, but the real insight is in the details.</div>'+
-          '<div style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#b0a494;margin-bottom:24px;line-height:1.6;">Enter your email to unlock your personalized gap analysis, risk explanations, and recommended next steps.</div>'+
+          '<div style="font-family:Bodoni Moda,serif;font-size:17px;color:#fdfcfa;margin-bottom:8px;line-height:1.6;">Your score is above, but the real insight is in the details.</div>'+
+          '<div style="font-family:Bodoni Moda,serif;font-size:16px;color:#fdfcfa;margin-bottom:24px;line-height:1.6;">Enter your email to unlock your personalized gap analysis, risk explanations, and recommended next steps.</div>'+
           '<div style="display:flex;gap:10px;max-width:400px;margin:0 auto;">'+
             '<input id="la-email" type="email" placeholder="Email" style="flex:1;padding:13px 16px;background:transparent;border:1px solid #6b5a38;border-radius:1px;color:#c1b085;font-family:Bodoni Moda,serif;font-size:15px;outline:none;">'+
             '<button onclick="__la.sub()" style="font-family:Cinzel,serif;font-size:11px;font-weight:700;letter-spacing:2px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;padding:13px 24px;border-radius:1px;white-space:nowrap;">UNLOCK RESULTS</button>'+
@@ -730,10 +729,11 @@
         if(xhr.status>=200&&xhr.status<300){
           var sec=document.getElementById('la-email-sec');
           if(sec)sec.parentElement.outerHTML=fullResultsHTML();
-          /* re-trigger bar animations + init Cal embed */
+          /* re-trigger bar animations + init Cal embed + scroll to top */
           setTimeout(function(){
             var b=document.querySelectorAll('.lab');for(var i=0;i<b.length;i++)b[i].style.width=b[i].getAttribute('data-w')+'%';
             initCalEmbed();
+            scrollToAudit();
           },200);
         }else{
           if(msg)msg.textContent='Something went wrong. Please try again.';
