@@ -26,7 +26,7 @@
     '[id^="r"][id*="-"]:hover{background:rgba(193,176,133,0.04)!important;border-color:rgba(193,176,133,0.15)!important;}'+
     'button:hover{filter:brightness(1.08);}'+
     '#la-email:focus{border-color:#c1b085!important;box-shadow:0 0 12px rgba(193,176,133,0.2)!important;}'+
-    '@media(max-width:600px){'+
+    '@media(max-width:600px){[style*="letter-spacing:4px"]{letter-spacing:2px!important;font-size:12px!important;}'+
       '#pg-rest,#pg1{padding:0 12px!important;}'+
       '[style*="font-size:44px"]{font-size:34px!important;}'+
       '[style*="font-size:32px"]{font-size:23px!important;}'+
@@ -499,7 +499,7 @@
     h+='<div style="padding:24px 0;margin-top:32px;text-align:center;">'+
       '<div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">'+
         '<div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#4a3d28);"></div>'+
-        '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;white-space:nowrap;">YOUR RECOMMENDED NEXT STEP</div>'+
+        '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;">YOUR RECOMMENDED NEXT STEP</div>'+
         '<div style="flex:1;height:1px;background:linear-gradient(90deg,#4a3d28,transparent);"></div>'+
       '</div>'+
       /* Book a Call button — right under heading */
@@ -739,8 +739,18 @@
     sub:function(){
       var em=document.getElementById('la-email');
       var msg=document.getElementById('la-email-msg');
-      if(!em||!em.value||em.value.indexOf('@')<1){if(msg)msg.textContent='Please enter a valid email.';return;}
-      var email=em.value;
+      if(!em||!em.value){if(msg)msg.textContent='Please enter a valid email.';return;}
+      var eVal=em.value.trim().toLowerCase();
+      /* basic format check */
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(eVal)){if(msg)msg.textContent='Please enter a valid email address.';return;}
+      /* block disposable/temp email domains */
+      var dom=eVal.split('@')[1];
+      var blocked=['mailinator.com','guerrillamail.com','tempmail.com','throwaway.email','yopmail.com','sharklasers.com','guerrillamailblock.com','grr.la','dispostable.com','maildrop.cc','mailnesia.com','tempmailaddress.com','trashmail.com','fakeinbox.com','tempail.com','temp-mail.org','10minutemail.com','minutemail.com','emailondeck.com','binkmail.com','mailcatch.com','mohmal.com','discard.email','getnada.com','spamgourmet.com','mytemp.email','mailsac.com','inboxbear.com','33mail.com','mailnull.com','spamfree24.org','trash-mail.com','harakirimail.com','bugmenot.com','tmail.com','temp-mail.io'];
+      if(blocked.indexOf(dom)>=0){if(msg)msg.textContent='Please use a permanent email address.';return;}
+      /* block obvious fakes */
+      var local=eVal.split('@')[0];
+      if(local==='test'||local==='fake'||local==='asdf'||local==='abc'||local==='aaa'||dom==='test.com'||dom==='fake.com'||dom==='example.com'){if(msg)msg.textContent='Please enter your real email to receive your results.';return;}
+      var email=eVal;
       if(msg)msg.textContent='Sending\u2026';
 
       var sc=calcScore();
@@ -778,16 +788,53 @@
       xhr.setRequestHeader('Content-Type','application/json');
       xhr.onload=function(){
         if(xhr.status>=200&&xhr.status<300){
-          var sec=document.getElementById('la-email-sec');
-          if(sec)sec.parentElement.outerHTML=fullResultsHTML();
-          /* re-trigger bar animations + init Cal embed + scroll to very top */
-          setTimeout(function(){
-            var b=document.querySelectorAll('.lab');for(var i=0;i<b.length;i++)b[i].style.width=b[i].getAttribute('data-w')+'%';
+          /* Replace entire results area with confirmation */
+          var rest=document.getElementById('pg-rest');
+          if(rest){
+            rest.innerHTML=
+              '<div style="text-align:center;padding:60px 24px;">'+
+              '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:5px;color:#b8984e;margin-bottom:20px;">AUDIT COMPLETE</div>'+
+              '<div style="font-family:Cinzel,serif;font-size:28px;font-weight:700;color:#fdfcfa;letter-spacing:2px;margin-bottom:20px;line-height:1.3;">Your Results Are On The Way</div>'+
+              '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#c1b085;line-height:1.6;margin-bottom:40px;">Check your inbox for your full gap analysis, risk breakdown, and personalized next steps.</div>'+
+              '<div style="width:60px;height:1px;background:linear-gradient(90deg,transparent,#4a3d28,transparent);margin:0 auto 40px;"></div>'+
+              /* CTAs */
+              '<div style="margin-bottom:20px;">'+
+                '<a href="#la-cal-embed" onclick="initCalEmbed();setTimeout(function(){document.getElementById(\'la-cal-embed\').scrollIntoView({behavior:\'smooth\',block:\'start\'});},300);return false;" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);padding:14px 32px;border-radius:2px;box-shadow:0 3px 16px rgba(193,176,133,0.35);">'+
+                  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#100d0a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>'+
+                  'BOOK A CALL'+
+                '</a>'+
+              '</div>'+
+              '<div style="font-family:Bodoni Moda,serif;font-size:19px;color:#c1b085;line-height:1.5;margin-bottom:6px;">A <strong>Life Manual</strong>\u2122 closes these gaps before someone else has to.</div>'+
+              '<div style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#fdfcfa;line-height:1.6;margin-bottom:40px;">It does not replace a will or a trust. It makes them usable.</div>'+
+              /* Workbook + pricing */
+              '<div style="border-top:1px solid #2a2218;padding-top:24px;">'+
+                '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#fdfcfa;line-height:1.6;margin-bottom:16px;">Explore at your own pace:</div>'+
+                '<div style="margin-bottom:16px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);text-decoration:none;display:inline-block;padding:14px 36px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.25);">DOWNLOAD THE FREE WORKBOOK</a></div>'+
+                '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid rgba(193,176,133,0.5);border-radius:2px;display:inline-block;">VIEW PACKAGES & PRICING</a>'+
+              '</div>'+
+              /* Cal embed */
+              '<div id="la-cal-section" style="margin-top:36px;padding-top:24px;border-top:1px solid #2a2218;">'+
+                '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;text-align:center;margin-bottom:6px;">BOOK A PRIVATE CONVERSATION</div>'+
+                '<div style="font-family:Bodoni Moda,serif;font-size:15px;color:#c1b085;text-align:center;margin-bottom:16px;">No obligation. 100% confidential.</div>'+
+                '<div id="la-cal-embed" style="width:100%;min-height:500px;overflow:auto;"></div>'+
+              '</div>'+
+              /* Footer */
+              '<div style="border-top:1px solid #2a2218;margin-top:40px;padding-top:32px;">'+
+                '<div style="display:flex;align-items:center;gap:14px;justify-content:center;margin-bottom:8px;">'+
+                  '<div style="width:40px;height:1px;background:linear-gradient(90deg,transparent,#4a3d28);"></div>'+
+                  '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#c1b085;line-height:1.6;">\u201COrder in Your Absence\u201D</div>'+
+                  '<div style="width:40px;height:1px;background:linear-gradient(90deg,#4a3d28,transparent);"></div>'+
+                '</div>'+
+                '<div style="font-family:Cinzel,serif;font-size:14px;color:#6b5a38;margin-top:16px;">Legacy Architect RVA</div>'+
+              '</div>'+
+              '<div style="display:flex;justify-content:center;margin-top:28px;">'+
+                '<div onclick="__la.rs()" style="font-family:Cinzel,serif;font-size:12px;letter-spacing:3px;color:#8a7240;cursor:pointer;">START OVER</div>'+
+              '</div>'+
+            '</div>';
+            rest.style.animation='none'; void rest.offsetWidth; rest.style.animation='la-in 0.4s ease';
             initCalEmbed();
-            var s52=document.getElementById('la-stat52');
-            if(s52){s52.scrollIntoView({behavior:'smooth',block:'start'});}
-            else{try{window.scrollTo({top:0,behavior:'smooth'});}catch(e2){window.scrollTo(0,0);}}
-          },200);
+          }
+          var pr=document.getElementById('pg-rest');if(pr){pr.scrollIntoView({behavior:'smooth',block:'start'});}else{try{window.scrollTo({top:0,behavior:'smooth'});}catch(e2){window.scrollTo(0,0);}}
         }else{
           if(msg)msg.textContent='Something went wrong. Please try again.';
         }
@@ -814,7 +861,7 @@
     }
   };
 
-  /* ── inject counter into Carrd page 1 ─────────── */
+  /* ── inject counter + divider into Carrd page 1 ── */
   (function injectP1Ctr(){
     /* if our full counter (with la-ctr-num-0) already exists, done */
     if(document.getElementById('la-ctr-num-0'))return;
@@ -830,6 +877,19 @@
     ctrDiv.innerHTML=counterHTML(0);
     if(target&&target.parentElement){target.parentElement.insertBefore(ctrDiv.firstElementChild,target);}
     else{pg1.insertBefore(ctrDiv.firstElementChild,pg1.firstChild);}
+    /* inject ✦ diamond divider between description and counter */
+    if(!document.getElementById('la-p1-divider')){
+      var desc=pg1.children[2]; /* description div */
+      if(desc&&desc.textContent.indexOf('Access and continuity')>=0){
+        var dv=document.createElement('div');
+        dv.id='la-p1-divider';
+        dv.style.cssText='display:flex;align-items:center;gap:16px;margin:20px 0 8px 0;';
+        dv.innerHTML='<div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#4a3d28);"></div>'
+          +'<div style="font-family:Cinzel,serif;font-size:9px;letter-spacing:4px;color:#6b5a38;">\u2726</div>'
+          +'<div style="flex:1;height:1px;background:linear-gradient(90deg,#4a3d28,transparent);"></div>';
+        desc.parentNode.insertBefore(dv,desc.nextSibling);
+      }
+    }
     updateCtr(0);
   })();
 
