@@ -1,0 +1,11 @@
+# Legacy Architect RVA — Audit Email Worker
+# Deploy: npx wrangler deploy
+# Secrets: npx wrangler secret put RESEND_API_KEY
+
+name = "la-audit-email"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+FROM_EMAIL = "Legacy Architect RVA <results@legacyarchitectrva.com>"
+ALLOWED_ORIGIN = "https://legacyarchitectrva.com"
