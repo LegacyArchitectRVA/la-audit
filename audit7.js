@@ -473,8 +473,7 @@
 
     var desc=tot<=10?'Critical gaps identified':tot<=22?'Significant gaps remain':tot<=30?'Partially documented':tot<=36?'Well organized':'Strongly organized';
 
-    var h='<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:5px;color:#b8984e;text-align:center;margin-bottom:14px;">AUDIT COMPLETE</div>'+
-      '<div style="font-family:Cinzel,serif;font-size:23px;font-weight:600;color:#fdfcfa;letter-spacing:3px;text-align:center;margin-bottom:56px;">YOUR CONTINUITY SCORE</div>';
+    var h='';
 
     /* 52% urgency stat - FIRST */
     h+='<div style="padding:28px 32px;margin-bottom:40px;text-align:center;background:rgba(193,176,133,0.02);">'+
@@ -504,7 +503,11 @@
       brows+
     '</div>';
 
-    /* animated score ring - THIRD */
+    /* AUDIT COMPLETE + YOUR CONTINUITY SCORE headers */
+    h+='<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:5px;color:#b8984e;text-align:center;margin-bottom:14px;">AUDIT COMPLETE</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:23px;font-weight:600;color:#fdfcfa;letter-spacing:3px;text-align:center;margin-bottom:56px;">YOUR CONTINUITY SCORE</div>';
+
+    /* animated score ring */
     h+='<div style="display:flex;justify-content:center;margin-bottom:40px;">'+
         '<div style="position:relative;width:230px;height:230px;">'+
           '<div style="position:absolute;top:0;right:0;bottom:0;left:0;border-radius:50%;animation:la-spin 2.8s linear infinite;">'+
