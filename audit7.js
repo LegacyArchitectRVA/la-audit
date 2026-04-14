@@ -788,6 +788,22 @@
       xhr.setRequestHeader('Content-Type','application/json');
       xhr.onload=function(){
         if(xhr.status>=200&&xhr.status<300){
+          /* Fire-and-forget: send branded email via worker */
+          try{
+            var ePillars=[];
+            for(var ek=0;ek<7;ek++){
+              var ePc=pillarChecked(ek),ePmx=pillarMax(ek);
+              var eTier2=ePc===0?'Critical Gaps':ePc<ePmx*0.5?'Needs Attention':ePc<ePmx?'Nearly Complete':'Fully Documented';
+              var eItems=[];
+              for(var em2=0;em2<6;em2++){eItems.push({name:P[ek].i[em2],checked:!!ST[ek][em2],na:!!NA[ek][em2]});}
+              ePillars.push({name:P[ek].n,checked:ePc,max:ePmx,tier:eTier2,items:eItems});
+            }
+            var ePayload={email:email,score:tot,maxScore:mx,percent:pct,tier:tierName,businessOwner:OB,recommendation:rec,pillars:ePillars};
+            var ex=new XMLHttpRequest();
+            ex.open('POST','__WORKER_URL__');
+            ex.setRequestHeader('Content-Type','application/json');
+            ex.send(JSON.stringify(ePayload));
+          }catch(eErr){console.log('email worker error',eErr);}
           /* Replace entire results area with confirmation */
           var rest=document.getElementById('pg-rest');
           if(rest){
