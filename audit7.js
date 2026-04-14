@@ -437,27 +437,35 @@
     /* full item-by-item breakdown */
     h+='<div style="margin-top:44px;">'+detailHTML()+'</div>';
 
-    /* CTA */
-    h+='<div style="padding:40px 0;margin-top:48px;text-align:center;">'+
-      '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;margin-bottom:16px;">YOUR RECOMMENDED NEXT STEP</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#c1b085;line-height:1.6;margin-bottom:8px;">A <strong>Life Manual</strong>\u2122 closes these gaps before someone else has to.</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#b0a494;line-height:1.7;margin-bottom:28px;">It does not replace a will or a trust. It makes them usable. It tells the people you trust not just what they have authority to do, but how to actually do it.</div>'+
+    /* CTA — tight, conversion-focused */
+    h+='<div style="padding:24px 0;margin-top:32px;text-align:center;">'+
+      '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:4px;color:#b8984e;margin-bottom:10px;">YOUR RECOMMENDED NEXT STEP</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#c1b085;line-height:1.5;margin-bottom:6px;">A <strong>Life Manual</strong>\u2122 closes these gaps before someone else has to.</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#b0a494;line-height:1.6;">It does not replace a will or a trust. It makes them usable.</div>'+
     '</div>';
 
     /* Workbook CTA with image */
-    h+='<div style="text-align:center;margin-top:40px;padding-top:32px;border-top:1px solid #2a2218;">'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.6;margin-bottom:20px;">Or explore at your own pace:</div>'+
+    h+='<div style="text-align:center;margin-top:28px;padding-top:24px;border-top:1px solid #2a2218;">'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#b0a494;line-height:1.6;margin-bottom:16px;">Explore at your own pace:</div>'+
       '<a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="text-decoration:none;display:inline-block;">'+
-        '<img src="'+WORKBOOK_IMG+'" alt="7-Pillar Continuity Workbook" style="max-width:400px;width:100%;border-radius:2px;margin-bottom:16px;">'+
+        '<img src="'+WORKBOOK_IMG+'" alt="7-Pillar Continuity Workbook" style="max-width:360px;width:100%;border-radius:2px;margin-bottom:14px;">'+
       '</a>'+
-      '<div style="margin-bottom:20px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;text-decoration:none;display:inline-block;padding:14px 36px;border-radius:1px;">DOWNLOAD THE FREE WORKBOOK</a></div>'+
+      '<div style="margin-bottom:16px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;text-decoration:none;display:inline-block;padding:14px 36px;border-radius:1px;">DOWNLOAD THE FREE WORKBOOK</a></div>'+
       '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid #c1b085;border-radius:1px;display:inline-block;">VIEW PACKAGES & PRICING</a>'+
     '</div>';
 
+    /* Book a Call icon anchor → scrolls to calendar */
+    h+='<div style="text-align:center;margin-top:28px;">'+
+      '<a href="#la-cal-embed" onclick="document.getElementById(\'la-cal-embed\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#c1b085;padding:12px 28px;border:1px solid rgba(193,176,133,0.3);border-radius:1px;transition:all 0.3s ease;" onmouseover="this.style.borderColor=\'#c1b085\';this.style.background=\'rgba(193,176,133,0.06)\'" onmouseout="this.style.borderColor=\'rgba(193,176,133,0.3)\';this.style.background=\'none\'">'+
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c1b085" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>'+
+        'BOOK A CALL'+
+      '</a>'+
+    '</div>';
+
     /* Cal.com inline embed */
-    h+='<div style="margin-top:48px;padding-top:32px;border-top:1px solid #2a2218;">'+
-      '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:4px;color:#b8984e;text-align:center;margin-bottom:8px;">BOOK A PRIVATE CONVERSATION</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#8a7240;text-align:center;margin-bottom:20px;">No obligation. 100% confidential.</div>'+
+    h+='<div id="la-cal-section" style="margin-top:36px;padding-top:24px;border-top:1px solid #2a2218;">'+
+      '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:4px;color:#b8984e;text-align:center;margin-bottom:6px;">BOOK A PRIVATE CONVERSATION</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:14px;font-style:italic;color:#8a7240;text-align:center;margin-bottom:16px;">No obligation. 100% confidential.</div>'+
       '<div id="la-cal-embed" style="width:100%;min-height:500px;overflow:auto;"></div>'+
     '</div>';
 
@@ -476,7 +484,7 @@
     var h='';
 
     /* 52% urgency stat - FIRST */
-    h+='<div style="padding:28px 32px;margin-bottom:40px;text-align:center;background:rgba(193,176,133,0.02);">'+
+    h+='<div style="padding:20px 24px;margin-bottom:28px;text-align:center;background:rgba(193,176,133,0.02);">'+
         '<div style="font-family:Cinzel,serif;font-size:42px;font-weight:700;color:#c1b085;line-height:1;margin-bottom:8px;">52%</div>'+
         '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.6;">of adults have <strong style=\'color:#c1b085;\'>no plan</strong> for their digital assets. The gaps below show where your family would be left guessing.</div>'+
       '</div>';
@@ -498,14 +506,14 @@
       '</div>';
     }
 
-    h+='<div style="margin-bottom:48px;">'+
-      '<div style="font-family:Cinzel,serif;font-size:15px;letter-spacing:4px;color:#b8984e;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #2a2218;">PILLAR BREAKDOWN</div>'+
+    h+='<div style="margin-bottom:32px;">'+
+      '<div style="font-family:Cinzel,serif;font-size:15px;letter-spacing:4px;color:#b8984e;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #2a2218;">PILLAR BREAKDOWN</div>'+
       brows+
     '</div>';
 
     /* AUDIT COMPLETE + YOUR CONTINUITY SCORE headers */
     h+='<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:5px;color:#b8984e;text-align:center;margin-bottom:14px;">AUDIT COMPLETE</div>'+
-      '<div style="font-family:Cinzel,serif;font-size:23px;font-weight:600;color:#fdfcfa;letter-spacing:3px;text-align:center;margin-bottom:56px;">YOUR CONTINUITY SCORE</div>';
+      '<div style="font-family:Cinzel,serif;font-size:23px;font-weight:600;color:#fdfcfa;letter-spacing:3px;text-align:center;margin-bottom:36px;">YOUR CONTINUITY SCORE</div>';
 
     /* animated score ring */
     h+='<div style="display:flex;justify-content:center;margin-bottom:40px;">'+
@@ -524,7 +532,7 @@
           '</div>'+
         '</div>'+
       '</div>'+
-      '<div style="text-align:center;margin-bottom:48px;">'+
+      '<div style="text-align:center;margin-bottom:32px;">'+
         '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:3px;color:#c1b085;margin-bottom:8px;">'+tot+' OF '+mx+' POINTS</div>'+
         '<div style="font-family:Cinzel,serif;font-size:20px;font-weight:700;color:#c1b085;letter-spacing:2px;margin-bottom:12px;">'+tp.t+'</div>'+
       '</div>';
@@ -728,6 +736,20 @@
       scrollToAudit();
     }
   };
+
+  /* ── inject counter into Carrd page 1 ─────────── */
+  (function injectP1Ctr(){
+    var pg1=document.getElementById('pg1');
+    if(!pg1){setTimeout(injectP1Ctr,200);return;}
+    /* find the first checkbox row to insert counter above it */
+    var firstCb=document.getElementById('c0-0');
+    var target=firstCb?firstCb.closest('[id^="r0-"]')||firstCb.parentElement.parentElement:null;
+    var ctrDiv=document.createElement('div');
+    ctrDiv.innerHTML=counterHTML(0);
+    if(target&&target.parentElement){target.parentElement.insertBefore(ctrDiv.firstElementChild,target);}
+    else{pg1.insertBefore(ctrDiv.firstElementChild,pg1.firstChild);}
+    updateCtr(0);
+  })();
 
   /* ── polling: nav checkbox + page 1 counter ────── */
   setInterval(function(){
