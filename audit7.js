@@ -444,13 +444,6 @@
       '<div style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#b0a494;line-height:1.7;margin-bottom:28px;">It does not replace a will or a trust. It makes them usable. It tells the people you trust not just what they have authority to do, but how to actually do it.</div>'+
     '</div>';
 
-    /* Cal.com inline embed */
-    h+='<div style="margin-bottom:40px;">'+
-      '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:4px;color:#b8984e;text-align:center;margin-bottom:8px;">BOOK A PRIVATE CONVERSATION</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#8a7240;text-align:center;margin-bottom:20px;">No obligation. 100% confidential.</div>'+
-      '<div id="la-cal-embed" style="width:100%;min-height:500px;overflow:auto;"></div>'+
-    '</div>';
-
     /* Workbook CTA with image */
     h+='<div style="text-align:center;margin-top:40px;padding-top:32px;border-top:1px solid #2a2218;">'+
       '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.6;margin-bottom:20px;">Or explore at your own pace:</div>'+
@@ -459,6 +452,13 @@
       '</a>'+
       '<div style="margin-bottom:20px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;text-decoration:none;display:inline-block;padding:14px 36px;border-radius:1px;">DOWNLOAD THE FREE WORKBOOK</a></div>'+
       '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid #c1b085;border-radius:1px;display:inline-block;">VIEW PACKAGES & PRICING</a>'+
+    '</div>';
+
+    /* Cal.com inline embed */
+    h+='<div style="margin-top:48px;padding-top:32px;border-top:1px solid #2a2218;">'+
+      '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:4px;color:#b8984e;text-align:center;margin-bottom:8px;">BOOK A PRIVATE CONVERSATION</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#8a7240;text-align:center;margin-bottom:20px;">No obligation. 100% confidential.</div>'+
+      '<div id="la-cal-embed" style="width:100%;min-height:500px;overflow:auto;"></div>'+
     '</div>';
 
     return h;
