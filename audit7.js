@@ -23,14 +23,14 @@
     '@keyframes la-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}'+
     '@media(max-width:600px){'+
       '#pg-rest,#pg1{padding:0 12px!important;}'+
-      '[style*="font-size:42px"]{font-size:32px!important;}'+
-      '[style*="font-size:30px"]{font-size:22px!important;}'+
-      '[style*="font-size:23px"]{font-size:18px!important;}'+
+      '[style*="font-size:44px"]{font-size:34px!important;}'+
+      '[style*="font-size:32px"]{font-size:23px!important;}'+
+      '[style*="font-size:24px"]{font-size:19px!important;}'+
       '[style*="letter-spacing:5px"]{letter-spacing:2px!important;}'+
       '[style*="width:230px"]{width:170px!important;height:170px!important;}'+
       '[style*="width:170px"][style*="flex-shrink"]{width:110px!important;}'+
       '[style*="padding:13px 24px"]{padding:11px 16px!important;font-size:10px!important;}'+
-      '[style*="padding:14px 36px"]{padding:12px 20px!important;font-size:11px!important;}'+
+      '[style*="padding:14px 36px"]{padding:12px 20px!important;font-size:12px!important;}'+
       '[style*="max-width:400px"]{max-width:100%!important;}'+
       '[style*="max-width:360px"]{max-width:100%!important;}'+
       '#la-cal-embed{min-height:400px!important;}'+
@@ -131,10 +131,10 @@
         'background:'+s.bg+';'+
         'box-shadow:'+s.shadow+';'+
         'transition:border-color 0.3s,box-shadow 0.4s,background 0.3s;">'+
-        '<span id="la-ctr-num-'+pi+'" style="font-family:Cinzel,serif;font-size:28px;font-weight:700;color:'+s.numColor+';line-height:1;'+
+        '<span id="la-ctr-num-'+pi+'" style="font-family:Cinzel,serif;font-size:29px;font-weight:700;color:'+s.numColor+';line-height:1;'+
           'text-shadow:'+s.numShadow+';transition:color 0.3s,text-shadow 0.3s;">'+cnt+'</span>'+
-        '<span style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#8a7240;line-height:1;">of </span>'+
-        '<span id="la-ctr-mx-'+pi+'" style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#8a7240;line-height:1;">'+mx+'</span>'+
+        '<span style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#8a7240;line-height:1;">of </span>'+
+        '<span id="la-ctr-mx-'+pi+'" style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#8a7240;line-height:1;">'+mx+'</span>'+
       '</div>'+
     '</div>';
   }
@@ -194,7 +194,7 @@
             '<div id="sh'+pi+'-'+ii+'" style="width:24px;height:24px;flex-shrink:0;border:1px solid '+(on?'#c1b085':'#7A6842')+';border-radius:2px;display:flex;align-items:center;justify-content:center;box-shadow:'+(on?'0 0 12px rgba(193,176,133,0.6),0 0 24px rgba(193,176,133,0.25),inset 0 0 8px rgba(193,176,133,0.1)':'none')+';transition:border-color 0.2s,box-shadow 0.2s;">'+
               '<svg id="mk'+pi+'-'+ii+'" width="14" height="11" viewBox="0 0 14 11" fill="none" style="opacity:'+(on?'1':'0')+';transform:'+(on?'scale(1)':'scale(0.6)')+';transition:opacity 0.2s,transform 0.2s;filter:drop-shadow(0 0 3px rgba(193,176,133,0.9));"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
             '</div>'+
-            '<div id="lb'+pi+'-'+ii+'" style="font-family:Cinzel,serif;font-size:16px;letter-spacing:2px;color:'+(on?'#c1b085':'#9a8d7a')+';'+(on?'text-shadow:0 0 12px rgba(193,176,133,0.3);':'')+'transition:color 0.2s,text-shadow 0.2s;">'+pl.i[ii]+'</div>'+
+            '<div id="lb'+pi+'-'+ii+'" style="font-family:Cinzel,serif;font-size:17px;letter-spacing:2px;color:'+(on?'#c1b085':'#9a8d7a')+';'+(on?'text-shadow:0 0 12px rgba(193,176,133,0.3);':'')+'transition:color 0.2s,text-shadow 0.2s;">'+pl.i[ii]+'</div>'+
           '</div>'+
           /* N/A button */
           '<div id="na'+pi+'-'+ii+'" onclick="__la.na('+pi+','+ii+')" style="'+naStyle(isNa)+'">'+
@@ -207,12 +207,12 @@
     var gate='';
     if(isP5){
       gate='<div style="margin-top:36px;padding-top:32px;border-top:1px solid #2a2218;margin-bottom:52px;">'+
-        '<div style="font-family:Cinzel,serif;font-size:16px;letter-spacing:3px;color:#b8984e;margin-bottom:20px;">DO YOU OWN A BUSINESS?</div>'+
+        '<div style="font-family:Cinzel,serif;font-size:17px;letter-spacing:3px;color:#b8984e;margin-bottom:20px;">DO YOU OWN A BUSINESS?</div>'+
         '<div style="display:flex;gap:12px;">'+
-          '<button id="by" onclick="__la.by()" style="font-family:Cinzel,serif;font-size:14px;font-weight:700;letter-spacing:3px;padding:13px 32px;border:1px solid '+(OB===true?'#c1b085':'#4a3d28')+';background:'+(OB===true?'rgba(193,176,133,0.05)':'transparent')+';color:'+(OB===true?'#c1b085':'#8a7240')+';cursor:pointer;border-radius:1px;box-shadow:'+(OB===true?'0 0 18px rgba(193,176,133,0.5),inset 0 0 12px rgba(193,176,133,0.08)':'none')+';transition:all 0.25s;">YES</button>'+
-          '<button id="bn" onclick="__la.bn()" style="font-family:Cinzel,serif;font-size:14px;font-weight:700;letter-spacing:3px;padding:13px 32px;border:1px solid '+(OB===false?'#c1b085':'#4a3d28')+';background:'+(OB===false?'rgba(193,176,133,0.05)':'transparent')+';color:'+(OB===false?'#c1b085':'#8a7240')+';cursor:pointer;border-radius:1px;box-shadow:'+(OB===false?'0 0 18px rgba(193,176,133,0.5),inset 0 0 12px rgba(193,176,133,0.08)':'none')+';transition:all 0.25s;">NO</button>'+
+          '<button id="by" onclick="__la.by()" style="font-family:Cinzel,serif;font-size:15px;font-weight:700;letter-spacing:3px;padding:13px 32px;border:1px solid '+(OB===true?'#c1b085':'#4a3d28')+';background:'+(OB===true?'rgba(193,176,133,0.05)':'transparent')+';color:'+(OB===true?'#c1b085':'#8a7240')+';cursor:pointer;border-radius:1px;box-shadow:'+(OB===true?'0 0 18px rgba(193,176,133,0.5),inset 0 0 12px rgba(193,176,133,0.08)':'none')+';transition:all 0.25s;">YES</button>'+
+          '<button id="bn" onclick="__la.bn()" style="font-family:Cinzel,serif;font-size:15px;font-weight:700;letter-spacing:3px;padding:13px 32px;border:1px solid '+(OB===false?'#c1b085':'#4a3d28')+';background:'+(OB===false?'rgba(193,176,133,0.05)':'transparent')+';color:'+(OB===false?'#c1b085':'#8a7240')+';cursor:pointer;border-radius:1px;box-shadow:'+(OB===false?'0 0 18px rgba(193,176,133,0.5),inset 0 0 12px rgba(193,176,133,0.08)':'none')+';transition:all 0.25s;">NO</button>'+
         '</div>'+
-        '<div id="bh" style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:'+(OB!==null?'#9a8d7a':'transparent')+';margin-top:14px;min-height:18px;">'+
+        '<div id="bh" style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:'+(OB!==null?'#9a8d7a':'transparent')+';margin-top:14px;min-height:18px;">'+
           (OB===true?'All 7 pillars will be included in your audit.':OB===false?'Your score will be calculated across 6 pillars.':'')+
         '</div></div>';
     }
@@ -220,20 +220,20 @@
     /* nav buttons */
     var nextBtn;
     if(isP5){
-      nextBtn='<button onclick="__la.p5()" style="font-family:Cinzel,serif;font-size:16px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:1px;">CONTINUE</button>';
+      nextBtn='<button onclick="__la.p5()" style="font-family:Cinzel,serif;font-size:17px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:1px;">CONTINUE</button>';
     }else if(isLast){
-      nextBtn='<button onclick="__la.go(\'R\')" style="font-family:Cinzel,serif;font-size:16px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:1px;">SEE RESULTS</button>';
+      nextBtn='<button onclick="__la.go(\'R\')" style="font-family:Cinzel,serif;font-size:17px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:1px;">SEE RESULTS</button>';
     }else{
-      nextBtn='<button onclick="__la.go('+(pi+2)+')" style="font-family:Cinzel,serif;font-size:16px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:1px;">NEXT PILLAR</button>';
+      nextBtn='<button onclick="__la.go('+(pi+2)+')" style="font-family:Cinzel,serif;font-size:17px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:1px;">NEXT PILLAR</button>';
     }
 
     var backTarget=pi===1?1:(pi===6&&OB===false)?5:pi;
-    var backBtn=pi===0?'':'<button onclick="__la.go('+backTarget+')" style="font-family:Cinzel,serif;font-size:16px;font-weight:700;letter-spacing:3px;color:#6b5a38;background:none;border:none;cursor:pointer;text-transform:uppercase;padding:0;">BACK</button>';
+    var backBtn=pi===0?'':'<button onclick="__la.go('+backTarget+')" style="font-family:Cinzel,serif;font-size:17px;font-weight:700;letter-spacing:3px;color:#6b5a38;background:none;border:none;cursor:pointer;text-transform:uppercase;padding:0;">BACK</button>';
 
     return prog(pi)+
-      '<div style="font-family:Cinzel,serif;font-size:16px;letter-spacing:5px;color:#b8984e;margin-bottom:10px;">PILLAR '+(pi+1)+' OF 7</div>'+
-      '<div style="font-family:Cinzel,serif;font-size:30px;font-weight:700;color:#c1b085;letter-spacing:2px;margin-bottom:12px;line-height:1.15;">'+pl.n.toUpperCase()+'</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#a09484;line-height:1.6;margin-bottom:44px;">'+pl.d+'</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:17px;letter-spacing:5px;color:#b8984e;margin-bottom:10px;">PILLAR '+(pi+1)+' OF 7</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:32px;font-weight:700;color:#c1b085;letter-spacing:2px;margin-bottom:12px;line-height:1.15;">'+pl.n.toUpperCase()+'</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#a09484;line-height:1.6;margin-bottom:44px;">'+pl.d+'</div>'+
       counterHTML(pi)+
       '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:'+(isP5?'0':'52px')+';">'+rows+'</div>'+
       gate+
@@ -247,13 +247,13 @@
 
   /* Full item-by-item breakdown */
   function detailHTML(){
-    var h='<div style="font-family:Cinzel,serif;font-size:15px;letter-spacing:4px;color:#b8984e;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #2a2218;">YOUR FULL BREAKDOWN</div>';
+    var h='<div style="font-family:Cinzel,serif;font-size:16px;letter-spacing:4px;color:#b8984e;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #2a2218;">YOUR FULL BREAKDOWN</div>';
     for(var pi=0;pi<7;pi++){
       if(pi===5&&OB===false)continue;
       var c=pillarChecked(pi);
       var mx=pillarMax(pi);
       h+='<div style="margin-bottom:28px;">'+
-        '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:2px;color:#c1b085;margin-bottom:14px;">'+P[pi].n.toUpperCase()+' <span style="color:#8a7240;font-size:12px;margin-left:8px;">'+c+'/'+mx+'</span></div>';
+        '<div style="font-family:Cinzel,serif;font-size:15px;letter-spacing:2px;color:#c1b085;margin-bottom:14px;">'+P[pi].n.toUpperCase()+' <span style="color:#8a7240;font-size:13px;margin-left:8px;">'+c+'/'+mx+'</span></div>';
       for(var ii=0;ii<6;ii++){
         var on=ST[pi][ii];
         var isNa=NA[pi][ii];
@@ -262,7 +262,7 @@
             '<div style="width:18px;height:18px;flex-shrink:0;border:1px solid #342a1c;border-radius:2px;display:flex;align-items:center;justify-content:center;">'+
               '<span style="font-family:Cinzel,serif;font-size:8px;color:#4a3d28;font-weight:700;">N/A</span>'+
             '</div>'+
-            '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:1.5px;color:#4a3d28;text-decoration:line-through;">'+P[pi].i[ii]+'</div>'+
+            '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:1.5px;color:#4a3d28;text-decoration:line-through;">'+P[pi].i[ii]+'</div>'+
           '</div>';
         }else{
           h+='<div style="display:flex;align-items:center;gap:14px;padding:8px 0;border-bottom:1px solid #1a1610;">'+
@@ -270,7 +270,7 @@
               (on?'<svg width="12" height="9" viewBox="0 0 14 11" fill="none"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>':
                    '<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 2L8 8M8 2L2 8" stroke="#4a3d28" stroke-width="1.2" stroke-linecap="round"/></svg>')+
             '</div>'+
-            '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:1.5px;color:'+(on?'#c1b085':'#6b5a38')+';">'+P[pi].i[ii]+'</div>'+
+            '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:1.5px;color:'+(on?'#c1b085':'#6b5a38')+';">'+P[pi].i[ii]+'</div>'+
           '</div>';
         }
       }
@@ -433,9 +433,9 @@
     var h='';
 
     /* what your score means */
-    h+='<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;padding-bottom:14px;border-bottom:1px solid #2a2218;margin-bottom:22px;">WHAT YOUR SCORE MEANS</div>';
+    h+='<div style="font-family:Cinzel,serif;font-size:15px;letter-spacing:4px;color:#b8984e;padding-bottom:14px;border-bottom:1px solid #2a2218;margin-bottom:22px;">WHAT YOUR SCORE MEANS</div>';
     for(var pp=0;pp<tp.p.length;pp++){
-      h+='<div style="font-family:Bodoni Moda,serif;font-size:17px;color:#fdfcfa;line-height:1.8;margin-bottom:18px;">'+tp.p[pp]+'</div>';
+      h+='<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#fdfcfa;line-height:1.8;margin-bottom:18px;">'+tp.p[pp]+'</div>';
     }
 
     /* key gaps */
@@ -450,13 +450,13 @@
     }
 
     if(gaps.length>0){
-      h+='<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;margin-top:40px;padding-bottom:14px;border-bottom:1px solid #2a2218;margin-bottom:22px;">YOUR KEY GAPS</div>';
-      h+='<div style="font-family:Bodoni Moda,serif;font-size:17px;color:#fdfcfa;line-height:1.8;margin-bottom:24px;">Based on your responses, these are the areas with the highest impact if left unaddressed:</div>';
+      h+='<div style="font-family:Cinzel,serif;font-size:15px;letter-spacing:4px;color:#b8984e;margin-top:40px;padding-bottom:14px;border-bottom:1px solid #2a2218;margin-bottom:22px;">YOUR KEY GAPS</div>';
+      h+='<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#fdfcfa;line-height:1.8;margin-bottom:24px;">Based on your responses, these are the areas with the highest impact if left unaddressed:</div>';
       for(var gk=0;gk<gaps.length;gk++){
         var g=gaps[gk];
         h+='<div style="padding:14px 0;border-bottom:1px solid #1a1510;">'+
-          '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:2px;color:#c1b085;margin-bottom:8px;">\u2717 '+P[g.pi].i[g.ii]+'</div>'+
-          '<div style="font-family:Bodoni Moda,serif;font-size:15px;color:#d4cfc7;line-height:1.7;">'+GD[g.pi][g.ii]+'</div>'+
+          '<div style="font-family:Cinzel,serif;font-size:15px;letter-spacing:2px;color:#c1b085;margin-bottom:8px;">\u2717 '+P[g.pi].i[g.ii]+'</div>'+
+          '<div style="font-family:Bodoni Moda,serif;font-size:16px;color:#d4cfc7;line-height:1.7;">'+GD[g.pi][g.ii]+'</div>'+
         '</div>';
       }
     }
@@ -466,32 +466,32 @@
 
     /* CTA — tight, conversion-focused */
     h+='<div style="padding:24px 0;margin-top:32px;text-align:center;">'+
-      '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:4px;color:#b8984e;margin-bottom:16px;">YOUR RECOMMENDED NEXT STEP</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;margin-bottom:16px;">YOUR RECOMMENDED NEXT STEP</div>'+
       /* Book a Call button — right under heading */
       '<div style="margin-bottom:20px;">'+
-        '<a href="#la-cal-embed" onclick="document.getElementById(\'la-cal-embed\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;padding:14px 32px;border-radius:1px;transition:all 0.3s ease;" onmouseover="this.style.background=\'#d4c4a0\'" onmouseout="this.style.background=\'#c1b085\'">'+
+        '<a href="#la-cal-embed" onclick="document.getElementById(\'la-cal-embed\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;padding:14px 32px;border-radius:1px;transition:all 0.3s ease;" onmouseover="this.style.background=\'#d4c4a0\'" onmouseout="this.style.background=\'#c1b085\'">'+
           '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#100d0a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>'+
           'BOOK A CALL'+
         '</a>'+
       '</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:18px;color:#c1b085;line-height:1.5;margin-bottom:6px;">A <strong>Life Manual</strong>\u2122 closes these gaps before someone else has to.</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:15px;color:#fdfcfa;line-height:1.6;">It does not replace a will or a trust. It makes them usable.</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:19px;color:#c1b085;line-height:1.5;margin-bottom:6px;">A <strong>Life Manual</strong>\u2122 closes these gaps before someone else has to.</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#fdfcfa;line-height:1.6;">It does not replace a will or a trust. It makes them usable.</div>'+
     '</div>';
 
     /* Workbook CTA with image */
     h+='<div style="text-align:center;margin-top:28px;padding-top:24px;border-top:1px solid #2a2218;">'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:16px;color:#fdfcfa;line-height:1.6;margin-bottom:16px;">Explore at your own pace:</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#fdfcfa;line-height:1.6;margin-bottom:16px;">Explore at your own pace:</div>'+
       '<a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="text-decoration:none;display:inline-block;">'+
         '<img src="'+WORKBOOK_IMG+'" alt="7-Pillar Continuity Workbook" style="max-width:360px;width:100%;border-radius:2px;margin-bottom:14px;">'+
       '</a>'+
-      '<div style="margin-bottom:16px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;text-decoration:none;display:inline-block;padding:14px 36px;border-radius:1px;">DOWNLOAD THE FREE WORKBOOK</a></div>'+
-      '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid #c1b085;border-radius:1px;display:inline-block;">VIEW PACKAGES & PRICING</a>'+
+      '<div style="margin-bottom:16px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;text-decoration:none;display:inline-block;padding:14px 36px;border-radius:1px;">DOWNLOAD THE FREE WORKBOOK</a></div>'+
+      '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid #c1b085;border-radius:1px;display:inline-block;">VIEW PACKAGES & PRICING</a>'+
     '</div>';
 
     /* Cal.com inline embed */
     h+='<div id="la-cal-section" style="margin-top:36px;padding-top:24px;border-top:1px solid #2a2218;">'+
-      '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:4px;color:#b8984e;text-align:center;margin-bottom:6px;">BOOK A PRIVATE CONVERSATION</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:14px;color:#c1b085;text-align:center;margin-bottom:16px;">No obligation. 100% confidential.</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;text-align:center;margin-bottom:6px;">BOOK A PRIVATE CONVERSATION</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:15px;color:#c1b085;text-align:center;margin-bottom:16px;">No obligation. 100% confidential.</div>'+
       '<div id="la-cal-embed" style="width:100%;min-height:500px;overflow:auto;"></div>'+
     '</div>';
 
@@ -511,8 +511,8 @@
 
     /* 52% urgency stat - FIRST */
     h+='<div style="padding:20px 24px;margin-bottom:28px;text-align:center;background:rgba(193,176,133,0.02);">'+
-        '<div style="font-family:Cinzel,serif;font-size:42px;font-weight:700;color:#c1b085;line-height:1;margin-bottom:8px;">52%</div>'+
-        '<div style="font-family:Bodoni Moda,serif;font-size:17px;color:#fdfcfa;line-height:1.6;">of adults have <strong style=\'color:#c1b085;\'>no plan</strong> for their digital assets. The gaps below show where your family would be left guessing.</div>'+
+        '<div style="font-family:Cinzel,serif;font-size:44px;font-weight:700;color:#c1b085;line-height:1;margin-bottom:8px;">52%</div>'+
+        '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#fdfcfa;line-height:1.6;">of adults have <strong style=\'color:#c1b085;\'>no plan</strong> for their digital assets. The gaps below show where your family would be left guessing.</div>'+
       '</div>';
 
     /* pillar breakdown bars - SECOND */
@@ -524,22 +524,22 @@
       var w=pmx>0?Math.round(c/pmx*100):0;
       var full=pmx>0&&c===pmx;
       brows+='<div style="display:flex;align-items:center;gap:16px;padding:11px 0;border-bottom:1px solid #2a2218;">'+
-        '<div style="font-family:Cinzel,serif;font-size:12px;letter-spacing:1.5px;color:#c1b085;width:170px;flex-shrink:0;">'+P[idx].n.toUpperCase()+'</div>'+
+        '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:1.5px;color:#c1b085;width:170px;flex-shrink:0;">'+P[idx].n.toUpperCase()+'</div>'+
         '<div style="flex:1;height:2px;background:#342a1c;position:relative;">'+
           '<div class="lab" data-w="'+w+'" style="position:absolute;top:0;left:0;height:100%;width:0%;background:'+(full?'#c1b085':'#8a7030')+';transition:width 1.2s cubic-bezier(0.4,0,0.2,1);box-shadow:'+(full?'0 0 8px rgba(193,176,133,0.5)':'0 0 4px rgba(138,112,48,0.4)')+';"></div>'+
         '</div>'+
-        '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:'+(full?'#c1b085':'#b8984e')+';width:42px;text-align:right;flex-shrink:0;">'+c+'/'+pmx+'</div>'+
+        '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:'+(full?'#c1b085':'#b8984e')+';width:42px;text-align:right;flex-shrink:0;">'+c+'/'+pmx+'</div>'+
       '</div>';
     }
 
     h+='<div style="margin-bottom:32px;">'+
-      '<div style="font-family:Cinzel,serif;font-size:15px;letter-spacing:4px;color:#b8984e;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #2a2218;">PILLAR BREAKDOWN</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:16px;letter-spacing:4px;color:#b8984e;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #2a2218;">PILLAR BREAKDOWN</div>'+
       brows+
     '</div>';
 
     /* AUDIT COMPLETE + YOUR CONTINUITY SCORE headers */
-    h+='<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:5px;color:#b8984e;text-align:center;margin-bottom:14px;">AUDIT COMPLETE</div>'+
-      '<div style="font-family:Cinzel,serif;font-size:23px;font-weight:600;color:#fdfcfa;letter-spacing:3px;text-align:center;margin-bottom:36px;">YOUR CONTINUITY SCORE</div>';
+    h+='<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:5px;color:#b8984e;text-align:center;margin-bottom:14px;">AUDIT COMPLETE</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:24px;font-weight:600;color:#fdfcfa;letter-spacing:3px;text-align:center;margin-bottom:36px;">YOUR CONTINUITY SCORE</div>';
 
     /* animated score ring */
     h+='<div style="display:flex;justify-content:center;margin-bottom:40px;">'+
@@ -551,42 +551,42 @@
           '<div style="position:absolute;top:4px;right:4px;bottom:4px;left:4px;border-radius:50%;background:#100d0a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">'+
             '<div style="font-family:Cinzel,serif;font-size:9px;letter-spacing:5px;color:#b8984e;">CONTINUITY</div>'+
             '<div style="display:flex;align-items:baseline;gap:3px;">'+
-              '<div style="font-family:Cinzel,serif;font-size:58px;font-weight:600;color:#c1b085;line-height:1;text-shadow:0 0 30px rgba(193,176,133,0.3);">'+pct+'</div>'+
-              '<div style="font-family:Cinzel,serif;font-size:22px;color:#b8984e;line-height:1;">%</div>'+
+              '<div style="font-family:Cinzel,serif;font-size:61px;font-weight:600;color:#c1b085;line-height:1;text-shadow:0 0 30px rgba(193,176,133,0.3);">'+pct+'</div>'+
+              '<div style="font-family:Cinzel,serif;font-size:23px;color:#b8984e;line-height:1;">%</div>'+
             '</div>'+
-            '<div style="font-family:Bodoni Moda,serif;font-size:15px;color:#c1b085;text-align:center;padding:0 16px;margin-top:4px;">'+desc+'</div>'+
+            '<div style="font-family:Bodoni Moda,serif;font-size:16px;color:#c1b085;text-align:center;padding:0 16px;margin-top:4px;">'+desc+'</div>'+
           '</div>'+
         '</div>'+
       '</div>'+
       '<div style="text-align:center;margin-bottom:32px;">'+
-        '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:3px;color:#c1b085;margin-bottom:8px;">'+tot+' OF '+mx+' POINTS</div>'+
-        '<div style="font-family:Cinzel,serif;font-size:20px;font-weight:700;color:#c1b085;letter-spacing:2px;margin-bottom:12px;">'+tp.t+'</div>'+
+        '<div style="font-family:Cinzel,serif;font-size:15px;letter-spacing:3px;color:#c1b085;margin-bottom:8px;">'+tot+' OF '+mx+' POINTS</div>'+
+        '<div style="font-family:Cinzel,serif;font-size:21px;font-weight:700;color:#c1b085;letter-spacing:2px;margin-bottom:12px;">'+tp.t+'</div>'+
       '</div>';
 
     /* email gate - no outer border */
     h+='<div style="padding:40px 32px;text-align:center;background:rgba(193,176,133,0.03);">'+
         '<div id="la-email-sec">'+
-          '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:3px;color:#c1b085;margin-bottom:12px;">GET YOUR FULL RESULTS</div>'+
-          '<div style="font-family:Bodoni Moda,serif;font-size:17px;color:#fdfcfa;margin-bottom:8px;line-height:1.6;">Your score is above, but the real insight is in the details.</div>'+
-          '<div style="font-family:Bodoni Moda,serif;font-size:16px;color:#fdfcfa;margin-bottom:24px;line-height:1.6;">Enter your email to unlock your personalized gap analysis, risk explanations, and recommended next steps.</div>'+
+          '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:3px;color:#c1b085;margin-bottom:12px;">GET YOUR FULL RESULTS</div>'+
+          '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#fdfcfa;margin-bottom:8px;line-height:1.6;">Your score is above, but the real insight is in the details.</div>'+
+          '<div style="font-family:Bodoni Moda,serif;font-size:17px;color:#fdfcfa;margin-bottom:24px;line-height:1.6;">Enter your email to unlock your personalized gap analysis, risk explanations, and recommended next steps.</div>'+
           '<div style="display:flex;gap:10px;max-width:400px;margin:0 auto;">'+
-            '<input id="la-email" type="email" placeholder="Email" style="flex:1;padding:13px 16px;background:transparent;border:1px solid #6b5a38;border-radius:1px;color:#c1b085;font-family:Bodoni Moda,serif;font-size:15px;outline:none;">'+
-            '<button onclick="__la.sub()" style="font-family:Cinzel,serif;font-size:11px;font-weight:700;letter-spacing:2px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;padding:13px 24px;border-radius:1px;white-space:nowrap;">UNLOCK RESULTS</button>'+
+            '<input id="la-email" type="email" placeholder="Email" style="flex:1;padding:13px 16px;background:transparent;border:1px solid #6b5a38;border-radius:1px;color:#c1b085;font-family:Bodoni Moda,serif;font-size:16px;outline:none;">'+
+            '<button onclick="__la.sub()" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;padding:13px 24px;border-radius:1px;white-space:nowrap;">UNLOCK RESULTS</button>'+
           '</div>'+
-          '<div id="la-email-msg" style="font-family:Bodoni Moda,serif;font-size:14px;font-style:italic;color:#b8984e;margin-top:12px;min-height:20px;"></div>'+
+          '<div id="la-email-msg" style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#b8984e;margin-top:12px;min-height:20px;"></div>'+
         '</div>'+
       '</div>';
 
     /* single back / start over */
     h+='<div style="display:flex;justify-content:center;gap:32px;margin-top:28px;">'+
-      '<button onclick="__la.go(7)" style="font-family:Cinzel,serif;font-size:11px;font-weight:700;letter-spacing:3px;color:#b8984e;background:none;border:none;cursor:pointer;text-transform:uppercase;padding:0;">BACK</button>'+
-      '<div onclick="__la.rs()" style="font-family:Cinzel,serif;font-size:11px;letter-spacing:3px;color:#8a7240;cursor:pointer;">START OVER</div>'+
+      '<button onclick="__la.go(7)" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#b8984e;background:none;border:none;cursor:pointer;text-transform:uppercase;padding:0;">BACK</button>'+
+      '<div onclick="__la.rs()" style="font-family:Cinzel,serif;font-size:12px;letter-spacing:3px;color:#8a7240;cursor:pointer;">START OVER</div>'+
     '</div>';
 
     /* footer */
     h+='<div style="border-top:1px solid #2a2218;margin-top:40px;padding-top:32px;text-align:center;">'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#c1b085;line-height:1.6;margin-bottom:4px;">\u201COrder in Your Absence\u201D</div>'+
-      '<div style="font-family:Cinzel,serif;font-size:13px;color:#6b5a38;margin-top:16px;">Legacy Architect RVA</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#c1b085;line-height:1.6;margin-bottom:4px;">\u201COrder in Your Absence\u201D</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:14px;color:#6b5a38;margin-top:16px;">Legacy Architect RVA</div>'+
     '</div>';
 
     return h;
@@ -732,11 +732,11 @@
         if(xhr.status>=200&&xhr.status<300){
           var sec=document.getElementById('la-email-sec');
           if(sec)sec.parentElement.outerHTML=fullResultsHTML();
-          /* re-trigger bar animations + init Cal embed + scroll to top */
+          /* re-trigger bar animations + init Cal embed + scroll to very top */
           setTimeout(function(){
             var b=document.querySelectorAll('.lab');for(var i=0;i<b.length;i++)b[i].style.width=b[i].getAttribute('data-w')+'%';
             initCalEmbed();
-            scrollToAudit();
+            try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}
           },200);
         }else{
           if(msg)msg.textContent='Something went wrong. Please try again.';
@@ -779,42 +779,28 @@
     updateCtr(0);
   })();
 
-  /* ── wire Page 1 mutual exclusion: checkbox ↔ N/A ── */
-  (function wireP1(){
-    var firstCb=document.getElementById('c0-0');
-    if(!firstCb){setTimeout(wireP1,200);return;}
-    for(var i=0;i<6;i++){
-      (function(idx){
-        var cb=document.getElementById('c0-'+idx);
-        var na=document.getElementById('na0-'+idx);
-        if(cb) cb.addEventListener('change',function(){
-          if(cb.checked&&na&&na.checked){na.checked=false; NA[0][idx]=0;}
-          ST[0][idx]=cb.checked?1:0;
-          updateCtr(0);
-        });
-        if(na) na.addEventListener('change',function(){
-          if(na.checked&&cb&&cb.checked){cb.checked=false; ST[0][idx]=0;}
-          NA[0][idx]=na.checked?1:0;
-          updateCtr(0);
-        });
-      })(i);
-    }
-  })();
-
   /* ── polling: nav checkbox + page 1 counter ────── */
   setInterval(function(){
     var c=document.getElementById('la-go');
     if(c&&c.checked){c.checked=false;getPg1State();window.__la.go(2);}
 
-    /* update page 1 counter when visible */
+    /* update page 1 counter when visible + mutual exclusion */
     var pg1=document.getElementById('pg1');
     if(pg1&&pg1.style.display!=='none'){
       var cnt=0,naCnt=0;
       for(var i=0;i<6;i++){
         var cb=document.getElementById('c0-'+i);
-        if(cb&&cb.checked)cnt++;
         var naCb=document.getElementById('na0-'+i);
-        if(naCb&&naCb.checked)naCnt++;
+        var cbOn=cb&&cb.checked, naOn=naCb&&naCb.checked;
+        /* mutual exclusion: if both checked, the newer one wins */
+        if(cbOn&&naOn){
+          /* cb was just checked — uncheck N/A */
+          if(!ST[0][i]){naCb.checked=false; naOn=false;}
+          /* na was just checked — uncheck cb */
+          else if(!NA[0][i]){cb.checked=false; cbOn=false;}
+        }
+        if(cbOn)cnt++;
+        if(naOn)naCnt++;
       }
       if(cnt!==lastP1Cnt||naCnt!==lastP1Na){
         lastP1Cnt=cnt;
