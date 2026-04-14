@@ -1,18 +1,35 @@
-/* LA Digital Audit v16 - audit7.js
-   Changes from v15:
-   - N/A buttons on Pillars 2-7 (matching Pillar 1 Carrd embed style)
-   - Mutual exclusion: N/A ↔ checkbox can't both be active
-   - N/A items excluded from scoring (denominator adjusts dynamically)
-   - Pillar 5 YES/NO both get glowing gold treatment when selected
-   - Results generate directly — no email gate blocking the breakdown
-   - Conversion-optimized results page with urgency, social proof, and clear CTAs
-   - Email capture remains but is optional (below results)
+/* LA Digital Audit v17 - audit7.js
+   Changes from v16:
+   - Results reordered: 52% stat -> pillar breakdown -> continuity score
+   - Removed all em dashes
+   - Removed section borders on results page
+   - Embedded Cal.com inline calendar (replaces schedule button)
+   - Added workbook CTA with promo image
+   - Removed Founding Families section (links to #pricing instead)
+   - Removed duplicate Schedule/Start Over buttons
+   - Life Manual bolded throughout, trademark on first mention only
+   - One link to #workbook, one to #pricing
 */
 (function(){
   var lnk=document.createElement('link');
   lnk.rel='stylesheet';
   lnk.href='https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,300;1,6..96,400&display=swap';
   document.head.appendChild(lnk);
+
+  /* ── Cal.com embed loader ──────────────────────── */
+  var WORKBOOK_IMG='https://cdn.jsdelivr.net/gh/LegacyArchitectRVA/la-audit@main/workbook-promo.jpg';
+
+  (function(C,A,L){
+    var p=function(a,ar){a.q.push(ar);};
+    var d=C.document;
+    C.Cal=C.Cal||function(){
+      var cal=C.Cal;var ar=arguments;
+      if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement('script')).src=A;cal.loaded=true;}
+      if(ar[0]===L){var api=function(){p(api,arguments);};var ns=ar[1];api.q=api.q||[];if(typeof ns==='string'){cal.ns[ns]=cal.ns[ns]||api;p(cal.ns[ns],ar);p(cal,['initNamespace',ns]);}else p(cal,ar);return;}
+      p(cal,ar);
+    };
+  })(window,'https://app.cal.com/embed/embed.js','init');
+  Cal('init','private-conversation',{origin:'https://app.cal.com'});
 
   var P=[
     {n:'Digital Life',d:'Access and continuity for essential digital accounts, credentials, and archives.',i:['PRIMARY EMAIL ACCOUNT ACCESS','MASTER PASSWORD MANAGER VAULT','CLOUD STORAGE & PHOTO ARCHIVES','TWO-FACTOR AUTH (2FA) RECOVERY KEYS','SOCIAL MEDIA LEGACY CONTACTS','DIGITAL MEDIA ARCHIVES']},
@@ -103,9 +120,6 @@
     var box=wrap.firstElementChild; if(!box)return;
     var num=document.getElementById('la-ctr-num-'+pi);
     var mxEl=document.getElementById('la-ctr-mx-'+pi);
-    /* fallback for Carrd-embedded counter (no inner IDs) */
-    if(!num){num=box.firstElementChild;}
-    if(!mxEl&&num){mxEl=num.nextElementSibling;if(mxEl)mxEl=mxEl.nextElementSibling;}
     var s=ctrStyles(cnt,mx);
     box.style.borderColor=s.border;
     box.style.boxShadow=s.shadow;
@@ -302,16 +316,16 @@
     {/* LEAN & READY */
       t:"LEAN & READY",
       p:[
-        "Your audit revealed <strong style=\"color:#c1b085;\">critical gaps</strong> across most pillars. This is not unusual \u2014 most people have never been asked to think about continuity in structured terms.",
-        "What it means practically: if something happened to you tomorrow, the people you trust most would face significant confusion. Access to accounts, knowledge of obligations, location of key documents \u2014 these are the things that fall through the cracks when there is no system in place.",
-        "The gaps you have are common \u2014 and they are fixable. A foundational continuity plan would cover the highest-risk areas first: digital access, emergency contacts, and essential documents."
+        "Your audit revealed <strong style=\"color:#c1b085;\">critical gaps</strong> across most pillars. This is not unusual. Most people have never been asked to think about continuity in structured terms.",
+        "What it means practically: if something happened to you tomorrow, the people you trust most would face significant confusion. Access to accounts, knowledge of obligations, location of key documents. These are the things that fall through the cracks when there is no system in place.",
+        "The gaps you have are common, and they are fixable. A foundational continuity plan would cover the highest-risk areas first: digital access, emergency contacts, and essential documents."
       ]
     },
     {/* LEGACY AT RISK */
       t:"LEGACY AT RISK",
       p:[
-        "You have some documentation in place, but <strong style=\"color:#c1b085;\">significant gaps remain</strong>. The items you checked show awareness \u2014 the unchecked ones represent single points of failure.",
-        "This is the range where risk is most deceptive. You have enough organized that it feels manageable, but not enough that a successor could act without guesswork. Financial accounts without documented access pathways, insurance policies without location records, digital accounts without recovery options \u2014 these are the gaps that create months of confusion.",
+        "You have some documentation in place, but <strong style=\"color:#c1b085;\">significant gaps remain</strong>. The items you checked show awareness. The unchecked ones represent single points of failure.",
+        "This is the range where risk is most deceptive. You have enough organized that it feels manageable, but not enough that a successor could act without guesswork. Financial accounts without documented access pathways, insurance policies without location records, digital accounts without recovery options. These are the gaps that create months of confusion.",
         "An expanded continuity plan would close these gaps systematically, covering not just the basics but the financial, legal, and household layers that hold everything together."
       ]
     },
@@ -319,24 +333,24 @@
       t:"CRITICAL COMPLEXITY",
       p:[
         "Your audit shows <strong style=\"color:#c1b085;\">multi-layered responsibilities</strong> across most pillars. You have significant documentation, but the complexity of your situation means the remaining gaps carry outsized risk.",
-        "At this level, the issue is not awareness but architecture. Individual items may be documented, but without a unified system that a successor can follow step by step, even well-organized people leave critical gaps. Cryptocurrency keys, business operating agreements, trust documentation, advanced healthcare directives \u2014 these are items where a single missing piece can mean permanent loss.",
-        "A comprehensive continuity plan would bring every pillar into a single, navigable system \u2014 including business operations if applicable."
+        "At this level, the issue is not awareness but architecture. Individual items may be documented, but without a unified system that a successor can follow step by step, even well-organized people leave critical gaps. Cryptocurrency keys, business operating agreements, trust documentation, advanced healthcare directives. These are items where a single missing piece can mean permanent loss.",
+        "A comprehensive continuity plan would bring every pillar into a single, navigable system, including business operations if applicable."
       ]
     },
     {/* WELL STRUCTURED */
       t:"WELL STRUCTURED",
       p:[
         "You are <strong style=\"color:#c1b085;\">well organized</strong>. Your audit shows a strong foundation across most pillars, with only a few remaining gaps.",
-        "At this level, the value is not in building from scratch \u2014 it is in validation and completion. The items you have not checked may represent things you have not gotten to yet, or things you assumed were covered but are not. Either way, a focused review would identify exactly what is missing and ensure everything is accessible, current, and connected.",
+        "At this level, the value is not in building from scratch. It is in validation and completion. The items you have not checked may represent things you have not gotten to yet, or things you assumed were covered but are not. Either way, a focused review would identify exactly what is missing and ensure everything is accessible, current, and connected.",
         "Most people at this level benefit from a structured review session rather than a full engagement."
       ]
     },
     {/* COMPREHENSIVE */
       t:"COMPREHENSIVE",
       p:[
-        "Your documentation is <strong style=\"color:#c1b085;\">thorough</strong>. This is rare \u2014 most people who take this audit score well below where you are.",
+        "Your documentation is <strong style=\"color:#c1b085;\">thorough</strong>. This is rare. Most people who take this audit score well below where you are.",
         "The question at this level is not what is missing, but whether what exists is current, accessible, and structured in a way that a successor could actually use. Documents can exist without being findable. Accounts can be listed without access being transferable.",
-        "An annual review ensures nothing drifts out of date \u2014 and that the people who may need this information know where to find it."
+        "An annual review ensures nothing drifts out of date, and that the people who may need this information know where to find it."
       ]
     }
   ];
@@ -361,6 +375,23 @@
     if(pct<=70) return 2;
     if(pct<=85) return 3;
     return 4;
+  }
+
+
+  function initCalEmbed(){
+    if(typeof Cal==='undefined')return;
+    try{
+      Cal.ns['private-conversation']('inline',{
+        elementOrSelector:'#la-cal-embed',
+        config:{layout:'month_view',useSlotsViewOnSmallScreen:'true'},
+        calLink:'legacyarchitectrva/private-conversation'
+      });
+      Cal.ns['private-conversation']('ui',{
+        cssVarsPerTheme:{light:{'cal-brand':'#292929'},dark:{'cal-brand':'#C4AB93'}},
+        hideEventTypeDetails:false,
+        layout:'month_view'
+      });
+    }catch(e){}
   }
 
   /* ── conversion-optimized results page ─────────── */
@@ -406,35 +437,34 @@
     /* full item-by-item breakdown */
     h+='<div style="margin-top:44px;">'+detailHTML()+'</div>';
 
-    /* === Primary CTA === */
-    h+='<div style="border:1px solid #c1b085;padding:40px 32px;margin-top:48px;text-align:center;background:rgba(193,176,133,0.03);box-shadow:0 0 30px rgba(193,176,133,0.06);">'+
+    /* CTA */
+    h+='<div style="padding:40px 0;margin-top:48px;text-align:center;">'+
       '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;margin-bottom:16px;">YOUR RECOMMENDED NEXT STEP</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#c1b085;line-height:1.6;margin-bottom:8px;">A Life Manual\u2122 closes these gaps before someone else has to.</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#b0a494;line-height:1.7;margin-bottom:28px;">It does not replace a will or a trust \u2014 it makes them usable. It tells the people you trust not just what they have authority to do, but how to actually do it.</div>'+
-      '<a href="https://cal.com/legacyarchitectrva/private-conversation" target="_blank" style="font-family:Cinzel,serif;font-size:14px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;text-decoration:none;display:inline-block;padding:18px 48px;border-radius:1px;transition:background 0.2s;">SCHEDULE A PRIVATE CONVERSATION</a>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:14px;font-style:italic;color:#8a7240;margin-top:14px;">No obligation \u2014 100% confidential</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#c1b085;line-height:1.6;margin-bottom:8px;">A <strong>Life Manual</strong>\u2122 closes these gaps before someone else has to.</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#b0a494;line-height:1.7;margin-bottom:28px;">It does not replace a will or a trust. It makes them usable. It tells the people you trust not just what they have authority to do, but how to actually do it.</div>'+
     '</div>';
 
-    /* pricing link */
-    h+='<div style="border:1px solid #2a2218;padding:28px 32px;margin-top:24px;text-align:center;">'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.6;margin-bottom:20px;">See how a Life Manual\u2122 closes the gaps above.</div>'+
-      '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;border:1px solid #c1b085;display:inline-block;padding:14px 36px;border-radius:1px;transition:background 0.2s;">VIEW PACKAGES &amp; PRICING</a>'+
+    /* Cal.com inline embed */
+    h+='<div style="margin-bottom:40px;">'+
+      '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:4px;color:#b8984e;text-align:center;margin-bottom:8px;">BOOK A PRIVATE CONVERSATION</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#8a7240;text-align:center;margin-bottom:20px;">No obligation. 100% confidential.</div>'+
+      '<div id="la-cal-embed" style="width:100%;min-height:500px;overflow:auto;"></div>'+
     '</div>';
 
-    /* footer CTA */
-    h+='<div style="text-align:center;margin-top:40px;padding-top:12px;">'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#c1b085;line-height:1.6;margin-bottom:8px;">Most people find gaps they did not expect.</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.6;margin-bottom:32px;">A Life Manual\u2122 closes them before someone else has to.</div>'+
-      '<a href="https://cal.com/legacyarchitectrva/private-conversation" target="_blank" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;text-decoration:none;display:inline-block;padding:17px 44px;border-radius:1px;transition:background 0.2s;">SCHEDULE A CONVERSATION</a>'+
-      '<div style="display:flex;justify-content:center;gap:32px;margin-top:28px;">'+
-        '<div onclick="__la.rs()" style="font-family:Cinzel,serif;font-size:11px;letter-spacing:3px;color:#8a7240;cursor:pointer;">START OVER</div>'+
-      '</div>'+
+    /* Workbook CTA with image */
+    h+='<div style="text-align:center;margin-top:40px;padding-top:32px;border-top:1px solid #2a2218;">'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.6;margin-bottom:20px;">Or explore at your own pace:</div>'+
+      '<a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="text-decoration:none;display:inline-block;">'+
+        '<img src="'+WORKBOOK_IMG+'" alt="7-Pillar Continuity Workbook" style="max-width:400px;width:100%;border-radius:2px;margin-bottom:16px;">'+
+      '</a>'+
+      '<div style="margin-bottom:20px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;text-decoration:none;display:inline-block;padding:14px 36px;border-radius:1px;">DOWNLOAD THE FREE WORKBOOK</a></div>'+
+      '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid #c1b085;border-radius:1px;display:inline-block;">VIEW PACKAGES & PRICING</a>'+
     '</div>';
 
     return h;
   }
 
-  /* Pre-email results page: score ring + pillar bars + email gate */
+  /* Pre-email results page */
   function resultsHTML(){
     var sc=calcScore();
     var tot=sc.total,mx=sc.max,pct=sc.pct;
@@ -443,34 +473,16 @@
 
     var desc=tot<=10?'Critical gaps identified':tot<=22?'Significant gaps remain':tot<=30?'Partially documented':tot<=36?'Well organized':'Strongly organized';
 
-    /* animated score ring */
     var h='<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:5px;color:#b8984e;text-align:center;margin-bottom:14px;">AUDIT COMPLETE</div>'+
-      '<div style="font-family:Cinzel,serif;font-size:23px;font-weight:600;color:#fdfcfa;letter-spacing:3px;text-align:center;margin-bottom:56px;">YOUR CONTINUITY SCORE</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:23px;font-weight:600;color:#fdfcfa;letter-spacing:3px;text-align:center;margin-bottom:56px;">YOUR CONTINUITY SCORE</div>';
 
-      '<div style="display:flex;justify-content:center;margin-bottom:40px;">'+
-        '<div style="position:relative;width:230px;height:230px;">'+
-          '<div style="position:absolute;top:0;right:0;bottom:0;left:0;border-radius:50%;animation:la-spin 2.8s linear infinite;">'+
-            '<div style="position:absolute;top:0;right:0;bottom:0;left:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(193,176,133,0) 0deg,rgba(193,176,133,0.7) 80deg,rgba(253,252,250,1) 90deg,rgba(193,176,133,0.7) 100deg,rgba(193,176,133,0) 180deg);filter:blur(1px);"></div>'+
-          '</div>'+
-          '<div style="position:absolute;top:0;right:0;bottom:0;left:0;border-radius:50%;border:1px solid #342a1c;"></div>'+
-          '<div style="position:absolute;top:4px;right:4px;bottom:4px;left:4px;border-radius:50%;background:#100d0a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">'+
-            '<div style="font-family:Cinzel,serif;font-size:9px;letter-spacing:5px;color:#b8984e;">CONTINUITY</div>'+
-            '<div style="display:flex;align-items:baseline;gap:3px;">'+
-              '<div style="font-family:Cinzel,serif;font-size:58px;font-weight:600;color:#c1b085;line-height:1;text-shadow:0 0 30px rgba(193,176,133,0.3);">'+pct+'</div>'+
-              '<div style="font-family:Cinzel,serif;font-size:22px;color:#b8984e;line-height:1;">%</div>'+
-            '</div>'+
-            '<div style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#c1b085;text-align:center;padding:0 16px;margin-top:4px;">'+desc+'</div>'+
-          '</div>'+
-        '</div>'+
-      '</div>'+
-
-      /* score summary */
-      '<div style="text-align:center;margin-bottom:48px;">'+
-        '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:3px;color:#c1b085;margin-bottom:8px;">'+tot+' OF '+mx+' POINTS</div>'+
-        '<div style="font-family:Cinzel,serif;font-size:20px;font-weight:700;color:#c1b085;letter-spacing:2px;margin-bottom:12px;">'+tp.t+'</div>'+
+    /* 52% urgency stat - FIRST */
+    h+='<div style="padding:28px 32px;margin-bottom:40px;text-align:center;background:rgba(193,176,133,0.02);">'+
+        '<div style="font-family:Cinzel,serif;font-size:42px;font-weight:700;color:#c1b085;line-height:1;margin-bottom:8px;">52%</div>'+
+        '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.6;">of adults have <strong style=\'color:#c1b085;\'>no plan</strong> for their digital assets. The gaps below show where your family would be left guessing.</div>'+
       '</div>';
 
-    /* pillar breakdown bars */
+    /* pillar breakdown bars - SECOND */
     var brows='';
     for(var idx=0;idx<7;idx++){
       if(idx===5&&OB===false)continue;
@@ -492,30 +504,52 @@
       brows+
     '</div>';
 
-    /* === Urgency stat === */
-    h+='<div style="border:1px solid #2a2218;padding:28px 32px;margin-bottom:40px;text-align:center;background:rgba(193,176,133,0.02);">'+
-      '<div style="font-family:Cinzel,serif;font-size:42px;font-weight:700;color:#c1b085;line-height:1;margin-bottom:8px;">52%</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;line-height:1.6;">of adults have <strong style=\'color:#c1b085;\'>no plan</strong> for their digital assets. The gaps above are the ones your family would have to navigate without you.</div>'+
-    '</div>';
-
-    /* === Email gate === */
-    h+='<div style="border:1px solid #c1b085;padding:40px 32px;text-align:center;background:rgba(193,176,133,0.03);box-shadow:0 0 30px rgba(193,176,133,0.06);">'+
-      '<div id="la-email-sec">'+
-        '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:3px;color:#c1b085;margin-bottom:12px;">GET YOUR FULL RESULTS</div>'+
-        '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;margin-bottom:8px;line-height:1.6;">Your score is above \u2014 but the real insight is in the details.</div>'+
-        '<div style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#b0a494;margin-bottom:24px;line-height:1.6;">Enter your email to unlock your personalized gap analysis, risk explanations, and recommended next steps.</div>'+
-        '<div style="display:flex;gap:10px;max-width:400px;margin:0 auto;">'+
-          '<input id="la-email" type="email" placeholder="Email" style="flex:1;padding:13px 16px;background:transparent;border:1px solid #6b5a38;border-radius:1px;color:#c1b085;font-family:Bodoni Moda,serif;font-size:15px;outline:none;">'+
-          '<button onclick="__la.sub()" style="font-family:Cinzel,serif;font-size:11px;font-weight:700;letter-spacing:2px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;padding:13px 24px;border-radius:1px;white-space:nowrap;">UNLOCK RESULTS</button>'+
+    /* animated score ring - THIRD */
+    h+='<div style="display:flex;justify-content:center;margin-bottom:40px;">'+
+        '<div style="position:relative;width:230px;height:230px;">'+
+          '<div style="position:absolute;top:0;right:0;bottom:0;left:0;border-radius:50%;animation:la-spin 2.8s linear infinite;">'+
+            '<div style="position:absolute;top:0;right:0;bottom:0;left:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(193,176,133,0) 0deg,rgba(193,176,133,0.7) 80deg,rgba(253,252,250,1) 90deg,rgba(193,176,133,0.7) 100deg,rgba(193,176,133,0) 180deg);filter:blur(1px);"></div>'+
+          '</div>'+
+          '<div style="position:absolute;top:0;right:0;bottom:0;left:0;border-radius:50%;border:1px solid #342a1c;"></div>'+
+          '<div style="position:absolute;top:4px;right:4px;bottom:4px;left:4px;border-radius:50%;background:#100d0a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">'+
+            '<div style="font-family:Cinzel,serif;font-size:9px;letter-spacing:5px;color:#b8984e;">CONTINUITY</div>'+
+            '<div style="display:flex;align-items:baseline;gap:3px;">'+
+              '<div style="font-family:Cinzel,serif;font-size:58px;font-weight:600;color:#c1b085;line-height:1;text-shadow:0 0 30px rgba(193,176,133,0.3);">'+pct+'</div>'+
+              '<div style="font-family:Cinzel,serif;font-size:22px;color:#b8984e;line-height:1;">%</div>'+
+            '</div>'+
+            '<div style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#c1b085;text-align:center;padding:0 16px;margin-top:4px;">'+desc+'</div>'+
+          '</div>'+
         '</div>'+
-        '<div id="la-email-msg" style="font-family:Bodoni Moda,serif;font-size:14px;font-style:italic;color:#b8984e;margin-top:12px;min-height:20px;"></div>'+
       '</div>'+
-    '</div>';
+      '<div style="text-align:center;margin-bottom:48px;">'+
+        '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:3px;color:#c1b085;margin-bottom:8px;">'+tot+' OF '+mx+' POINTS</div>'+
+        '<div style="font-family:Cinzel,serif;font-size:20px;font-weight:700;color:#c1b085;letter-spacing:2px;margin-bottom:12px;">'+tp.t+'</div>'+
+      '</div>';
 
-    /* back / start over */
+    /* email gate - no outer border */
+    h+='<div style="padding:40px 32px;text-align:center;background:rgba(193,176,133,0.03);">'+
+        '<div id="la-email-sec">'+
+          '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:3px;color:#c1b085;margin-bottom:12px;">GET YOUR FULL RESULTS</div>'+
+          '<div style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#b0a494;margin-bottom:8px;line-height:1.6;">Your score is above, but the real insight is in the details.</div>'+
+          '<div style="font-family:Bodoni Moda,serif;font-size:16px;font-style:italic;color:#b0a494;margin-bottom:24px;line-height:1.6;">Enter your email to unlock your personalized gap analysis, risk explanations, and recommended next steps.</div>'+
+          '<div style="display:flex;gap:10px;max-width:400px;margin:0 auto;">'+
+            '<input id="la-email" type="email" placeholder="Email" style="flex:1;padding:13px 16px;background:transparent;border:1px solid #6b5a38;border-radius:1px;color:#c1b085;font-family:Bodoni Moda,serif;font-size:15px;outline:none;">'+
+            '<button onclick="__la.sub()" style="font-family:Cinzel,serif;font-size:11px;font-weight:700;letter-spacing:2px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;padding:13px 24px;border-radius:1px;white-space:nowrap;">UNLOCK RESULTS</button>'+
+          '</div>'+
+          '<div id="la-email-msg" style="font-family:Bodoni Moda,serif;font-size:14px;font-style:italic;color:#b8984e;margin-top:12px;min-height:20px;"></div>'+
+        '</div>'+
+      '</div>';
+
+    /* single back / start over */
     h+='<div style="display:flex;justify-content:center;gap:32px;margin-top:28px;">'+
       '<button onclick="__la.go(7)" style="font-family:Cinzel,serif;font-size:11px;font-weight:700;letter-spacing:3px;color:#b8984e;background:none;border:none;cursor:pointer;text-transform:uppercase;padding:0;">BACK</button>'+
       '<div onclick="__la.rs()" style="font-family:Cinzel,serif;font-size:11px;letter-spacing:3px;color:#8a7240;cursor:pointer;">START OVER</div>'+
+    '</div>';
+
+    /* footer */
+    h+='<div style="border-top:1px solid #2a2218;margin-top:40px;padding-top:32px;text-align:center;">'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#c1b085;line-height:1.6;margin-bottom:4px;">\u201COrder in Your Absence\u201D</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:13px;color:#6b5a38;margin-top:16px;">Legacy Architect RVA</div>'+
     '</div>';
 
     return h;
@@ -661,8 +695,11 @@
         if(xhr.status>=200&&xhr.status<300){
           var sec=document.getElementById('la-email-sec');
           if(sec)sec.parentElement.outerHTML=fullResultsHTML();
-          /* re-trigger bar animations */
-          setTimeout(function(){var b=document.querySelectorAll('.lab');for(var i=0;i<b.length;i++)b[i].style.width=b[i].getAttribute('data-w')+'%';},80);
+          /* re-trigger bar animations + init Cal embed */
+          setTimeout(function(){
+            var b=document.querySelectorAll('.lab');for(var i=0;i<b.length;i++)b[i].style.width=b[i].getAttribute('data-w')+'%';
+            initCalEmbed();
+          },200);
         }else{
           if(msg)msg.textContent='Something went wrong. Please try again.';
         }
