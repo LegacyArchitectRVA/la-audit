@@ -21,6 +21,11 @@
   var sty=document.createElement('style');
   sty.textContent='@keyframes la-spin{to{transform:rotate(360deg)}}'+
     '@keyframes la-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}'+
+    '@keyframes la-pulse{0%{box-shadow:0 0 12px rgba(193,176,133,0.3)}50%{box-shadow:0 0 20px rgba(193,176,133,0.5)}100%{box-shadow:0 0 12px rgba(193,176,133,0.3)}}'+
+    '@keyframes la-shimmer{from{background-position:-200% 0}to{background-position:200% 0}}'+
+    '[id^="r"][id*="-"]:hover{background:rgba(193,176,133,0.04)!important;border-color:rgba(193,176,133,0.15)!important;}'+
+    'button:hover{filter:brightness(1.08);}'+
+    '#la-email:focus{border-color:#c1b085!important;box-shadow:0 0 12px rgba(193,176,133,0.2)!important;}'+
     '@media(max-width:600px){'+
       '#pg-rest,#pg1{padding:0 12px!important;}'+
       '[style*="font-size:44px"]{font-size:34px!important;}'+
@@ -162,7 +167,7 @@
     for(var s=0;s<7;s++){
       var bg=s<active?'#8a7030':s===active?'#c1b085':'#342a1c';
       var sh=s===active?'0 0 8px rgba(193,176,133,0.6)':'none';
-      h+='<div style="height:2px;flex:1;background:'+bg+';border-radius:1px;box-shadow:'+sh+';"></div>';
+      h+='<div style="height:3px;flex:1;background:'+(s<active?'linear-gradient(90deg,#8a7030,#c1b085)':bg)+';border-radius:2px;box-shadow:'+sh+';transition:background 0.4s;"></div>';
     }
     return h+'</div>';
   }
@@ -220,11 +225,11 @@
     /* nav buttons */
     var nextBtn;
     if(isP5){
-      nextBtn='<button onclick="__la.p5()" style="font-family:Cinzel,serif;font-size:17px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:1px;">CONTINUE</button>';
+      nextBtn='<button onclick="__la.p5()" style="font-family:Cinzel,serif;font-size:17px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.3);transition:box-shadow 0.3s,transform 0.15s;">CONTINUE</button>';
     }else if(isLast){
-      nextBtn='<button onclick="__la.go(\'R\')" style="font-family:Cinzel,serif;font-size:17px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:1px;">SEE RESULTS</button>';
+      nextBtn='<button onclick="__la.go(\'R\')" style="font-family:Cinzel,serif;font-size:17px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.3);transition:box-shadow 0.3s,transform 0.15s;">SEE RESULTS</button>';
     }else{
-      nextBtn='<button onclick="__la.go('+(pi+2)+')" style="font-family:Cinzel,serif;font-size:17px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:1px;">NEXT PILLAR</button>';
+      nextBtn='<button onclick="__la.go('+(pi+2)+')" style="font-family:Cinzel,serif;font-size:17px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.3);transition:box-shadow 0.3s,transform 0.15s;">NEXT PILLAR</button>';
     }
 
     var backTarget=pi===1?1:(pi===6&&OB===false)?5:pi;
@@ -233,7 +238,12 @@
     return prog(pi)+
       '<div style="font-family:Cinzel,serif;font-size:17px;letter-spacing:5px;color:#b8984e;margin-bottom:10px;">PILLAR '+(pi+1)+' OF 7</div>'+
       '<div style="font-family:Cinzel,serif;font-size:32px;font-weight:700;color:#c1b085;letter-spacing:2px;margin-bottom:12px;line-height:1.15;">'+pl.n.toUpperCase()+'</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#a09484;line-height:1.6;margin-bottom:44px;">'+pl.d+'</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#a09484;line-height:1.6;margin-bottom:20px;">'+pl.d+'</div>'+
+      '<div style="display:flex;align-items:center;gap:16px;margin-bottom:40px;">'+
+        '<div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#4a3d28);"></div>'+
+        '<div style="font-family:Cinzel,serif;font-size:9px;letter-spacing:4px;color:#6b5a38;">\u2726</div>'+
+        '<div style="flex:1;height:1px;background:linear-gradient(90deg,#4a3d28,transparent);"></div>'+
+      '</div>'+
       counterHTML(pi)+
       '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:'+(isP5?'0':'52px')+';">'+rows+'</div>'+
       gate+
@@ -247,7 +257,12 @@
 
   /* Full item-by-item breakdown */
   function detailHTML(){
-    var h='<div style="font-family:Cinzel,serif;font-size:16px;letter-spacing:4px;color:#b8984e;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #2a2218;">YOUR FULL BREAKDOWN</div>';
+    var h='<div style="margin-bottom:24px;">'+
+      '<div style="font-family:Cinzel,serif;font-size:16px;letter-spacing:4px;color:#b8984e;margin-bottom:12px;">YOUR FULL BREAKDOWN</div>'+
+      '<div style="display:flex;align-items:center;gap:12px;">'+
+        '<div style="flex:1;height:1px;background:linear-gradient(90deg,#4a3d28,transparent);"></div>'+
+      '</div>'+
+    '</div>';
     for(var pi=0;pi<7;pi++){
       if(pi===5&&OB===false)continue;
       var c=pillarChecked(pi);
@@ -404,6 +419,22 @@
     return 4;
   }
 
+  /* ── per-pillar tier labels & colors ────────────── */
+  var PTIER=[
+    {l:"Critical Gaps",     c:"#b8564e", bg:"rgba(184,86,78,0.06)", bc:"rgba(184,86,78,0.25)"},
+    {l:"Needs Attention",   c:"#b8984e", bg:"rgba(184,152,78,0.06)", bc:"rgba(184,152,78,0.25)"},
+    {l:"Nearly Complete",   c:"#8ab87a", bg:"rgba(138,184,122,0.06)", bc:"rgba(138,184,122,0.20)"},
+    {l:"Fully Documented",  c:"#c1b085", bg:"rgba(193,176,133,0.06)", bc:"rgba(193,176,133,0.25)"}
+  ];
+  function pillarTier(checked,mx){
+    if(mx===0) return PTIER[3];
+    var pct=checked/mx;
+    if(pct<=0.25) return PTIER[0];
+    if(pct<=0.5)  return PTIER[1];
+    if(pct<1)     return PTIER[2];
+    return PTIER[3];
+  }
+
 
   function initCalEmbed(){
     if(typeof Cal==='undefined')return;
@@ -466,10 +497,14 @@
 
     /* CTA — tight, conversion-focused */
     h+='<div style="padding:24px 0;margin-top:32px;text-align:center;">'+
-      '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;margin-bottom:16px;">YOUR RECOMMENDED NEXT STEP</div>'+
+      '<div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">'+
+        '<div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#4a3d28);"></div>'+
+        '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:4px;color:#b8984e;white-space:nowrap;">YOUR RECOMMENDED NEXT STEP</div>'+
+        '<div style="flex:1;height:1px;background:linear-gradient(90deg,#4a3d28,transparent);"></div>'+
+      '</div>'+
       /* Book a Call button — right under heading */
       '<div style="margin-bottom:20px;">'+
-        '<a href="#la-cal-embed" onclick="document.getElementById(\'la-cal-embed\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;padding:14px 32px;border-radius:1px;transition:all 0.3s ease;" onmouseover="this.style.background=\'#d4c4a0\'" onmouseout="this.style.background=\'#c1b085\'">'+
+        '<a href="#la-cal-embed" onclick="document.getElementById(\'la-cal-embed\').scrollIntoView({behavior:\'smooth\',block:\'start\'});return false;" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);padding:14px 32px;border-radius:2px;box-shadow:0 3px 16px rgba(193,176,133,0.35);transition:all 0.3s ease;" onmouseover="this.style.boxShadow=\'0 4px 20px rgba(193,176,133,0.5)\'" onmouseout="this.style.boxShadow=\'0 3px 16px rgba(193,176,133,0.35)\'">'+
           '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#100d0a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>'+
           'BOOK A CALL'+
         '</a>'+
@@ -484,8 +519,8 @@
       '<a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="text-decoration:none;display:inline-block;">'+
         '<img src="'+WORKBOOK_IMG+'" alt="7-Pillar Continuity Workbook" style="max-width:360px;width:100%;border-radius:2px;margin-bottom:14px;">'+
       '</a>'+
-      '<div style="margin-bottom:16px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:#c1b085;text-decoration:none;display:inline-block;padding:14px 36px;border-radius:1px;">DOWNLOAD THE FREE WORKBOOK</a></div>'+
-      '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid #c1b085;border-radius:1px;display:inline-block;">VIEW PACKAGES & PRICING</a>'+
+      '<div style="margin-bottom:16px;"><a href="https://legacyarchitectrva.com/#workbook" target="_blank" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);text-decoration:none;display:inline-block;padding:14px 36px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.25);transition:box-shadow 0.3s;">DOWNLOAD THE FREE WORKBOOK</a></div>'+
+      '<a href="https://legacyarchitectrva.com/#pricing" target="_blank" style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:3px;color:#c1b085;text-decoration:none;padding:14px 36px;border:1px solid rgba(193,176,133,0.5);border-radius:2px;display:inline-block;transition:border-color 0.3s,box-shadow 0.3s;">VIEW PACKAGES & PRICING</a>'+
     '</div>';
 
     /* Cal.com inline embed */
@@ -510,7 +545,7 @@
     var h='';
 
     /* 52% urgency stat - FIRST */
-    h+='<div id="la-stat52" style="padding:20px 24px;margin-bottom:28px;text-align:center;background:rgba(193,176,133,0.02);">'+
+    h+='<div id="la-stat52" style="padding:28px 24px;margin-bottom:32px;text-align:center;background:rgba(193,176,133,0.02);border:1px solid rgba(193,176,133,0.08);border-radius:2px;position:relative;">'+
         '<div style="font-family:Cinzel,serif;font-size:44px;font-weight:700;color:#c1b085;line-height:1;margin-bottom:8px;">52%</div>'+
         '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#fdfcfa;line-height:1.6;">of adults have <strong style=\'color:#c1b085;\'>no plan</strong> for their digital assets. The gaps below show where your family would be left guessing.</div>'+
       '</div>';
@@ -523,17 +558,26 @@
       var pmx=pillarMax(idx);
       var w=pmx>0?Math.round(c/pmx*100):0;
       var full=pmx>0&&c===pmx;
-      brows+='<div style="display:flex;align-items:center;gap:16px;padding:11px 0;border-bottom:1px solid #2a2218;">'+
-        '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:1.5px;color:#c1b085;width:170px;flex-shrink:0;">'+P[idx].n.toUpperCase()+'</div>'+
-        '<div style="flex:1;height:2px;background:#342a1c;position:relative;">'+
-          '<div class="lab" data-w="'+w+'" style="position:absolute;top:0;left:0;height:100%;width:0%;background:'+(full?'#c1b085':'#8a7030')+';transition:width 1.2s cubic-bezier(0.4,0,0.2,1);box-shadow:'+(full?'0 0 8px rgba(193,176,133,0.5)':'0 0 4px rgba(138,112,48,0.4)')+';"></div>'+
+      var pt=pillarTier(c,pmx);
+      brows+='<div style="padding:11px 0;border-bottom:1px solid #2a2218;">'+
+        '<div style="display:flex;align-items:center;gap:16px;">'+
+          '<div style="font-family:Cinzel,serif;font-size:13px;letter-spacing:1.5px;color:#c1b085;width:170px;flex-shrink:0;">'+P[idx].n.toUpperCase()+'</div>'+
+          '<div style="flex:1;height:4px;background:#1a1610;border-radius:2px;position:relative;overflow:hidden;">'+
+            '<div class="lab" data-w="'+w+'" style="position:absolute;top:0;left:0;height:100%;width:0%;background:'+(full?'linear-gradient(90deg,#b8984e,#c1b085,#d4c4a0)':'linear-gradient(90deg,#6b5a38,#8a7030)')+';border-radius:2px;transition:width 1.2s cubic-bezier(0.4,0,0.2,1);box-shadow:'+(full?'0 0 10px rgba(193,176,133,0.6)':'0 0 6px rgba(138,112,48,0.4)');"></div>'+
+          '</div>'+
+          '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:'+(full?'#c1b085':'#b8984e')+';width:42px;text-align:right;flex-shrink:0;">'+c+'/'+pmx+'</div>'+
         '</div>'+
-        '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:'+(full?'#c1b085':'#b8984e')+';width:42px;text-align:right;flex-shrink:0;">'+c+'/'+pmx+'</div>'+
+        '<div style="display:flex;justify-content:flex-end;margin-top:4px;">'+
+          '<div style="font-family:Bodoni Moda,serif;font-size:11px;font-style:italic;letter-spacing:1px;color:'+pt.c+';padding:2px 8px;background:'+pt.bg+';border:1px solid '+pt.bc+';border-radius:2px;">'+pt.l+'</div>'+
+        '</div>'+
       '</div>';
     }
 
     h+='<div style="margin-bottom:32px;">'+
-      '<div style="font-family:Cinzel,serif;font-size:16px;letter-spacing:4px;color:#b8984e;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #2a2218;">PILLAR BREAKDOWN</div>'+
+      '<div style="margin-bottom:4px;">'+
+        '<div style="font-family:Cinzel,serif;font-size:16px;letter-spacing:4px;color:#b8984e;margin-bottom:10px;">PILLAR BREAKDOWN</div>'+
+        '<div style="height:1px;background:linear-gradient(90deg,#4a3d28,transparent);margin-bottom:8px;"></div>'+
+      '</div>'+
       brows+
     '</div>';
 
@@ -544,7 +588,7 @@
     /* animated score ring */
     h+='<div style="display:flex;justify-content:center;margin-bottom:40px;">'+
         '<div style="position:relative;width:230px;height:230px;">'+
-          '<div style="position:absolute;top:0;right:0;bottom:0;left:0;border-radius:50%;animation:la-spin 2.8s linear infinite;">'+
+          '<div style="position:absolute;top:0;right:0;bottom:0;left:0;border-radius:50%;animation:la-spin 2.8s linear infinite;filter:drop-shadow(0 0 6px rgba(193,176,133,0.15));">'+
             '<div style="position:absolute;top:0;right:0;bottom:0;left:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(193,176,133,0) 0deg,rgba(193,176,133,0.7) 80deg,rgba(253,252,250,1) 90deg,rgba(193,176,133,0.7) 100deg,rgba(193,176,133,0) 180deg);filter:blur(1px);"></div>'+
           '</div>'+
           '<div style="position:absolute;top:0;right:0;bottom:0;left:0;border-radius:50%;border:1px solid #342a1c;"></div>'+
@@ -570,8 +614,8 @@
           '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#fdfcfa;margin-bottom:8px;line-height:1.6;">Your score is above, but the real insight is in the details.</div>'+
           '<div style="font-family:Bodoni Moda,serif;font-size:17px;color:#fdfcfa;margin-bottom:24px;line-height:1.6;">Enter your email to unlock your personalized gap analysis, risk explanations, and recommended next steps.</div>'+
           '<div style="display:flex;gap:10px;max-width:400px;margin:0 auto;">'+
-            '<input id="la-email" type="email" placeholder="Email" style="flex:1;padding:13px 16px;background:transparent;border:1px solid #6b5a38;border-radius:1px;color:#c1b085;font-family:Bodoni Moda,serif;font-size:16px;outline:none;">'+
-            '<button onclick="__la.sub()" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#100d0a;background:#c1b085;border:none;cursor:pointer;padding:13px 24px;border-radius:1px;white-space:nowrap;">UNLOCK RESULTS</button>'+
+            '<input id="la-email" type="email" placeholder="Email" style="flex:1;padding:14px 18px;background:rgba(16,13,10,0.6);border:1px solid #6b5a38;border-radius:2px;color:#c1b085;font-family:Bodoni Moda,serif;font-size:16px;outline:none;transition:border-color 0.3s,box-shadow 0.3s;">'+
+            '<button onclick="__la.sub()" style="font-family:Cinzel,serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);border:none;cursor:pointer;padding:14px 26px;border-radius:2px;white-space:nowrap;box-shadow:0 2px 10px rgba(193,176,133,0.3);transition:box-shadow 0.3s;">UNLOCK RESULTS</button>'+
           '</div>'+
           '<div id="la-email-msg" style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#b8984e;margin-top:12px;min-height:20px;"></div>'+
         '</div>'+
@@ -585,7 +629,11 @@
 
     /* footer */
     h+='<div style="border-top:1px solid #2a2218;margin-top:40px;padding-top:32px;text-align:center;">'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#c1b085;line-height:1.6;margin-bottom:4px;">\u201COrder in Your Absence\u201D</div>'+
+      '<div style="display:flex;align-items:center;gap:14px;justify-content:center;margin-bottom:8px;">'+
+        '<div style="width:40px;height:1px;background:linear-gradient(90deg,transparent,#4a3d28);"></div>'+
+        '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#c1b085;line-height:1.6;">\u201COrder in Your Absence\u201D</div>'+
+        '<div style="width:40px;height:1px;background:linear-gradient(90deg,#4a3d28,transparent);"></div>'+
+      '</div>'+
       '<div style="font-family:Cinzel,serif;font-size:14px;color:#6b5a38;margin-top:16px;">Legacy Architect RVA</div>'+
     '</div>';
 
