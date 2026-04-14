@@ -510,7 +510,7 @@
     var h='';
 
     /* 52% urgency stat - FIRST */
-    h+='<div style="padding:20px 24px;margin-bottom:28px;text-align:center;background:rgba(193,176,133,0.02);">'+
+    h+='<div id="la-stat52" style="padding:20px 24px;margin-bottom:28px;text-align:center;background:rgba(193,176,133,0.02);">'+
         '<div style="font-family:Cinzel,serif;font-size:44px;font-weight:700;color:#c1b085;line-height:1;margin-bottom:8px;">52%</div>'+
         '<div style="font-family:Bodoni Moda,serif;font-size:18px;font-style:italic;color:#fdfcfa;line-height:1.6;">of adults have <strong style=\'color:#c1b085;\'>no plan</strong> for their digital assets. The gaps below show where your family would be left guessing.</div>'+
       '</div>';
@@ -736,7 +736,9 @@
           setTimeout(function(){
             var b=document.querySelectorAll('.lab');for(var i=0;i<b.length;i++)b[i].style.width=b[i].getAttribute('data-w')+'%';
             initCalEmbed();
-            try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}
+            var s52=document.getElementById('la-stat52');
+            if(s52){s52.scrollIntoView({behavior:'smooth',block:'start'});}
+            else{try{window.scrollTo({top:0,behavior:'smooth'});}catch(e2){window.scrollTo(0,0);}}
           },200);
         }else{
           if(msg)msg.textContent='Something went wrong. Please try again.';
@@ -766,9 +768,13 @@
 
   /* ── inject counter into Carrd page 1 ─────────── */
   (function injectP1Ctr(){
-    if(document.getElementById('la-ctr-0'))return; /* already exists */
+    /* if our full counter (with la-ctr-num-0) already exists, done */
+    if(document.getElementById('la-ctr-num-0'))return;
     var pg1=document.getElementById('pg1');
     if(!pg1){setTimeout(injectP1Ctr,200);return;}
+    /* replace any existing shell counter (e.g. from Carrd) */
+    var old=document.getElementById('la-ctr-0');
+    if(old) old.remove();
     /* find the first checkbox row to insert counter above it */
     var firstCb=document.getElementById('c0-0');
     var target=firstCb?firstCb.closest('[id^="r0-"]')||firstCb.parentElement.parentElement:null;
