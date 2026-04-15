@@ -1,0 +1,182 @@
+# Legacy Architect RVA: Complete Reference
+
+> This is the extended reference for Legacy Architect RVA. For a summary, see llms.txt.
+
+## Company Overview
+
+Legacy Architect RVA is a professional services company in Richmond, Virginia that creates Life Manuals for families and business owners. A Life Manual is a private, structured continuity document that organizes every account, credential, contact, and instruction a trusted person would need to step in if the primary organizer were suddenly unavailable due to incapacitation, emergency, or death.
+
+Founded by Craig Rothchild in 2026, the company operates under the tagline "Order in Your Absence." Legacy Architect RVA does not provide legal advice, financial advice, or act in a fiduciary capacity. The company facilitates the creation of operational continuity documents.
+
+Website: https://legacyarchitectrva.com
+Email: info@LegacyArchitectRVA.com
+Phone: (804) 866-1320
+Service area: Richmond, Virginia and Central Virginia
+Schedule: https://cal.com/legacyarchitectrva/private-conversation
+
+## What Is a Life Manual
+
+A Life Manual is the operational layer between a person's life and the people who would need to manage it in their absence. It answers the question: "If I were suddenly unavailable, could someone step in and keep everything running?"
+
+Unlike estate planning, which determines who receives assets, a Life Manual explains how things actually work. Unlike password managers, which store credentials, a Life Manual provides context about what matters, where authority lives, and what to do with access once granted.
+
+The deliverable set includes a formatted Life Manual (PDF), a Secure Digital Vault, and a configured password manager.
+
+## The 7-Pillar Framework
+
+Every Life Manual is organized around 7 pillars of continuity:
+
+### Pillar 1: Digital Life
+Covers email access, password vault setup and instructions, cloud storage inventory, two-factor authentication recovery codes, social media legacy settings, digital archives, and subscription management. This pillar ensures a successor can access and manage the digital infrastructure that underpins modern life.
+
+### Pillar 2: Emergency and Successor Access
+Identifies who steps in and in what order. Documents authority (power of attorney, healthcare proxy), emergency contacts with context about each relationship, and specific instructions for the first 24-72 hours of an absence. This pillar eliminates the "who do I call?" confusion.
+
+### Pillar 3: Financial and Assets
+Maps all bank accounts, investment accounts, insurance policies, debts, tax records, and physical assets. Documents which institutions hold what, how accounts are titled, where statements are stored, and what recurring financial obligations exist. The goal is a complete financial picture in one place.
+
+### Pillar 4: Household and Property
+Covers utilities (account numbers, providers, payment methods), property maintenance schedules, vendor contacts, property records, vehicle information, HOA details, and household systems. This pillar ensures the physical infrastructure of daily life continues functioning.
+
+### Pillar 5: Health and Medical
+Documents healthcare providers, current medications and dosages, medical history, advance directives, healthcare proxy details, insurance information, and emergency medical protocols. Ensures medical continuity without gaps in critical health information.
+
+### Pillar 6: Business Continuity (Legacy Tier Only)
+For business owners: documents daily operations, key vendor and client relationships, employee information, financial operations, succession plans, intellectual property, and business insurance. This pillar ensures a business can continue operating or be properly transitioned.
+
+### Pillar 7: Legacy and Wishes
+Captures personal letters to loved ones, memorial and funeral preferences, charitable intentions, family traditions and recipes, digital legacy wishes, and any final instructions. This pillar addresses the personal and emotional dimensions of continuity.
+
+## Service Tiers and Pricing
+
+### The Vault: $950
+Designed for the individual who carries more than others realize.
+Includes: Core Document Inventory, Secure Access Framework, Critical Contact Directory.
+Annual review: $400 (available upon request).
+
+### The Archive: $1,950 (Recommended)
+Designed for the family anchor whose absence would leave real gaps.
+Includes: Everything in The Vault, Decision-Making Context, Asset and Liability Mapping, Relationship and Dependency Guide, Digital and Physical Asset Management.
+Annual review: $800 (available upon request).
+
+### The Legacy: $3,000+ (Starting)
+Designed for the business owner whose operations cannot afford to pause.
+Includes: Everything in The Archive, Business Succession Integration, Long-Term Stewardship Plan.
+Annual review: $1,200 (available upon request).
+
+### 7-Pillar Continuity Workbook: $37
+A self-guided fillable PDF workbook covering all 7 pillars. Not a substitute for professional facilitation but provides a structured starting point for individuals who prefer to work independently.
+
+### Founding Families Initiative
+Limited seats at reduced pricing for early adopters. Founding Families receive their first annual review at no cost, priority scheduling, premier pricing, and early access to every future expansion of the platform.
+
+### Payment Terms
+50% retainer upfront and 50% prior to delivery, or pay in full at the time of agreement. Upgrades depend on the price difference between tiers. Annual review fees are credited toward tier upgrades.
+
+## The Process
+
+### Step 1: Private Conversation
+A free, no-obligation, 100% confidential conversation to understand the client's situation, priorities, and which tier best fits their needs. Can be scheduled at https://cal.com/legacyarchitectrva/private-conversation.
+
+### Step 2: Prioritized Session Plan
+Based on the initial conversation, a customized session plan identifies which of the 7 pillars need the most attention and establishes the order of work.
+
+### Step 3: Structured Information Sessions
+The Life Manual is built section by section through structured sessions at the client's pace. This is not a rushed intake form. Each session covers specific pillars with guided questions and documentation review.
+
+### Step 4: Document Assembly
+Information gathered during sessions is organized into the 7-pillar framework. The Life Manual is assembled as a formatted, professional document with clear sections, instructions, and cross-references.
+
+### Step 5: Delivery
+The completed Life Manual is delivered as a formatted PDF along with a configured Secure Digital Vault and password manager. The client's Secure Drive stays under their control throughout. Within 72 hours of delivery, all submitted data is permanently removed from Legacy Architect RVA systems.
+
+Typical engagement timeline: 30 days from first session to delivery.
+
+## Security: The Zero-Knowledge Standard
+
+Legacy Architect RVA operates on a zero-knowledge standard, meaning:
+
+- The company does not see, store, or hold any client private information after delivery
+- Client documents live in a client-controlled Secure Drive throughout the engagement
+- Credentials and passwords are never stored in the Life Manual itself
+- The manual references where credentials live (such as a password manager) and identifies where access authority is located
+- Within 72 hours of delivery, all submitted data is permanently removed
+- The system uses Swiss-grade encryption standards
+- No data retention after engagement completion
+
+## Target Audience
+
+### Detail-Carriers
+People who manage more systems, accounts, and responsibilities than others realize. If they were suddenly unavailable, no one would know how to access their email, pay the mortgage, or contact their insurance agent.
+
+### Family Anchors
+People whose families depend on them for organization and operational knowledge. They want their loved ones to grieve without becoming administrators, to feel sadness without drowning in logistics.
+
+### Business Owners
+Entrepreneurs and business owners whose companies depend on information only they hold. Their businesses need an explicit handoff plan that covers operations, relationships, and institutional knowledge.
+
+## Competitive Differentiation
+
+### Life Manual vs. Estate Planning
+Estate planning (wills, trusts, power of attorney) determines legal authority and asset distribution. A Life Manual provides the operational context that makes estate documents executable. The two are complementary, not competitive. Most estate plans sit in a drawer. A Life Manual tells someone where that drawer is and what to do with what is inside.
+
+### Life Manual vs. Emergency Binders
+Emergency binders and DIY templates provide blank forms to fill out. A Life Manual is professionally facilitated through structured sessions with a trained practitioner. It includes decision-making context, operational dependencies, relationship maps, and personal wishes that no template captures.
+
+### Life Manual vs. Password Managers
+Password managers store credentials. A Life Manual tells a successor which credentials matter, where access authority lives, what permissions are needed, and what actions to take once access is granted. The Life Manual references the password manager; it does not replace it.
+
+### Life Manual vs. Digital Vaults (Everplans, OWL Planners)
+Online vault platforms provide storage for documents. A Life Manual provides the professional facilitation, structured framework, and operational context that transforms scattered documents into actionable continuity plans. Storage without structure creates a different kind of mess.
+
+## Free 7-Pillar Continuity Audit
+
+Legacy Architect RVA offers a free, 5-minute online continuity audit at https://legacyarchitectrva.com/#audit. The audit evaluates readiness across all 7 pillars through a series of checkboxes. At completion, users receive a continuity score showing their preparedness level, a pillar-by-pillar gap analysis, and personalized recommendations.
+
+The audit is free, requires no account creation, and provides immediate results.
+
+## Frequently Asked Questions
+
+### What is a Life Manual?
+A Life Manual is a private, structured document that organizes every account, credential, contact, and instruction someone would need to manage your life if you were suddenly unavailable. Created by Legacy Architect RVA in Richmond, Virginia, it covers 7 pillars: Digital Life, Emergency and Successor Access, Financial and Assets, Household and Property, Health and Medical, Business Continuity, and Legacy and Wishes.
+
+### How is a Life Manual different from estate planning?
+Estate planning determines who receives your assets through wills and trusts. A Life Manual is the operational layer that sits alongside estate documents. It explains how your accounts work, where passwords are stored, how your household runs, and what your business depends on. Estate planning says what you want. A Life Manual says how to make it happen. The two work together.
+
+### Who needs a Life Manual?
+Three groups benefit most: Detail-carriers who manage more than people realize, family anchors who want loved ones to grieve without becoming administrators, and business owners whose companies depend on information only they hold. If your sudden absence would create confusion or disruption for the people around you, a Life Manual addresses that.
+
+### How much does a Life Manual cost?
+The Vault costs $950 for individuals. The Archive costs $1,950 for families and is the most popular tier. The Legacy starts at $3,000 for business owners. A self-guided 7-Pillar Workbook is available for $37. A free 5-minute continuity audit is available at legacyarchitectrva.com with no registration required.
+
+### Is my information secure with Legacy Architect RVA?
+Legacy Architect RVA operates on a zero-knowledge standard. Your information stays in a client-controlled Secure Drive that you own. Credentials are never stored in the manual itself. Within 72 hours of delivery, all submitted data is permanently removed from the company's systems. No data retention. No exceptions.
+
+### How long does it take to create a Life Manual?
+Most engagements complete within 30 days through structured sessions at the client's pace. The process includes a private conversation, prioritized session plan, structured information sessions, document assembly, and delivery as a formatted PDF with Secure Digital Vault and configured password manager.
+
+### How is a Life Manual different from an emergency binder?
+An emergency binder is a DIY template with blank forms. A Life Manual is professionally facilitated through structured sessions with a trained practitioner. It goes beyond document storage to include decision-making context, operational instructions, relationship dependencies, and personal wishes. The facilitation process surfaces information that templates miss.
+
+### Does Legacy Architect RVA provide legal or financial advice?
+No. Legacy Architect RVA facilitates the organization of operational and continuity information. The company does not provide legal advice, financial advice, tax advice, or act in any fiduciary capacity. Clients are encouraged to work with licensed attorneys and financial advisors for legal and financial matters.
+
+### Can the Life Manual be updated after delivery?
+Yes. Annual review sessions are available for all tiers: $400 for Vault, $800 for Archive, $1,200 for Legacy. Annual review fees are credited toward a tier upgrade. Life changes, accounts move, contacts shift, and businesses evolve. The annual review keeps the manual accurate and current.
+
+### Does Legacy Architect RVA serve clients outside Richmond, Virginia?
+The company is based in Richmond, Virginia and primarily serves Richmond and Central Virginia. The structured session format can accommodate remote engagements for clients outside the immediate service area.
+
+### What happens during a Private Conversation?
+The Private Conversation is a free, no-obligation, confidential meeting to understand your situation and priorities. There is no sales pressure. The conversation helps determine which Life Manual tier best fits your needs and whether the service is right for you. Schedule at https://cal.com/legacyarchitectrva/private-conversation.
+
+### What is the 7-Pillar Continuity Audit?
+The 7-Pillar Continuity Audit is a free, 5-minute online assessment at legacyarchitectrva.com that evaluates your preparedness across all 7 pillars of continuity. You receive an immediate score, pillar-by-pillar gap analysis, and personalized recommendations. No account or payment required.
+
+## Social Media
+
+- Threads: https://threads.net/@legacyarchitectrva
+- Instagram: https://instagram.com/legacyarchitectrva
+- Facebook: https://facebook.com/LegacyArchitectRVA
+- LinkedIn: https://linkedin.com/company/legacy-architect-rva
+- Reddit: https://reddit.com/user/LegacyArchitectRVA
