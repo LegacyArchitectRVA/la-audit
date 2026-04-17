@@ -1,6 +1,6 @@
-/* LA Digital Audit v19.3 - audit7.js
+/* LA Digital analysis v19.3 - analysis7.js
    v19.3 changes:
-   - Added GA4 event tracking: audit_start, pillar_view, audit_complete, business_gate, email_submit, cta_click
+   - Added GA4 event tracking: analysis_start, pillar_view, analysis_complete, business_gate, email_submit, cta_click
    Changes from v16:
    - Results reordered: 52% stat -> pillar breakdown -> continuity score
    - Removed all em dashes
@@ -48,7 +48,7 @@
   document.head.appendChild(sty);
 
   /* ── Cal.com embed loader ──────────────────────── */
-  var WORKBOOK_IMG='https://cdn.jsdelivr.net/gh/LegacyArchitectRVA/la-audit@main/workbook-promo.jpg';
+  var WORKBOOK_IMG='https://cdn.jsdelivr.net/gh/LegacyArchitectRVA/la-analysis@main/workbook-promo.jpg';
 
   (function(C,A,L){
     var p=function(a,ar){a.q.push(ar);};
@@ -85,7 +85,7 @@
 
   /* ── helpers ────────────────────────────────────── */
 
-  function scrollToAudit(){
+  function scrollToanalysis(){
     var el=document.getElementById('la-wrap')||document.getElementById('pg-rest')||document.getElementById('pg1');
     if(el){
       var rect=el.getBoundingClientRect();
@@ -225,7 +225,7 @@
           '<button id="bn" onclick="__la.bn()" style="font-family:Cinzel,serif;font-size:15px;font-weight:700;letter-spacing:3px;padding:13px 32px;border:1px solid '+(OB===false?'#c1b085':'#4a3d28')+';background:'+(OB===false?'rgba(193,176,133,0.05)':'transparent')+';color:'+(OB===false?'#c1b085':'#8a7240')+';cursor:pointer;border-radius:1px;box-shadow:'+(OB===false?'0 0 18px rgba(193,176,133,0.5),inset 0 0 12px rgba(193,176,133,0.08)':'none')+';transition:all 0.25s;">NO</button>'+
         '</div>'+
         '<div id="bh" style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:'+(OB!==null?'#9a8d7a':'transparent')+';margin-top:14px;min-height:18px;">'+
-          (OB===true?'All 7 pillars will be included in your audit.':OB===false?'Your score will be calculated across 6 pillars.':'')+
+          (OB===true?'All 7 pillars will be included in your analysis.':OB===false?'Your score will be calculated across 6 pillars.':'')+
         '</div></div>';
     }
 
@@ -365,8 +365,8 @@
     {/* LEAN & READY */
       t:"LEAN & READY",
       p:[
-        "Your audit revealed <strong style=\"color:#c1b085;\">critical gaps</strong> across most pillars. This is not unusual. Most people have never been asked to think about continuity in structured terms.",
-        "What it means practically: if something happened to you tomorrow, the people you trust most would face significant confusion. Access to accounts, knowledge of obligations, location of key documents. These are the things that fall through the cracks when there is no system in place.",
+        "Your analysis revealed <strong style=\"color:#c1b085;\">critical gaps</strong> across most pillars. This is not unusual. Most people have never been asked to think about continuity in structured terms."
+        "What it means practically: if something happened to you tomorrow, the people you trust most would face significant confusion. Access to accounts, knowledge of obligations, and location of key documents. These are the things that fall through the cracks when there is no system in place.",
         "The gaps you have are common, and they are fixable. A foundational continuity plan would cover the highest-risk areas first: digital access, emergency contacts, and essential documents."
       ]
     },
@@ -381,7 +381,7 @@
     {/* CRITICAL COMPLEXITY */
       t:"CRITICAL COMPLEXITY",
       p:[
-        "Your audit shows <strong style=\"color:#c1b085;\">multi-layered responsibilities</strong> across most pillars. You have significant documentation, but the complexity of your situation means the remaining gaps carry outsized risk.",
+        "Your analysis shows <strong style=\"color:#c1b085;\">multi-layered responsibilities</strong> across most pillars. You have significant documentation, but the complexity of your situation means the remaining gaps carry outsized risk.",
         "At this level, the issue is not awareness but architecture. Individual items may be documented, but without a unified system that a successor can follow step by step, even well-organized people leave critical gaps. Cryptocurrency keys, business operating agreements, trust documentation, advanced healthcare directives. These are items where a single missing piece can mean permanent loss.",
         "A comprehensive continuity plan would bring every pillar into a single, navigable system, including business operations if applicable."
       ]
@@ -389,7 +389,7 @@
     {/* WELL STRUCTURED */
       t:"WELL STRUCTURED",
       p:[
-        "You are <strong style=\"color:#c1b085;\">well organized</strong>. Your audit shows a strong foundation across most pillars, with only a few remaining gaps.",
+        "You are <strong style=\"color:#c1b085;\">well organized</strong>. Your analysis shows a strong foundation across most pillars, with only a few remaining gaps.",
         "At this level, the value is not in building from scratch. It is in validation and completion. The items you have not checked may represent things you have not gotten to yet, or things you assumed were covered but are not. Either way, a focused review would identify exactly what is missing and ensure everything is accessible, current, and connected.",
         "Most people at this level benefit from a structured review session rather than a full engagement."
       ]
@@ -397,7 +397,7 @@
     {/* COMPREHENSIVE */
       t:"COMPREHENSIVE",
       p:[
-        "Your documentation is <strong style=\"color:#c1b085;\">thorough</strong>. This is rare. Most people who take this audit score well below where you are.",
+        "Your documentation is <strong style=\"color:#c1b085;\">thorough</strong>. This is rare. Most people who take this analysis score well below where you are."
         "The question at this level is not what is missing, but whether what exists is current, accessible, and structured in a way that a successor could actually use. Documents can exist without being findable. Accounts can be listed without access being transferable.",
         "An annual review ensures nothing drifts out of date, and that the people who may need this information know where to find it."
       ]
@@ -588,8 +588,8 @@
       brows+
     '</div>';
 
-    /* AUDIT COMPLETE + YOUR CONTINUITY SCORE headers */
-    h+='<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:5px;color:#b8984e;text-align:center;margin-bottom:14px;">AUDIT COMPLETE</div>'+
+    /* analysis COMPLETE + YOUR CONTINUITY SCORE headers */
+    h+='<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:5px;color:#b8984e;text-align:center;margin-bottom:14px;">analysis COMPLETE</div>'+
       '<div style="font-family:Cinzel,serif;font-size:24px;font-weight:600;color:#fdfcfa;letter-spacing:3px;text-align:center;margin-bottom:36px;">YOUR CONTINUITY SCORE</div>';
 
     /* animated score ring */
@@ -664,17 +664,17 @@
 
   window.__la={
     go:function(n){
-      if(n===1){showPg1();showRest('');gaEvt('audit_start');}
+      if(n===1){showPg1();showRest('');gaEvt('analysis_start');}
       else if(n==='R'){
         getPg1State();hidePg1();showRest(resultsHTML());
         var s=calcScore(),t=getTier(s.total,s.max);
-        gaEvt('audit_complete',{score:s.total,max_score:s.max,percent:s.pct,tier:t<4?TP[t].t:'',business_owner:OB?'yes':'no'});
+        gaEvt('analysis_complete',{score:s.total,max_score:s.max,percent:s.pct,tier:t<4?TP[t].t:'',business_owner:OB?'yes':'no'});
       }
       else{
         hidePg1();showRest(pillarHTML(n-1));
         gaEvt('pillar_view',{pillar_number:n,pillar_name:P[n-2>=0?n-2:0].n});
       }
-      scrollToAudit();
+      scrollToanalysis();
     },
 
     /* toggle checkbox — also unsets N/A */
@@ -735,7 +735,7 @@
       var y=document.getElementById('by'),n=document.getElementById('bn'),h=document.getElementById('bh');
       if(y){y.style.borderColor='#c1b085';y.style.color='#c1b085';y.style.background='rgba(193,176,133,0.05)';y.style.boxShadow='0 0 18px rgba(193,176,133,0.5),inset 0 0 12px rgba(193,176,133,0.08)';}
       if(n){n.style.borderColor='#4a3d28';n.style.color='#8a7240';n.style.background='transparent';n.style.boxShadow='none';}
-      if(h){h.textContent='All 7 pillars will be included in your audit.';h.style.color='#9a8d7a';}
+      if(h){h.textContent='All 7 pillars will be included in your analysis.';h.style.color='#9a8d7a';}
     },
 
     /* business owner: NO — now with matching gold glow */
@@ -800,7 +800,7 @@
         }
       }
 
-      var body='DIGITAL LIFE AUDIT RESULTS\n\nScore: '+pct+'% ('+tot+' of '+mx+' points)\nTier: '+tierName+'\nBusiness Owner: '+(OB?'Yes':'No')+'\n\nPILLAR BREAKDOWN\n'+bd+'\nRecommended: '+rec+detail;
+      var body='DIGITAL LIFE analysis RESULTS\n\nScore: '+pct+'% ('+tot+' of '+mx+' points)\nTier: '+tierName+'\nBusiness Owner: '+(OB?'Yes':'No')+'\n\nPILLAR BREAKDOWN\n'+bd+'\nRecommended: '+rec+detail;
 
       var xhr=new XMLHttpRequest();
       xhr.open('POST','https://api.hsforms.com/submissions/v3/integration/submit/244990054/8def8d38-97f9-4c65-8c3e-fd5b4653c121');
@@ -820,7 +820,7 @@
             }
             var ePayload={email:email,score:tot,maxScore:mx,percent:pct,tier:tierName,businessOwner:OB,recommendation:rec,pillars:ePillars};
             var ex=new XMLHttpRequest();
-            ex.open('POST','https://la-audit-email.craig-a51.workers.dev');
+            ex.open('POST','https://la-analysis-email.craig-a51.workers.dev');
             ex.setRequestHeader('Content-Type','application/json');
             ex.send(JSON.stringify(ePayload));
           }catch(eErr){console.log('email worker error',eErr);}
@@ -829,7 +829,7 @@
           if(rest){
             rest.innerHTML=
               '<div style="text-align:center;padding:60px 24px;">'+
-              '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:5px;color:#b8984e;margin-bottom:20px;">AUDIT COMPLETE</div>'+
+              '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:5px;color:#b8984e;margin-bottom:20px;">analysis COMPLETE</div>'+
               '<div style="font-family:Cinzel,serif;font-size:28px;font-weight:700;color:#fdfcfa;letter-spacing:2px;margin-bottom:20px;line-height:1.3;">Your Results Are On The Way</div>'+
               '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#c1b085;line-height:1.6;margin-bottom:40px;">Check your inbox for your full gap analysis, risk breakdown, and personalized next steps.</div>'+
               '<div style="width:60px;height:1px;background:linear-gradient(90deg,transparent,#4a3d28,transparent);margin:0 auto 40px;"></div>'+
@@ -876,7 +876,7 @@
         }
       };
       xhr.onerror=function(){if(msg)msg.textContent='Connection error. Please try again.';};
-      xhr.send(JSON.stringify({fields:[{name:'email',value:email},{name:'message',value:body},{name:'audit_tier',value:tierName},{name:'audit_score',value:String(tot)},{name:'audit_percent',value:String(pct)},{name:'business_owner',value:OB?'Yes':'No'}]}));
+      xhr.send(JSON.stringify({fields:[{name:'email',value:email},{name:'message',value:body},{name:'analysis_tier',value:tierName},{name:'analysis_score',value:String(tot)},{name:'analysis_percent',value:String(pct)},{name:'business_owner',value:OB?'Yes':'No'}]}));
     },
 
     rs:function(){
@@ -893,7 +893,7 @@
         if(wrap)wrap.classList.remove('is-na');
       }
       updateCtr(0);
-      scrollToAudit();
+      scrollToanalysis();
     }
   };
 
