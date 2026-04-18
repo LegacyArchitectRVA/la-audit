@@ -1,163 +1,250 @@
+/* LA Digital analysis v19.3 - analysis7.js */
 (function(){
+  if(window.__laLoaded)return; window.__laLoaded=true;
 
-const P = [
-  { n:"Digital Life", d:"Access and continuity for essential digital accounts, credentials, and archives.", i:[
-    "PRIMARY EMAIL ACCOUNT ACCESS",
-    "MASTER PASSWORD MANAGER VAULT",
-    "CLOUD STORAGE & PHOTO ARCHIVES",
-    "TWO-FACTOR AUTH (2FA) RECOVERY KEYS",
-    "SOCIAL MEDIA LEGACY CONTACTS",
-    "DIGITAL MEDIA ARCHIVES"
-  ]},
-  { n:"Emergency & Successor", d:"Authority and immediate access for decision-making.", i:[
-    "PRIMARY DECISION-MAKER IDENTIFIED",
-    "BACKUP DECISION-MAKER IDENTIFIED",
-    "AUTHORITY TO ACT DOCUMENTED",
-    "FIRST 72 HOURS ACTION PLAN",
-    "KEY CONTACTS LISTED",
-    "SUCCESSOR KNOWS WHERE TO FIND INFORMATION"
-  ]},
-  { n:"Financial & Assets", d:"Accounts, obligations, and financial visibility.", i:[
-    "BANK ACCOUNTS LISTED",
-    "INCOME SOURCES IDENTIFIED",
-    "RECURRING EXPENSES DOCUMENTED",
-    "INSURANCE POLICIES ORGANIZED",
-    "DEBTS & LIABILITIES OUTLINED",
-    "ASSETS INVENTORIED"
-  ]},
-  { n:"Household Operations", d:"Day-to-day systems and responsibilities.", i:[
-    "BILLS & PAYMENTS DOCUMENTED",
-    "HOME SYSTEMS EXPLAINED",
-    "VENDORS LISTED",
-    "MAIL & SUBSCRIPTIONS ORGANIZED",
-    "VEHICLE INFO DOCUMENTED",
-    "ROUTINES CAN CONTINUE"
-  ]},
-  { n:"Vital Records", d:"Critical documents and access.", i:[
-    "IDENTIFICATION DOCUMENTS ACCESSIBLE",
-    "LEGAL DOCUMENTS ORGANIZED",
-    "MEDICAL RECORDS IDENTIFIED",
-    "INSURANCE DOCUMENTS STORED",
-    "SECURE STORAGE LOCATION KNOWN",
-    "TRUSTED PERSON HAS ACCESS"
-  ]},
-  { n:"Business Continuity", d:"Continuity for business operations.", i:[
-    "BUSINESS STRUCTURE DOCUMENTED",
-    "KEY ROLES DEFINED",
-    "CLIENTS & REVENUE IDENTIFIED",
-    "SYSTEM ACCESS ORGANIZED",
-    "PROCESSES DOCUMENTED",
-    "TRANSITION PLAN EXISTS"
-  ]},
-  { n:"Legacy & Wishes", d:"Personal intent and direction.", i:[
-    "PERSONAL WISHES DOCUMENTED",
-    "CARE PREFERENCES OUTLINED",
-    "DEPENDENTS’ NEEDS DEFINED",
-    "RELATIONSHIPS ACKNOWLEDGED",
-    "PERSONAL ITEMS INSTRUCTIONS",
-    "MESSAGE FOR OTHERS"
-  ]}
-];
+  var lnk=document.createElement('link');
+  lnk.rel='stylesheet';
+  lnk.href='https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,300;1,6..96,400&display=swap';
+  document.head.appendChild(lnk);
 
-let state = {
-  p:0,
-  answers:[],
-  hasBiz:true
-};
+  var sty=document.createElement('style');
+  sty.textContent='@keyframes la-spin{to{transform:rotate(360deg)}}'+
+    '@keyframes la-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}'+
+    '[id^="r"][id*="-"]:hover{background:rgba(193,176,133,0.04)!important;border-color:rgba(193,176,133,0.15)!important;}'+
+    'button:hover{filter:brightness(1.08);}'+
+    '@media(max-width:600px){[style*="letter-spacing:4px"]{letter-spacing:2px!important;font-size:12px!important;}'+
+      '#pg-rest,#pg1{padding:0 12px!important;}'+
+      '[style*="font-size:32px"]{font-size:23px!important;}'+
+      '[style*="font-size:24px"]{font-size:19px!important;}'+
+      '[style*="letter-spacing:5px"]{letter-spacing:2px!important;}'+
+      '[style*="padding:14px 36px"]{padding:12px 20px!important;font-size:12px!important;}'+
+    '}';
+  document.head.appendChild(sty);
 
-function el(id){ return document.getElementById(id); }
+  var P=[
+    {n:'Digital Life',d:'Access and continuity for essential digital accounts, credentials, and archives.',i:['PRIMARY EMAIL ACCOUNT ACCESS','MASTER PASSWORD MANAGER VAULT','CLOUD STORAGE & PHOTO ARCHIVES','TWO-FACTOR AUTH (2FA) RECOVERY KEYS','SOCIAL MEDIA LEGACY CONTACTS','DIGITAL MEDIA ARCHIVES']},
+    {n:'Financial & Assets',d:'Documentation of all financial accounts, obligations, and automated payment systems.',i:['BANKING & CREDIT CARD ACCESS','INVESTMENT & RETIREMENT ACCOUNTS','CRYPTOCURRENCY WALLETS & KEYS','AUTOMATED BILL PAYMENTS LIST','TAX RETURNS & FINANCIAL RECORDS','DEBT & LOAN DOCUMENTATION']},
+    {n:'Household & Property',d:'Physical property records, access information, and household operational documentation.',i:['PROPERTY DEEDS & TITLES','VEHICLE REGISTRATIONS','HOME MAINTENANCE RECORDS','UTILITY ACCOUNT ACCESS','PHYSICAL ASSET INVENTORY','STORAGE UNIT KEYS & ACCESS']},
+    {n:'Health & Medical',d:'Medical history, healthcare directives, and emergency access information.',i:['HEALTH INSURANCE INFORMATION','MEDICAL RECORDS & HISTORY','PRESCRIPTION MEDICATIONS LIST','ADVANCE HEALTHCARE DIRECTIVE','ORGAN DONOR STATUS','EMERGENCY CONTACTS LIST']},
+    {n:'Legal & Estate',d:'Legal instruments, policy documentation, and estate planning records.',i:['LAST WILL & TESTAMENT','TRUST DOCUMENTATION','POWERS OF ATTORNEY','LIFE INSURANCE POLICIES','GUARDIANSHIP DESIGNATIONS','BUSINESS SUCCESSION PLAN']},
+    {n:'Business Continuity',d:'Operational documentation for business owners, including entity records, access, and transition planning.',i:['BUSINESS ENTITY DOCUMENTS','BUSINESS BANKING & CREDIT ACCESS','OPERATING OR PARTNERSHIP AGREEMENTS','BUSINESS INSURANCE POLICIES','KEY VENDOR & CLIENT CONTACTS','BUSINESS CONTINUITY INSTRUCTIONS']},
+    {n:'Legacy & Wishes',d:'Personal statements, end-of-life preferences, and enduring messages for those left behind.',i:['PERSONAL LETTERS & MESSAGES','ETHICAL WILL STATEMENT','FUNERAL PREFERENCES','OBITUARY INFORMATION','HEIRLOOM STORIES','CHARITABLE GIVING WISHES']}
+  ];
 
-function buildPillar(idx){
-  const wrap = document.createElement("div");
-  wrap.style.animation = "la-in .4s ease";
+  var ST=[[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
+  var NA=[[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]];
+  var OB=null;
+  var lastP1Cnt=-1;
+  var lastP1Na=-1;
 
-  const p = P[idx];
+  function scrollToanalysis(){
+    var wrap=document.getElementById('la-wrap');
+    var rest=document.getElementById('pg-rest');
+    var pg1=document.getElementById('pg1');
+    var el=(rest && rest.innerHTML.trim()) ? rest : (pg1 && pg1.style.display!=='none' ? pg1 : wrap);
 
-  let html = `
-  <div style="text-align:center;margin-bottom:10px;font-family:Cinzel,serif;letter-spacing:4px;color:#b8984e;">
-    PILLAR ${idx+1} OF 7
-  </div>
-  <div style="text-align:center;font-family:Cinzel,serif;font-size:24px;margin-bottom:10px;">
-    ${p.n.toUpperCase()}
-  </div>
-  <div style="text-align:center;font-style:italic;margin-bottom:25px;color:#b0a494;">
-    ${p.d}
-  </div>
-  `;
-
-  p.i.forEach((t,i)=>{
-    html += `
-    <div class="la-item-wrap">
-      <input type="checkbox" class="lacb" id="c${idx}-${i}">
-      <label for="c${idx}-${i}" class="larow">
-        <div class="lash"><svg class="lamk" width="14" height="11"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6"/></svg></div>
-        <span class="lalb">${t}</span>
-      </label>
-      <input type="checkbox" class="lana" id="na${idx}-${i}">
-      <label for="na${idx}-${i}" class="lana-btn">N/A</label>
-    </div>
-    `;
-  });
-
-  // Pillar 5 business toggle
-  if(idx===4){
-    html += `
-    <div style="margin-top:25px;text-align:center;">
-      <div style="margin-bottom:10px;">Do you have a business?</div>
-      <label><input type="radio" name="biz" value="yes" checked> Yes</label>
-      <label style="margin-left:20px;"><input type="radio" name="biz" value="no"> No</label>
-    </div>
-    `;
+    if(el){
+      var rect=el.getBoundingClientRect();
+      var scrollY=window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop||0;
+      var headerOffset=140;
+      var target=Math.max(0,rect.top+scrollY-headerOffset);
+      try{window.scrollTo({top:target,behavior:'smooth'});}catch(e){window.scrollTo(0,target);}
+    }else{
+      try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}
+    }
   }
 
-  html += `
-  <div style="text-align:center;margin-top:30px;">
-    <button id="nextBtn" style="padding:14px 30px;background:#c1b085;border:none;cursor:pointer;">
-      CONTINUE
-    </button>
-  </div>
-  `;
-
-  wrap.innerHTML = html;
-  return wrap;
-}
-
-function go(){
-  const container = el("pg-rest");
-  container.innerHTML = "";
-
-  // skip business pillar if no business
-  if(state.p===5 && !state.hasBiz){
-    state.p = 6;
+  function getPg1State(){
+    for(var i=0;i<6;i++){
+      var cb=document.getElementById('c0-'+i);
+      ST[0][i]=(cb&&cb.checked)?1:0;
+      var naCb=document.getElementById('na0-'+i);
+      NA[0][i]=(naCb&&naCb.checked)?1:0;
+    }
   }
 
-  if(state.p >= P.length){
-    container.innerHTML = `<div style="text-align:center;">Complete</div>`;
-    return;
+  function pillarChecked(pi){ return ST[pi].reduce(function(a,v){return a+v;},0); }
+  function pillarNa(pi){ return NA[pi].reduce(function(a,v){return a+v;},0); }
+  function pillarMax(pi){ return 6-pillarNa(pi); }
+
+  function ctrStyles(cnt,mx){
+    var f=mx>0&&cnt===mx;
+    return {
+      border: f?'#c1b085': cnt>0?'rgba(193,176,133,'+(0.3+cnt*0.1).toFixed(1)+')':'#342a1c',
+      shadow: cnt>0?'0 0 '+(8+cnt*4)+'px rgba(193,176,133,'+(0.15+cnt*0.05).toFixed(2)+')'+(f?',0 0 32px rgba(193,176,133,0.3)':''):'none',
+      bg: 'rgba(193,176,133,'+(f?'0.06':'0.02')+')',
+      numColor: f?'#c1b085': cnt>0?'#b8984e':'#6b5a38',
+      numShadow: f?'0 0 16px rgba(193,176,133,0.5)':'none'
+    };
   }
 
-  const page = buildPillar(state.p);
-  container.appendChild(page);
-
-  // bind business toggle
-  if(state.p===4){
-    document.querySelectorAll("[name='biz']").forEach(r=>{
-      r.addEventListener("change",e=>{
-        state.hasBiz = e.target.value==="yes";
-      });
-    });
+  function counterHTML(pi){
+    var cnt=pillarChecked(pi), mx=pillarMax(pi), s=ctrStyles(cnt,mx);
+    return '<div id="la-ctr-'+pi+'" style="display:flex;align-items:center;justify-content:center;margin-bottom:32px;">'+
+      '<div style="display:inline-flex;align-items:baseline;gap:8px;padding:14px 32px;border:1px solid '+s.border+';border-radius:2px;background:'+s.bg+';box-shadow:'+s.shadow+';transition:border-color 0.3s,box-shadow 0.4s,background 0.3s;">'+
+      '<span id="la-ctr-num-'+pi+'" style="font-family:Cinzel,serif;font-size:29px;font-weight:700;color:'+s.numColor+';line-height:1;text-shadow:'+s.numShadow+';transition:color 0.3s,text-shadow 0.3s;">'+cnt+'</span>'+
+      '<span style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#8a7240;line-height:1;">of </span>'+
+      '<span id="la-ctr-mx-'+pi+'" style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:#8a7240;line-height:1;">'+mx+'</span>'+
+      '</div></div>';
   }
 
-  el("nextBtn").onclick = ()=>{
-    state.p++;
-    go();
+  function updateCtr(pi){
+    var cnt=pillarChecked(pi), mx=pillarMax(pi), wrap=document.getElementById('la-ctr-'+pi);
+    if(!wrap)return;
+    var box=wrap.firstElementChild, num=document.getElementById('la-ctr-num-'+pi), mxEl=document.getElementById('la-ctr-mx-'+pi), s=ctrStyles(cnt,mx);
+    box.style.borderColor=s.border; box.style.boxShadow=s.shadow; box.style.background=s.bg;
+    if(num){num.textContent=cnt;num.style.color=s.numColor;num.style.textShadow=s.numShadow;}
+    if(mxEl){mxEl.textContent=mx;}
+  }
+
+  function prog(active){
+    var h='<div style="display:flex;gap:6px;margin-bottom:52px;">';
+    for(var s=0;s<7;s++){
+      var bg=s<active?'#8a7030':s===active?'#c1b085':'#342a1c';
+      var sh=s===active?'0 0 8px rgba(193,176,133,0.6)':'none';
+      h+='<div style="height:3px;flex:1;background:'+(s<active?'linear-gradient(90deg,#8a7030,#c1b085)':bg)+';border-radius:2px;box-shadow:'+sh+';transition:background 0.4s;"></div>';
+    }
+    return h+'</div>';
+  }
+
+  function naStyle(isNa){
+    return 'display:inline-flex;align-items:center;justify-content:center;width:auto;min-width:42px;height:24px;padding:0 8px;flex-shrink:0;border:1px solid '+(isNa?'#c1b085':'#342a1c')+';border-radius:2px;cursor:pointer;background:'+(isNa?'rgba(193,176,133,0.08)':'transparent')+';box-shadow:'+(isNa?'0 0 12px rgba(193,176,133,0.5),0 0 24px rgba(193,176,133,0.2)':'none')+';transition:border-color 0.2s,background 0.2s,box-shadow 0.2s;';
+  }
+
+  function pillarHTML(pi){
+    var pl=P[pi], isP5=pi===4, isLast=pi===6, rows='';
+    for(var ii=0;ii<6;ii++){
+      var on=ST[pi][ii], isNa=NA[pi][ii], rowOpacity=isNa?'0.35':'1';
+      rows+='<div id="r'+pi+'-'+ii+'" style="display:flex;align-items:center;gap:12px;padding:13px 16px;border:1px solid '+(on?'rgba(193,176,133,0.12)':'transparent')+';border-radius:2px;background:'+(on?'rgba(193,176,133,0.03)':'transparent')+';opacity:'+rowOpacity+';transition:opacity 0.25s,border-color 0.2s,background 0.2s;">'+
+        '<div onclick="__la.t('+pi+','+ii+')" style="display:flex;align-items:center;gap:18px;flex:1;cursor:pointer;">'+
+        '<div id="sh'+pi+'-'+ii+'" style="width:24px;height:24px;flex-shrink:0;border:1px solid '+(on?'#c1b085':'#7A6842')+';border-radius:2px;display:flex;align-items:center;justify-content:center;box-shadow:'+(on?'0 0 12px rgba(193,176,133,0.6),0 0 24px rgba(193,176,133,0.25),inset 0 0 8px rgba(193,176,133,0.1)':'none')+';transition:border-color 0.2s,box-shadow 0.2s;">'+
+        '<svg id="mk'+pi+'-'+ii+'" width="14" height="11" viewBox="0 0 14 11" fill="none" style="opacity:'+(on?'1':'0')+';transform:'+(on?'scale(1)':'scale(0.6)')+';transition:opacity 0.2s,transform 0.2s;filter:drop-shadow(0 0 3px rgba(193,176,133,0.9));"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>'+
+        '<div id="lb'+pi+'-'+ii+'" style="font-family:Cinzel,serif;font-size:17px;letter-spacing:2px;color:'+(on?'#c1b085':'#9a8d7a')+';'+(on?'text-shadow:0 0 12px rgba(193,176,133,0.3);':'')+'transition:color 0.2s,text-shadow 0.2s;">'+pl.i[ii]+'</div></div>'+
+        '<div id="na'+pi+'-'+ii+'" onclick="__la.na('+pi+','+ii+')" style="'+naStyle(isNa)+'"><span style="font-family:Cinzel,serif;font-size:10px;letter-spacing:1.5px;font-weight:700;color:'+(isNa?'#b8984e':'#4a3d28')+';line-height:1;transition:color 0.2s;">N/A</span></div></div>';
+    }
+
+    var gate='';
+    if(isP5){
+      gate='<div style="margin-top:36px;padding-top:32px;border-top:1px solid #2a2218;margin-bottom:52px;">'+
+      '<div style="font-family:Cinzel,serif;font-size:17px;letter-spacing:3px;color:#b8984e;margin-bottom:20px;">DO YOU OWN A BUSINESS?</div>'+
+      '<div style="display:flex;gap:12px;">'+
+      '<button id="by" onclick="__la.by()" style="font-family:Cinzel,serif;font-size:15px;font-weight:700;letter-spacing:3px;padding:13px 32px;border:1px solid '+(OB===true?'#c1b085':'#4a3d28')+';background:'+(OB===true?'rgba(193,176,133,0.05)':'transparent')+';color:'+(OB===true?'#c1b085':'#8a7240')+';cursor:pointer;border-radius:1px;box-shadow:'+(OB===true?'0 0 18px rgba(193,176,133,0.5),inset 0 0 12px rgba(193,176,133,0.08)':'none')+';transition:all 0.25s;">YES</button>'+
+      '<button id="bn" onclick="__la.bn()" style="font-family:Cinzel,serif;font-size:15px;font-weight:700;letter-spacing:3px;padding:13px 32px;border:1px solid '+(OB===false?'#c1b085':'#4a3d28')+';background:'+(OB===false?'rgba(193,176,133,0.05)':'transparent')+';color:'+(OB===false?'#c1b085':'#8a7240')+';cursor:pointer;border-radius:1px;box-shadow:'+(OB===false?'0 0 18px rgba(193,176,133,0.5),inset 0 0 12px rgba(193,176,133,0.08)':'none')+';transition:all 0.25s;">NO</button></div>'+
+      '<div id="bh" style="font-family:Bodoni Moda,serif;font-size:17px;font-style:italic;color:'+(OB!==null?'#9a8d7a':'transparent')+';margin-top:14px;min-height:18px;">'+(OB===true?'All 7 pillars will be included in your analysis.':OB===false?'Your score will be calculated across 6 pillars.':'')+'</div></div>';
+    }
+
+    var nextBtn;
+    if(isP5){ nextBtn='<button onclick="__la.p5()" style="font-family:Cinzel,serif;font-size:17px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.3);transition:box-shadow 0.3s,transform 0.15s;">CONTINUE</button>'; }
+    else if(isLast){ nextBtn='<button onclick="__la.go(\'R\')" style="font-family:Cinzel,serif;font-size:17px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.3);transition:box-shadow 0.3s,transform 0.15s;">SEE RESULTS</button>'; }
+    else { nextBtn='<button onclick="__la.go('+(pi+2)+')" style="font-family:Cinzel,serif;font-size:17px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);border:none;cursor:pointer;text-transform:uppercase;padding:15px 34px;border-radius:2px;box-shadow:0 2px 12px rgba(193,176,133,0.3);transition:box-shadow 0.3s,transform 0.15s;">NEXT PILLAR</button>'; }
+
+    var backTarget=pi===1?1:(pi===6&&OB===false)?5:pi;
+    var backBtn=pi===0?'':'<button onclick="__la.go('+backTarget+')" style="font-family:Cinzel,serif;font-size:17px;font-weight:700;letter-spacing:3px;color:#6b5a38;background:none;border:none;cursor:pointer;text-transform:uppercase;padding:0;">BACK</button>';
+
+    return prog(pi)+'<div style="font-family:Cinzel,serif;font-size:17px;letter-spacing:5px;color:#b8984e;margin-bottom:10px;">PILLAR '+(pi+1)+' OF 7</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:32px;font-weight:700;color:#c1b085;letter-spacing:2px;margin-bottom:12px;line-height:1.15;">'+pl.n.toUpperCase()+'</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:19px;font-style:italic;color:#a09484;line-height:1.6;margin-bottom:20px;">'+pl.d+'</div>'+
+      '<div style="display:flex;align-items:center;gap:16px;margin-bottom:40px;"><div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#4a3d28);"></div><div style="font-family:Cinzel,serif;font-size:9px;letter-spacing:4px;color:#6b5a38;">✦</div><div style="flex:1;height:1px;background:linear-gradient(90deg,#4a3d28,transparent);"></div></div>'+
+      counterHTML(pi)+'<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:'+(isP5?'0':'52px')+';">'+rows+'</div>'+gate+
+      '<div style="display:flex;justify-content:'+(pi===0?'flex-end':'space-between')+';align-items:center;">'+backBtn+nextBtn+'</div>';
+  }
+
+  function resultsHTML(){ return '<div style="text-align:center;padding:40px 0;font-family:Cinzel,serif;color:#c1b085;">RESULTS</div>'; }
+  function showRest(html){ var el=document.getElementById('pg-rest'); if(!el)return; el.innerHTML=html; el.style.animation='none'; void el.offsetWidth; el.style.animation='la-in 0.4s ease'; }
+  function hidePg1(){var e=document.getElementById('pg1');if(e)e.style.display='none';}
+  function showPg1(){var e=document.getElementById('pg1');if(e)e.style.display='';}
+
+  window.__la={
+    go:function(n){
+      if(n===1){showPg1();showRest('');}
+      else if(n==='R'){getPg1State();hidePg1();showRest(resultsHTML());}
+      else{hidePg1();showRest(pillarHTML(n-1));}
+      scrollToanalysis();
+    },
+    t:function(pi,ii){
+      if(NA[pi][ii]) return;
+      ST[pi][ii]=ST[pi][ii]?0:1; var on=ST[pi][ii];
+      var r=document.getElementById('r'+pi+'-'+ii), s=document.getElementById('sh'+pi+'-'+ii), m=document.getElementById('mk'+pi+'-'+ii), l=document.getElementById('lb'+pi+'-'+ii);
+      if(r){r.style.borderColor=on?'rgba(193,176,133,0.12)':'transparent';r.style.background=on?'rgba(193,176,133,0.03)':'transparent';}
+      if(s){s.style.borderColor=on?'#c1b085':'#7A6842';s.style.boxShadow=on?'0 0 12px rgba(193,176,133,0.6),0 0 24px rgba(193,176,133,0.25),inset 0 0 8px rgba(193,176,133,0.1)':'none';}
+      if(m){m.style.opacity=on?'1':'0';m.style.transform=on?'scale(1)':'scale(0.6)';}
+      if(l){l.style.color=on?'#c1b085':'#9a8d7a';l.style.textShadow=on?'0 0 12px rgba(193,176,133,0.3)':'none';}
+      updateCtr(pi);
+    },
+    na:function(pi,ii){
+      NA[pi][ii]=NA[pi][ii]?0:1; var isNa=NA[pi][ii];
+      if(isNa&&ST[pi][ii]){
+        ST[pi][ii]=0;
+        var s=document.getElementById('sh'+pi+'-'+ii), m=document.getElementById('mk'+pi+'-'+ii), l=document.getElementById('lb'+pi+'-'+ii);
+        if(s){s.style.borderColor='#7A6842';s.style.boxShadow='none';}
+        if(m){m.style.opacity='0';m.style.transform='scale(0.6)';}
+        if(l){l.style.color='#9a8d7a';l.style.textShadow='none';}
+      }
+      var r=document.getElementById('r'+pi+'-'+ii); if(r){r.style.opacity=isNa?'0.35':'1';r.style.borderColor='transparent';r.style.background='transparent';}
+      var naBtn=document.getElementById('na'+pi+'-'+ii);
+      if(naBtn){
+        naBtn.style.borderColor=isNa?'#c1b085':'#342a1c';
+        naBtn.style.background=isNa?'rgba(193,176,133,0.08)':'transparent';
+        naBtn.style.boxShadow=isNa?'0 0 12px rgba(193,176,133,0.5),0 0 24px rgba(193,176,133,0.2)':'none';
+        var span=naBtn.querySelector('span'); if(span) span.style.color=isNa?'#b8984e':'#4a3d28';
+      }
+      updateCtr(pi);
+    },
+    by:function(){
+      OB=true;
+      var y=document.getElementById('by'),n=document.getElementById('bn'),h=document.getElementById('bh');
+      if(y){y.style.borderColor='#c1b085';y.style.color='#c1b085';y.style.background='rgba(193,176,133,0.05)';y.style.boxShadow='0 0 18px rgba(193,176,133,0.5),inset 0 0 12px rgba(193,176,133,0.08)';}
+      if(n){n.style.borderColor='#4a3d28';n.style.color='#8a7240';n.style.background='transparent';n.style.boxShadow='none';}
+      if(h){h.textContent='All 7 pillars will be included in your analysis.';h.style.color='#9a8d7a';}
+    },
+    bn:function(){
+      OB=false;
+      var y=document.getElementById('by'),n=document.getElementById('bn'),h=document.getElementById('bh');
+      if(n){n.style.borderColor='#c1b085';n.style.color='#c1b085';n.style.background='rgba(193,176,133,0.05)';n.style.boxShadow='0 0 18px rgba(193,176,133,0.5),inset 0 0 12px rgba(193,176,133,0.08)';}
+      if(y){y.style.borderColor='#4a3d28';y.style.color='#8a7240';y.style.background='transparent';y.style.boxShadow='none';}
+      if(h){h.textContent='Your score will be calculated across 6 pillars.';h.style.color='#9a8d7a';}
+    },
+    p5:function(){
+      if(OB===null){
+        var h=document.getElementById('bh');
+        if(h){h.textContent='Please answer before continuing.';h.style.color='#b8984e';}
+        return;
+      }
+      window.__la.go(OB?6:7);
+    }
   };
-}
 
-// initial bind
-document.getElementById("la-go").addEventListener("change",()=>{
-  document.getElementById("pg1").style.display="none";
-  go();
-});
+  (function injectP1Ctr(){
+    if(document.getElementById('la-ctr-num-0'))return;
+    var pg1=document.getElementById('pg1'); if(!pg1){setTimeout(injectP1Ctr,200);return;}
+    var old=document.getElementById('la-ctr-0'); if(old) old.remove();
+    var firstCb=document.getElementById('c0-0');
+    var target=firstCb?firstCb.closest('[id^="r0-"]')||firstCb.parentElement.parentElement:null;
+    var ctrDiv=document.createElement('div'); ctrDiv.innerHTML=counterHTML(0);
+    if(target&&target.parentElement){target.parentElement.insertBefore(ctrDiv.firstElementChild,target);} else {pg1.insertBefore(ctrDiv.firstElementChild,pg1.firstChild);}
+    updateCtr(0);
+  })();
 
+  setInterval(function(){
+    var c=document.getElementById('la-go');
+    if(c&&c.checked){c.checked=false;getPg1State();window.__la.go(2);}
+    var pg1=document.getElementById('pg1');
+    if(pg1&&pg1.style.display!=='none'){
+      var cnt=0,naCnt=0;
+      for(var i=0;i<6;i++){
+        var cb=document.getElementById('c0-'+i), naCb=document.getElementById('na0-'+i), cbOn=cb&&cb.checked, naOn=naCb&&naCb.checked;
+        if(cbOn&&naOn){ if(!ST[0][i]){naCb.checked=false; naOn=false;} else if(!NA[0][i]){cb.checked=false; cbOn=false;} }
+        if(cbOn)cnt++; if(naOn)naCnt++;
+      }
+      if(cnt!==lastP1Cnt||naCnt!==lastP1Na){
+        lastP1Cnt=cnt; lastP1Na=naCnt;
+        for(var j=0;j<6;j++){
+          var cb2=document.getElementById('c0-'+j), naCb2=document.getElementById('na0-'+j);
+          ST[0][j]=(cb2&&cb2.checked)?1:0; NA[0][j]=(naCb2&&naCb2.checked)?1:0;
+          var row=cb2&&(cb2.closest('[id^="r0-"]')||cb2.parentElement.parentElement); if(row) row.style.opacity=NA[0][j]?'0.35':'1';
+        }
+        updateCtr(0);
+      }
+    }
+  },150);
 })();
