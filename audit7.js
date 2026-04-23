@@ -217,9 +217,8 @@
   function hidePg1(){var e=document.getElementById('pg1');if(e)e.style.display='none';}
   function showPg1(){var e=document.getElementById('pg1');if(e)e.style.display='';}
   function scrollToanalysis(){
-    var el=document.getElementById('analysis')||document.querySelector('[id*="analysis"]');
+    var el=document.getElementById('la-wrap')||document.getElementById('pg-rest');
     if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
-    else window.scrollTo({top:0,behavior:'smooth'});
   }
 
   window.__la={
