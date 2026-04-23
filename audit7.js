@@ -143,31 +143,25 @@
       return '#8b3a3a';
     }
 
-    var pillarRows='', weakest=null, weakestPct=101;
+    var pillarRows='', weakest=null, weakestPct=101, totalGaps=totalMax-totalChecked;
     for(var p=0;p<pillarData.length;p++){
       var pd=pillarData[p], barW=pd.max>0?pd.percent:0, pc=tColor(pd.tier);
       if(pd.tier!=='N/A'&&pd.percent<weakestPct){weakestPct=pd.percent;weakest=pd;}
-      var iRows='';
-      for(var j=0;j<pd.items.length;j++){
-        var it=pd.items[j], icon=it.na?'\u2796':it.checked?'\u2705':'\u274C';
-        var lbl=it.na?'<span style="color:#666;">'+it.name+' (N/A)</span>':'<span style="color:'+(it.checked?'#c1b085':'#8b3a3a')+';">'+it.name+'</span>';
-        iRows+='<div style="display:flex;align-items:center;gap:10px;padding:6px 0 6px 12px;font-family:Georgia,serif;font-size:13px;">'+icon+' '+lbl+'</div>';
-      }
       pillarRows+='<div style="margin-bottom:28px;">'+
         '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">'+
         '<span style="font-family:Cinzel,serif;font-size:13px;font-weight:700;letter-spacing:2px;color:#fdfcfa;text-transform:uppercase;">'+pd.name+'</span>'+
         '<span style="font-family:Cinzel,serif;font-size:18px;font-weight:700;color:#c1b085;">'+pd.checked+'/'+pd.max+'</span></div>'+
         '<div style="background:#1a1510;border-radius:4px;height:8px;width:100%;margin-bottom:6px;">'+
         '<div style="background:linear-gradient(90deg,'+pc+',#c1b085);height:8px;border-radius:4px;width:'+barW+'%;"></div></div>'+
-        '<div style="font-family:Cinzel,serif;font-size:11px;font-weight:600;letter-spacing:2px;color:'+pc+';text-transform:uppercase;margin-bottom:8px;">'+pd.tier+'</div>'+iRows+'</div>';
+        '<div style="font-family:Cinzel,serif;font-size:11px;font-weight:600;letter-spacing:2px;color:'+pc+';text-transform:uppercase;">'+pd.tier+'</div></div>';
     }
 
     var wn=weakest?weakest.name:'your most critical areas';
     var rec;
-    if(percent>=86) rec='Your continuity planning is strong. Consider a Life Manual to formalize everything into a single successor-ready system.';
-    else if(percent>=66) rec='You have solid foundations. Focus on closing the remaining gaps \u2014 especially in '+wn+' \u2014 to reach full coverage.';
-    else if(percent>=46) rec='Your planning has real complexity creating hidden risk. Start with '+wn+' \u2014 that\'s where the biggest vulnerability sits right now.';
-    else rec='Your continuity gaps are significant. The good news: even one focused session can close the most critical ones. Start with '+wn+'.';
+    if(percent>=86) rec='Your continuity planning is strong. A Life Manual would formalize everything into a single successor-ready system.';
+    else if(percent>=66) rec='You have solid foundations \u2014 but the remaining gaps could still create real confusion for your family.';
+    else if(percent>=46) rec='Your planning has real complexity creating hidden risk. The gaps you\u2019re carrying could cost your family dozens of hours and real money.';
+    else rec='Your continuity gaps are significant. Without action, your family faces potentially weeks of confusion and costly decisions made in the dark.';
 
     var tc=tColor(tier);
 
@@ -186,20 +180,21 @@
 
       '<div style="display:flex;align-items:center;gap:16px;margin-bottom:32px;"><div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,#4a3d28);"></div><div style="font-family:Cinzel,serif;font-size:9px;letter-spacing:4px;color:#6b5a38;">\u2726</div><div style="flex:1;height:1px;background:linear-gradient(90deg,#4a3d28,transparent);"></div></div>'+
 
-      '<div style="font-family:Cinzel,serif;font-size:12px;letter-spacing:4px;color:#b8984e;margin-bottom:20px;text-transform:uppercase;">Pillar Breakdown</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:12px;letter-spacing:4px;color:#b8984e;margin-bottom:20px;text-transform:uppercase;">Pillar Overview</div>'+
       pillarRows+
 
       '<div style="background:#13100c;border:1px solid #2a2218;border-radius:6px;padding:24px;margin-bottom:36px;">'+
-      '<div style="font-family:Cinzel,serif;font-size:11px;letter-spacing:4px;color:#b8984e;margin-bottom:12px;text-transform:uppercase;">Your Recommended Next Step</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:11px;letter-spacing:4px;color:#b8984e;margin-bottom:12px;text-transform:uppercase;">What This Means</div>'+
       '<div style="font-family:Georgia,serif;font-size:16px;font-style:italic;color:#fdfcfa;line-height:1.6;">'+rec+'</div></div>'+
 
-      '<div style="background:#13100c;border:1px solid #2a2218;border-radius:6px;padding:32px;margin-bottom:36px;text-align:center;">'+
-      '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:3px;color:#c1b085;margin-bottom:8px;text-transform:uppercase;">Get Your Full Results by Email</div>'+
-      '<div style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#9a8d7a;margin-bottom:24px;">Detailed breakdown with personalized recommendations</div>'+
+      '<div style="background:#13100c;border:1px solid #c1b085;border-radius:6px;padding:32px;margin-bottom:36px;text-align:center;">'+
+      '<div style="font-family:Cinzel,serif;font-size:14px;letter-spacing:3px;color:#c1b085;margin-bottom:8px;text-transform:uppercase;">Unlock Your Full Breakdown</div>'+
+      '<div style="font-family:Bodoni Moda,serif;font-size:15px;font-style:italic;color:#9a8d7a;margin-bottom:8px;">See exactly which items need attention in each pillar</div>'+
+      '<div style="font-family:Georgia,serif;font-size:13px;color:#6b5a38;margin-bottom:24px;">You have '+totalGaps+' uncovered items across '+pillarData.length+' pillars. We\u2019ll send the complete item-by-item report.</div>'+
       '<div style="display:flex;flex-direction:column;gap:12px;max-width:360px;margin:0 auto;">'+
       '<input id="la-fn" type="text" placeholder="First name" style="font-family:Georgia,serif;font-size:15px;padding:12px 16px;background:#0a0806;border:1px solid #342a1c;border-radius:2px;color:#d4c8b4;outline:none;">'+
       '<input id="la-em" type="email" placeholder="Email address" style="font-family:Georgia,serif;font-size:15px;padding:12px 16px;background:#0a0806;border:1px solid #342a1c;border-radius:2px;color:#d4c8b4;outline:none;">'+
-      '<button id="la-send" onclick="__la.send()" style="font-family:Cinzel,serif;font-size:14px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);border:none;cursor:pointer;text-transform:uppercase;padding:14px 28px;border-radius:2px;margin-top:4px;">SEND MY RESULTS</button>'+
+      '<button id="la-send" onclick="__la.send()" style="font-family:Cinzel,serif;font-size:14px;font-weight:700;letter-spacing:3px;color:#100d0a;background:linear-gradient(135deg,#c1b085,#d4c4a0);border:none;cursor:pointer;text-transform:uppercase;padding:14px 28px;border-radius:2px;margin-top:4px;">SEND MY FULL RESULTS</button>'+
       '<div id="la-msg" style="font-family:Georgia,serif;font-size:13px;color:#9a8d7a;min-height:20px;"></div></div></div>'+
 
       '<div style="text-align:center;margin-bottom:36px;">'+
