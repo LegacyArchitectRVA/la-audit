@@ -238,11 +238,14 @@
       }).catch(function(){if(msg){msg.textContent='Connection error. Please try again.';msg.style.color='#8b3a3a';}if(btn){btn.textContent='SEND MY RESULTS';btn.disabled=false;}});
     },
     go:function(n){
-      if(n===1){showPg1();showRest('');}
-      else if(n==='R'){getPg1State();hidePg1();showRest(resultsHTML());}
-      else{hidePg1();showRest(pillarHTML(n-1));}
-      scrollToanalysis();
-    },
+  if(n===1){showPg1();showRest('');}
+  else if(n==='R'){getPg1State();hidePg1();showRest(resultsHTML());}
+  else{hidePg1();showRest(pillarHTML(n-1));}
+  scrollToanalysis();
+  setTimeout(function(){scrollToanalysis();},0);
+  setTimeout(function(){scrollToanalysis();},50);
+  setTimeout(function(){scrollToanalysis();},150);
+},
     t:function(pi,ii){
       if(NA[pi][ii]) return;
       ST[pi][ii]=ST[pi][ii]?0:1; var on=ST[pi][ii];
