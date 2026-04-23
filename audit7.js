@@ -218,7 +218,7 @@
   function showPg1(){var e=document.getElementById('pg1');if(e)e.style.display='';}
   function scrollToanalysis(){
     var el=document.getElementById('la-wrap')||document.getElementById('pg-rest');
-    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+    if(el) el.scrollIntoView({behavior:'auto',block:'start'});
   }
 
   window.__la={
