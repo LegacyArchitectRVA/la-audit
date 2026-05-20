@@ -71,15 +71,9 @@
     return h+'</div>';
   }
 
- function naStyle(isNa){
-  return 'display:inline-flex;align-items:center;justify-content:center;width:auto;min-width:42px;height:24px;padding:0 8px;flex-shrink:0;' +
-    'border:1px solid ' + (isNa ? '#c1b085' : '#7A6842') + ';' +
-    'border-radius:2px;cursor:pointer;' +
-    'background:' + (isNa ? 'rgba(193,176,133,0.08)' : 'transparent') + ';' +
-    'box-shadow:' + (isNa ? '0 0 12px rgba(193,176,133,0.6),0 0 24px rgba(193,176,133,0.25),inset 0 0 8px rgba(193,176,133,0.1)' : 'none') + ';' +
-    'transition:border-color 0.2s,background 0.2s,box-shadow 0.2s;';
-}
-
+  function naStyle(isNa){
+    return 'display:inline-flex;align-items:center;justify-content:center;width:auto;min-width:42px;height:24px;padding:0 8px;flex-shrink:0;border:1px solid '+(isNa?'#c1b085':'#342a1c')+';border-radius:2px;cursor:pointer;background:'+(isNa?'rgba(193,176,133,0.08)':'transparent')+';box-shadow:'+(isNa?'0 0 12px rgba(193,176,133,0.5),0 0 24px rgba(193,176,133,0.2)':'none')+';transition:border-color 0.2s,background 0.2s,box-shadow 0.2s;';
+  }
 
   function pillarHTML(pi){
     var pl=P[pi], isP5=pi===4, isLast=pi===6, rows='';
@@ -90,7 +84,7 @@
         '<div id="sh'+pi+'-'+ii+'" style="width:24px;height:24px;flex-shrink:0;border:1px solid '+(on?'#c1b085':'#7A6842')+';border-radius:2px;display:flex;align-items:center;justify-content:center;box-shadow:'+(on?'0 0 12px rgba(193,176,133,0.6),0 0 24px rgba(193,176,133,0.25),inset 0 0 8px rgba(193,176,133,0.1)':'none')+';transition:border-color 0.2s,box-shadow 0.2s;">'+
         '<svg id="mk'+pi+'-'+ii+'" width="14" height="11" viewBox="0 0 14 11" fill="none" style="opacity:'+(on?'1':'0')+';transform:'+(on?'scale(1)':'scale(0.6)')+';transition:opacity 0.2s,transform 0.2s;filter:drop-shadow(0 0 3px rgba(193,176,133,0.9));"><path d="M1.5 5.5L5.5 9.5L12.5 1.5" stroke="#c1b085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>'+
         '<div id="lb'+pi+'-'+ii+'" style="font-family:Cinzel,serif;font-size:17px;letter-spacing:2px;color:'+(on?'#c1b085':'#9a8d7a')+';'+(on?'text-shadow:0 0 12px rgba(193,176,133,0.3);':'')+'transition:color 0.2s,text-shadow 0.2s;">'+pl.i[ii]+'</div></div>'+
-        '<div id="na'+pi+'-'+ii+'" onclick="__la.na('+pi+','+ii+')" style="'+naStyle(isNa)+'"><span style="font-family:Cinzel,serif;font-size:10px;letter-spacing:1.5px;font-weight:700;color:'+(isNa?'#ffd36a':'#6b5a38')+';line-height:1;transition:color 0.2s;">N/A</span></div></div>';
+        '<div id="na'+pi+'-'+ii+'" onclick="__la.na('+pi+','+ii+')" style="'+naStyle(isNa)+'"><span style="font-family:Cinzel,serif;font-size:10px;letter-spacing:1.5px;font-weight:700;color:'+(isNa?'#b8984e':'#4a3d28')+';line-height:1;transition:color 0.2s;">N/A</span></div></div>';
     }
 
     var gate='';
@@ -210,7 +204,7 @@
       '<a href="https://cal.com/legacyarchitectrva/the-blueprint-session" target="_blank" style="display:inline-block;font-family:Cinzel,serif;font-size:12px;letter-spacing:2px;color:#c1b085;text-decoration:underline;text-transform:uppercase;">BOOK A FREE CONSULTATION</a></div></div>'+
 
       '<div style="text-align:center;border-top:1px solid #2a2218;padding-top:24px;">'+
-      '<div style="font-family:Cinzel,serif;font-size:10px;letter-spacing:3px;color:#957d4c;">LEGACY ARCHITECT RVA</div>'+
+      '<div style="font-family:Cinzel,serif;font-size:10px;letter-spacing:3px;color:#8d774a;">LEGACY ARCHITECT RVA</div>'+
       '<div style="font-family:Bodoni Moda,serif;font-size:12px;font-style:italic;color:#8a7e6a;margin-top:8px;">&ldquo;Order in Your Absence&rdquo;</div></div></div>';
   }
 
